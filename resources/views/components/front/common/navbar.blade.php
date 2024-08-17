@@ -56,7 +56,7 @@
                     Profile
                 </a>
             @else
-                <a href="#" @class(['nav-item', 'nav-link', 'active' => false])>
+                <a href="{{ route('login') }}" @class(['nav-item', 'nav-link', 'active' => Route::is('login')])>
                     Login
                 </a>
             @endauth

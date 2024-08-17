@@ -1,10 +1,13 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\JobsController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
 
 
 

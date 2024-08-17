@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>JobEntry - Job Portal Website Template</title>
+    <title>@yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
     @yield('css')
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{ asset('logo.svg') }}" rel="icon">
 
     @include('components.common.css_links')
 </head>

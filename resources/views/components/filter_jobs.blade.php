@@ -1,8 +1,8 @@
 <div class="row mb-5">
     <div class="col-12">
-        <div class="" style="borderRadius: 8px, margin: 0 20px">
-            <h4 class="filter-title">Find Your Perfect Job</h4>
-            <form id="job-filter-form">
+        <div class="" style="border-radius: 8px; margin: 0 20px">
+            <h3 class="filter-title text-center mb-4 wow fadeInUp" data-wow-delay="0.1s">Find Your Perfect Job</h3>
+            <form id="job-filter-form" class="wow fadeInUp" data-wow-delay="0.2s">
                 <div class="row g-3">
                     <div class="col-md-4 col-lg-3">
                         <div class="form-floating">

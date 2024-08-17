@@ -45,19 +45,21 @@
             <a href="{{ route('home') }}" @class(['nav-item', 'nav-link', 'active' => Route::is('home')])>
                 Home
             </a>
-            <a href="#" @class(['nav-item', 'nav-link', 'active' => false])>
+            <a href="{{ route('jobs') }}" @class(['nav-item', 'nav-link', 'active' => Route::is('jobs')])>
                 Jobs
             </a>
             <a href="#" @class(['nav-item', 'nav-link', 'active' => false])>
                 About
             </a>
-            <a href="#" @class(['nav-item', 'nav-link', 'active' => false])>
-                Login
-            </a>
-            <a href="#" @class(['nav-item', 'nav-link', 'active' => false])>
-                Profile
-            </a>
-
+            @auth
+                <a href="#" @class(['nav-item', 'nav-link', 'active' => false])>
+                    Profile
+                </a>
+            @else
+                <a href="#" @class(['nav-item', 'nav-link', 'active' => false])>
+                    Login
+                </a>
+            @endauth
         </div>
         <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
     </div>

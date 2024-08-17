@@ -11,15 +11,15 @@
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
-    @include('components.css_links')
+    @include('components.front.css_links')
 </head>
 
 <body>
     <div class="container-xxl bg-white p-0">
 
-        @include('components.loader')
-        @include('components.navbar')
-        @include('components.carousel')
+        @include('components.front.loader')
+        @include('components.front.navbar')
+        @include('components.front.carousel')
 
 
         <!-- Search Start -->
@@ -58,7 +58,7 @@
         <!-- Search End -->
 
 
-        @include('components.categories')
+        @include('components.front.categories')
         <!-- Jobs Start -->
         <div class="container-xxl py-5">
             <div class="container">
@@ -82,7 +82,7 @@
                         </li>
                     </ul>
                     
-                    @include('components.job_list')
+                    @include('components.front.job_list')
                 </div>
             </div>
         </div>
@@ -92,14 +92,14 @@
         
 
 
-        @include('components.footer')
+        @include('components.front.footer')
 
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    @include('components.js_links')
+    @include('components.front.js_links')
 </body>
 
 </html>

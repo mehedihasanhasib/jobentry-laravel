@@ -9,6 +9,6 @@ class JobsController extends Controller
 {
     public function index()
     {
-        return view('pages.Jobs.index');
+        return view('front.pages.jobs.index');
     }
 }

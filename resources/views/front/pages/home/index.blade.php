@@ -1,9 +1,9 @@
-@extends('components.layouts.app')
+@extends('components.front.layouts.app')
 @section('title')
     Job Portal Website
 @endsection
 @section('content')
-    @include('components.carousel')
+    @include('components.front.carousel')
     
     <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
         <div class="container">
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    @include('components.categories')
+    @include('components.front.categories')
 
-    @include('components.job_list')
+    @include('components.front.job_list')
 @endsection

@@ -48,7 +48,7 @@
             <a href="{{ route('jobs') }}" @class(['nav-item', 'nav-link', 'active' => Route::is('jobs')])>
                 Jobs
             </a>
-            <a href="#" @class(['nav-item', 'nav-link', 'active' => false])>
+            <a href="{{ route('about.us') }}" @class(['nav-item', 'nav-link', 'active' => Route::is('about.us')])>
                 About
             </a>
             @auth

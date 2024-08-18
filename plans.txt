@@ -1,0 +1,31 @@
+1. Separate controller/views/routes for different modules
+	a. controllers structure would be
+		app/http/controllers/front
+		app/http/controllers/admin
+		app/http/controllers/recruiter
+	
+	b. views structure would be
+		resources/views/front
+		resources/views/admin
+		resources/views/recruiter
+		
+	c. routes stracture will be
+		"routes/web.php" will be for frontend
+		"routes/admin.php" will be for admin and will be required in "web.php"
+		"routes/recruiter.php" will be for admin and will be required in "web.php"
+
+2. Always use resuseable components or functions.
+3. Use Laravel's built-in features.
+4. Try to make your code DRY (Don't Repeat Yourself).
+
+C:\Windows\System32\drivers\etc\hosts
+
+<VirtualHost *:80>
+    ServerName admin.jobentry.com
+    DocumentRoot "D:\xampp\htdocs\practice\jobentry-laravel\public"
+    <Directory "D:\xampp\htdocs\practice\jobentry-laravel\public">
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>

@@ -36,7 +36,7 @@
                             </button>
                         </form>
                         <div class="text-center">
-                            <p>Don't have an account? <a href="/signup" class="text-primary">Sign up</a></p>
+                            <p>Don't have an account? <a href="{{ route('register') }}" class="text-primary">Sign up</a></p>
                         </div>
                     </div>
                 </div>

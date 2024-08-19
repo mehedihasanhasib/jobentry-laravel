@@ -7,20 +7,18 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-require __DIR__.'/recruiter.php';
-require __DIR__.'/admin.php';
+require __DIR__ . '/recruiter.php';
+require __DIR__ . '/admin.php';
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
 Route::get('/about-us', [AboutUsController::class, 'index'])->name('about.us');
 
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware('auth.basic');
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,6 +26,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-
-
+require __DIR__ . '/auth.php';

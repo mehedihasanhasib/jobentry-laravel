@@ -21,6 +21,10 @@ Route::prefix('/profile')->group(function(){
     });
 });
 
+Route::get('/test', function(){
+    return view('welcome');
+});
+
 
 
 Route::get('/dashboard', function () {

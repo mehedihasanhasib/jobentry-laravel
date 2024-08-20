@@ -1,4 +1,7 @@
 @extends("components.front.layouts.app")
+@section('title')
+    Profile
+@endsection
 @section("content")
     <div class="container-fluid p-4" style="background-color: #f8f9fa">
         <div class="row">

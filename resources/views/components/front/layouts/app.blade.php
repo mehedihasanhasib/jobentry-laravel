@@ -9,7 +9,6 @@
     <meta content="" name="description">
     
     @yield('css')
-    <!-- Favicon -->
     <link href="{{ asset('logo.svg') }}" rel="icon">
 
     <x-front.common.css_links />
@@ -25,7 +24,7 @@
         @yield('content')
 
         <x-front.common.footer />
-        <!-- Back to Top -->
+        
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 

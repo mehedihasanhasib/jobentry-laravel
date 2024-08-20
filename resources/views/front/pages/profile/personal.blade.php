@@ -3,18 +3,18 @@
 @section("information")
     <div class="col-md-9">
         <div class="card shadow-sm rounded border-0">
-            <x-front.profile.card_header heading="Personal Information" />
+            <x-front.profile.card_header heading="Personal Information" id="editButton" click="editInput('textView', 'editView', 'editButton')" />
 
             <div class="card-body">
                 <div class="row mb-4" id="textView">
-                        <x-front.profile.text value="Mehedi Hasan" label="First Name" />
-                        <x-front.profile.text value="Hasib" label="Last Name" />
-                        <x-front.profile.text value="hasib@email.com" label="Email" />
-                        <x-front.profile.text value="Abul Kalam Azad" label="Father Name" />
-                        <x-front.profile.text value="Masuda Begum" label="Mother Name" />
-                        <x-front.profile.text value="05 Dec 1998" label="Date of Birth" />
-                        <x-front.profile.text value="Male" label="Gender" />
-                        <x-front.profile.text value="01965046625" label="Phone" />
+                    <x-front.profile.text value="Mehedi Hasan" label="First Name" />
+                    <x-front.profile.text value="Hasib" label="Last Name" />
+                    <x-front.profile.text value="hasib@email.com" label="Email" />
+                    <x-front.profile.text value="Abul Kalam Azad" label="Father Name" />
+                    <x-front.profile.text value="Masuda Begum" label="Mother Name" />
+                    <x-front.profile.text value="05 Dec 1998" label="Date of Birth" />
+                    <x-front.profile.text value="Male" label="Gender" />
+                    <x-front.profile.text value="01965046625" label="Phone" />
                 </div>
 
                 <div class="row mb-4" id="editView" style="display: none">
@@ -27,28 +27,56 @@
                 </div>
             </div>
         </div>
+
+        <div class="card shadow-sm rounded border-0">
+            <x-front.profile.card_header heading="Personal Information" id="editButton2" click="editInput('textView2', 'editView2', 'editButton2')" />
+
+            <div class="card-body">
+                <div class="row mb-4" id="textView2">
+                    <x-front.profile.text value="Mehedi Hasan" label="First Name" />
+                    <x-front.profile.text value="Hasib" label="Last Name" />
+                    <x-front.profile.text value="hasib@email.com" label="Email" />
+                    <x-front.profile.text value="Abul Kalam Azad" label="Father Name" />
+                    <x-front.profile.text value="Masuda Begum" label="Mother Name" />
+                    <x-front.profile.text value="05 Dec 1998" label="Date of Birth" />
+                    <x-front.profile.text value="Male" label="Gender" />
+                    <x-front.profile.text value="01965046625" label="Phone" />
+                </div>
+
+                <div class="row mb-4" id="editView2" style="display: none">
+                    <div class="col-md-6 mt-2">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input class="form-control" id="firstName" name="first_name" type="text" value="Mehedi Hasan">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
-@section('script')
+@section("script")
     <script>
-        let edit = false;
-        $('#editButton').click(function (e) {
-            edit = !edit;
+        let shouldEdit = false;
 
-            let textView = $('#textView');
-            let editView = $('#editView');
-            let editButton = $('#editButton span')
+        function editInput(text, edit, id) {
 
-            if (edit) {
+            shouldEdit = !shouldEdit;
+            let textView = $(`#${text}`);
+            let editView = $(`#${edit}`);
+
+            let editButton = $(`#${id}`).find('span')
+
+            if (shouldEdit) {
                 textView.css('display', 'none');
                 editView.css('display', '');
                 editButton.text('Save');
-            } else{
+            } else {
                 textView.css('display', '');
-                editView.css('display', 'none'); 
+                editView.css('display', 'none');
                 editButton.text('Edit');
             }
-        });
+        }
     </script>
 @endsection

@@ -52,7 +52,7 @@
                 About
             </a>
             {{-- @auth --}}
-                <a href="{{ route('user_profile.personal.information') }}" @class(['nav-item', 'nav-link', 'active' => false])>
+                <a href="{{ route('user_profile.personal.information') }}" @class(['nav-item', 'nav-link', 'active' => Route::is('user_profile.*')])>
                     Profile
                 </a>
             {{-- @else --}}

@@ -51,15 +51,15 @@
             <a href="{{ route('about.us') }}" @class(['nav-item', 'nav-link', 'active' => Route::is('about.us')])>
                 About
             </a>
-            @auth
-                <a href="#" @class(['nav-item', 'nav-link', 'active' => false])>
+            {{-- @auth --}}
+                <a href="{{ route('user_profile.personal.information') }}" @class(['nav-item', 'nav-link', 'active' => false])>
                     Profile
                 </a>
-            @else
+            {{-- @else --}}
                 <a href="{{ route('login') }}" @class(['nav-item', 'nav-link', 'active' => Route::is('login')])>
                     Login
                 </a>
-            @endauth
+            {{-- @endauth --}}
         </div>
         <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
     </div>

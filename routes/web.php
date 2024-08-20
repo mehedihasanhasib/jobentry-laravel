@@ -15,15 +15,22 @@ Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
 Route::get('/about-us', [AboutUsController::class, 'index'])->name('about.us');
 
 
+Route::prefix('/profile')->group(function(){
+    Route::name('user_profile.')->group(function(){
+        Route::get('/personal-information', [ProfileController::class, 'personal_information'])->name('personal.information');
+    });
+});
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__ . '/auth.php';

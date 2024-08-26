@@ -3,7 +3,8 @@
     Profile
 @endsection
 @section("content")
-    <div class="container-fluid p-4" style="background-color: #f8f9fa">
+@include('components.front.common.header', ['heading' => 'Profile'])
+    <div class="container-fluid p-4 wow fadeInUp" style="background-color: #f8f9fa">
         <div class="row">
             @include("components.front.profile.profile_sidebar")
 

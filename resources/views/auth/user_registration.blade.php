@@ -1,7 +1,10 @@
 @extends("components.front.layouts.app")
+@section('title')
+    Signup
+@endsection
 @section("content")
 @include('components.front.common.header', ['heading' => 'Sign Up'])
-    <div class="container-fluid d-flex align-items-center justify-content-center">
+    <div class="container-fluid d-flex align-items-center justify-content-center wow fadeInUp" data-wow-delay="0.1s">
         <div class="row w-100">
             <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
                 <div class="card shadow-lg border-0 rounded-lg">

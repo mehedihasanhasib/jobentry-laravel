@@ -1,1 +1,0 @@
-<x-test value="Hello" label="test" />

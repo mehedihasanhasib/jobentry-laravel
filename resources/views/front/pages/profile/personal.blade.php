@@ -1,55 +1,32 @@
 @extends("front.pages.profile.index")
-
 @section("information")
     <div class="col-md-9">
         <div class="card shadow-sm rounded border-0">
-            <x-front.profile.card_header heading="Personal Information" id="editButton" click="editInput('textView', 'editView', 'editButton')" />
+            <x-front.profile.card_header id="editButton" heading="Personal Information" click="editInput('textView', 'editView', 'editButton')" />
 
+            @include('components.labels')
+            @php
+                $userData = Arr::except($user->getAttributes(), ["password", "id"]);
+                $personalInfo = Arr::except($user->personalInfo->getAttributes(), ["user_id", "image", "id"]);
+            @endphp
             <div class="card-body">
                 <div class="row mb-4" id="textView">
-                    <x-front.profile.text value="Mehedi Hasan" label="First Name" />
-                    <x-front.profile.text value="Hasib" label="Last Name" />
-                    <x-front.profile.text value="hasib@email.com" label="Email" />
-                    <x-front.profile.text value="Abul Kalam Azad" label="Father Name" />
-                    <x-front.profile.text value="Masuda Begum" label="Mother Name" />
-                    <x-front.profile.text value="05 Dec 1998" label="Date of Birth" />
-                    <x-front.profile.text value="Male" label="Gender" />
-                    <x-front.profile.text value="01965046625" label="Phone" />
+                    @foreach ($userData as $key => $data)
+                        <x-inputs.text value="{{ $data }}" label="{{ $labels[$key] }}" />
+                    @endforeach
+                    @foreach ($personalInfo as $key => $data)
+                        <x-inputs.text value="{{ $data }}" label="{{ $labels[$key] }}" />
+                    @endforeach
                 </div>
 
                 <div class="row mb-4" id="editView" style="display: none">
-                    <div class="col-md-6 mt-2">
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input class="form-control" id="firstName" name="first_name" type="text" value="Mehedi Hasan">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card shadow-sm rounded border-0">
-            <x-front.profile.card_header heading="Personal Information" id="editButton2" click="editInput('textView2', 'editView2', 'editButton2')" />
-
-            <div class="card-body">
-                <div class="row mb-4" id="textView2">
-                    <x-front.profile.text value="Mehedi Hasan" label="First Name" />
-                    <x-front.profile.text value="Hasib" label="Last Name" />
-                    <x-front.profile.text value="hasib@email.com" label="Email" />
-                    <x-front.profile.text value="Abul Kalam Azad" label="Father Name" />
-                    <x-front.profile.text value="Masuda Begum" label="Mother Name" />
-                    <x-front.profile.text value="05 Dec 1998" label="Date of Birth" />
-                    <x-front.profile.text value="Male" label="Gender" />
-                    <x-front.profile.text value="01965046625" label="Phone" />
-                </div>
-
-                <div class="row mb-4" id="editView2" style="display: none">
-                    <div class="col-md-6 mt-2">
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input class="form-control" id="firstName" name="first_name" type="text" value="Mehedi Hasan">
-                        </div>
-                    </div>
+                    @foreach ($userData as $key => $data)
+                        <x-inputs.edit id="{{ $key }}" name="{{ $key }}" type="{{ $types[$key] }}" value="{{ $data }}" label="{{ $labels[$key] }}" />
+                    @endforeach
+                    @foreach ($personalInfo as $key => $data)
+                        <x-inputs.edit id="{{ $key }}" name="{{ $key }}" type="{{ $types[$key] }}" value="{{ $data }}" label="{{ $labels[$key] }}" />
+                    @endforeach
+                    {{-- <x-inputs.edit label="First Name" /> --}}
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Education;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,27 +19,18 @@ class ProfileController extends Controller
      */
     public function personal_information(Request $request): View
     {
-        // return view('profile.edit', [
-        //     'user' => $request->user(),
-        // ]);
-        // $personalData = [
-        //     'firstName' => 'Mehedi Hasan',
-        //     'lastName' => 'Hasib',
-        //     'fatherName' => 'Abul Kalam Azad',
-        //     'motherName' => 'Masuda Begum',
-        //     'email' => 'hasib@gmail.com',
-        //     'dob' => '1998-12-05',
-        //     'phone' => '01712345678',
-        //     'gender' => 'male'
-        // ];
-
         $user = User::with('personalInfo')->find(1);
-        return view('front.pages.profile.personal', compact('user'));
+        return view('front.pages.profile.personal', [
+            'user' => $user,
+        ]);
     }
 
     public function education_information(Request $request): View
     {
-        return view('front.pages.profile.personal_information');
+        $educations = Education::where('user_id', 1)->get();
+        return view('front.pages.profile.education', [
+            'educations' => $educations,
+        ]);
     }
 
     /**

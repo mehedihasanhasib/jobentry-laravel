@@ -16,8 +16,9 @@ Route::get('/about-us', [AboutUsController::class, 'index'])->name('about.us');
 
 
 Route::prefix('/profile')->group(function(){
-    Route::name('user_profile.')->group(function(){
-        Route::get('/personal-information', [ProfileController::class, 'personal_information'])->name('personal.information');
+    Route::name('user.profile.')->group(function(){
+        Route::get('/personal', [ProfileController::class, 'personal_information'])->name('personal');
+        Route::get('/education', [ProfileController::class, 'education_information'])->name('education');
     });
 });
 

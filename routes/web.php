@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Front\AboutUsController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\JobsController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Front\AboutUsController;
+use App\Http\Controllers\Front\ProfileController;
 
 
 require __DIR__ . '/recruiter.php';

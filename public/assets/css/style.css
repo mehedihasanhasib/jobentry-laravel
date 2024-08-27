@@ -391,3 +391,9 @@
     padding-right: 0;
     border-right: none;
 }
+
+@media (max-width: 575.98px) {
+    .mt-xsm-3 {
+        margin-top: 1rem;
+    }
+}

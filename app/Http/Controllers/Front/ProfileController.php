@@ -1,33 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Front;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\Education;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Front\EducationInformation;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
-    public function personal_information(Request $request): View
+    public function personal_information(Request $request)
     {
         $user = User::with('personalInfo')->find(1);
+        
         return view('front.pages.profile.personal', [
             'user' => $user,
         ]);
     }
 
-    public function education_information(Request $request): View
+    public function education_information(Request $request)
     {
-        $educations = Education::where('user_id', 1)->get();
+        $educations = EducationInformation::where('user_id', 1)->get();
         return view('front.pages.profile.education', [
             'educations' => $educations,
         ]);
@@ -36,23 +34,15 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update()
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        //
     }
 
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Front;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PersonalInfo extends Model
+class PersonalInformation extends Model
 {
     use HasFactory;
-    protected $table = 'personal';
+    protected $table =  'personal_informations';
 }

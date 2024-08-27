@@ -1,15 +1,15 @@
 @extends("front.pages.profile.index")
 @section("information")
-    @php
-        $rows = $user->count();
-    @endphp
-    <div class="col-md-9">
+    @if ($user)
+        @php
+            $rows = $user->count();
+        @endphp
         <div class="card shadow-sm rounded border-0">
             <x-front.profile.card_header id="editButton" heading="Personal Information" click="editInput('textView', 'editView', 'editButton')" />
 
             @php
-                $userData = Arr::except($user->getAttributes(), ["password", "id"]);
-                $personalInfo = Arr::except($user->personalInfo->getAttributes(), ["user_id", "image", "id"]);
+                $userData = Arr::only($user->getAttributes(), ["name", "email"]);
+                $personalInfo = Arr::except($user->personalInfo->getAttributes(), ["user_id", "image", "id", "created_at", "updated_at"]);
             @endphp
             <div class="card-body">
                 <div class="row mb-4" id="textView">
@@ -32,5 +32,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    @else
+        @php
+            $rows = 0;
+        @endphp
+        <x-front.no_data_alert module="personal" />
+    @endif
 @endsection

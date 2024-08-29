@@ -16,7 +16,7 @@ class ProfileController extends Controller
      */
     public function personal_information(Request $request)
     {
-        $user = User::with('personalInfo')->find(2);
+        $user = User::with('personalInfo')->find(Auth::user()->id);
         
         return view('front.pages.profile.personal', [
             'user' => $user,

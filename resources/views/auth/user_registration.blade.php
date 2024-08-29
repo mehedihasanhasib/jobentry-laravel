@@ -10,9 +10,10 @@
                 <div class="card shadow-lg border-0 rounded-lg">
                     <div class="card-body p-5">
                         <h2 class="text-center mb-4">Create an Account</h2>
-                        <form>
+                        <form id="registrationForm" action="{{ route("register") }}" method="POST">
+                            @csrf
                             <div class="mb-3 d-flex justify-content-center">
-                                <img class="rounded-circle" src="{{ asset('assets/img/avatar.png') }}" alt="Avatar" style="width: 150px;" />
+                                <img class="rounded-circle" src="{{ asset("assets/img/avatar.png") }}" alt="Avatar" style="width: 150px;" />
                                 <label for="image" style="cursor: pointer">
                                     <i class="fa fa-camera"></i>
                                 </label>
@@ -50,7 +51,7 @@
                                         "placeholder" => "Password",
                                         "required" => true,
                                     ],
-                                    "confirm_password" => [
+                                    "password_confirmation" => [
                                         "label" => "Confirm Password",
                                         "type" => "password",
                                         "placeholder" => "Confirm Password",
@@ -61,19 +62,11 @@
                             <div class="row">
                                 @foreach ($fields as $key => $field)
                                     <div class="form-group mb-3 col-lg-6">
-                                        {{-- <div> --}}
-                                            <label class="form-label">{{ $field["label"] }}</label>
-                                            {{-- @if ($field["required"])
-                                                <span class="text-danger">*</span>
-                                            @endif --}}
-                                        {{-- </div> --}}
-
+                                        <label class="form-label">{{ $field["label"] }}</label>
                                         <div class="input-group">
-                                            {{-- <span class="input-group-text bg-primary text-white">
-                                                <i class="fa fa-user"></i>
-                                            </span> --}}
-                                            <input class="form-control" name="{{ $key }}" type="{{ $field["type"] }}" placeholder="{{ $field["placeholder"] }}" @required($field["required"]) />
+                                            <input class="form-control" name="{{ $key }}" type="{{ $field["type"] }}" value="{{ old($key) }}" placeholder="{{ $field["placeholder"] }}" />
                                         </div>
+                                        <span class="{{ $key }} text-danger errors"></span>
                                     </div>
                                 @endforeach
                             </div>
@@ -92,4 +85,39 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section("script")
+    <script>
+        $('#registrationForm').submit(function(e) {
+            e.preventDefault();
+            const formData = new FormData(this)
+
+            $.ajax({
+                type: "post",
+                url: "/register",
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        console.log(response);
+                        
+                        window.location.href = response.url;
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        const errors = xhr.responseJSON.errors;
+                        $(`.errors`).text('');
+                        $.each(errors, function(key, value) {
+                            
+                            $(`.${key}`).text(value[0]);
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

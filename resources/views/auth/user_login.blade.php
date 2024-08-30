@@ -10,22 +10,29 @@
                 <div class="card shadow-lg border-0 rounded-lg">
                     <div class="card-body p-5">
                         <h2 class="text-center mb-4">Welcome Back!</h2>
-                        <form>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
                             <div class="mb-4">
                                 <div class="input-group">
                                     <span class="input-group-text bg-primary text-white">
                                         <i class="fas fa-user"></i>
                                     </span>
-                                    <input type="email" class="form-control" placeholder="Email Address" required />
+                                    <input type="email" name="email" class="form-control" placeholder="Email Address" required />
                                 </div>
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="mb-4">
                                 <div class="input-group">
                                     <span class="input-group-text bg-primary text-white">
                                         <i class="fas fa-lock"></i>
                                     </span>
-                                    <input type="password" class="form-control" placeholder="Password" required />
+                                    <input type="password" name="password" class="form-control" placeholder="Password" required />
                                 </div>
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="mb-4 d-flex justify-content-between align-items-center">
                                 <div class="form-check">

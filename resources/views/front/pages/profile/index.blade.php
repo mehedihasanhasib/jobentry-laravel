@@ -33,4 +33,5 @@
             }
         }
     </script>
+    @yield("profilescript")
 @endsection

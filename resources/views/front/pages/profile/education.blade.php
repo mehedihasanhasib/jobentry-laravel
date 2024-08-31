@@ -28,9 +28,17 @@
                         @endforeach
                     </div>
 
+                    {{-- ------------------------------------------------------------------------------- --}}
+
                     <div class="row mb-4" id="{{ $editViewId }}" style="display: none"> {{-- edit data --}}
                         @foreach ($educationData as $key => $data)
-                            <x-inputs.edit id="{{ $key }}" name="{{ $key }}" type="{{ $types[$key] }}" value="{{ $data }}" label="{{ $labels[$key] }}" />
+                            <x-inputs.edit
+                                id="{{ $key }}"
+                                name="{{ $key }}"
+                                type="{{ $types[$key] }}"
+                                value="{{ $data }}"
+                                label="{{ $labels[$key] }}"
+                            />
                         @endforeach
                     </div>
                 </div>

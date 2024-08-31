@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Front;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Front\EducationInformation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Front\EducationInformation;
 
 class ProfileController extends Controller
 {
@@ -16,10 +17,15 @@ class ProfileController extends Controller
      */
     public function personal_information(Request $request)
     {
+        $table = 'personal_informations';
+        $column = 'gender';
+
+        $genders = $this->getEnumValues($table, $column);
         $user = User::with('personalInfo')->find(Auth::user()->id);
-        
+
         return view('front.pages.profile.personal', [
             'user' => $user,
+            'genders' => $genders,
         ]);
     }
 
@@ -58,5 +64,21 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    function getEnumValues($table, $column)
+    {
+        // Get the column's details using a direct query string
+        $type = DB::select("SHOW COLUMNS FROM {$table} WHERE Field = '{$column}'")[0]->Type;
+
+        // Extract the ENUM values using a regular expression
+        preg_match('/^enum\((.*)\)$/', $type, $matches);
+
+        // Convert the result into an array of values
+        $enumValues = array_map(function ($value) {
+            return trim($value, "'");
+        }, explode(',', $matches[1]));
+
+        return $enumValues;
     }
 }

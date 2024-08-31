@@ -17,6 +17,9 @@
 
 @section("script")
     <script>
+        const labels = @json($labels);
+        
+
         const rows = @json($rows);
         const shouldEdit = Array(rows).fill(false);
 

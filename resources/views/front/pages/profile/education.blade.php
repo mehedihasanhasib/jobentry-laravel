@@ -3,6 +3,14 @@
     @php
         $rows = $educations->count();
         $fields = ["degree", "exam", "institute", "passing_year", "group", "cgpa", "scale"];
+        $component = view('components.inputs.edit', [
+            'id' => 1,
+            'name' => 'fatherName',
+            'type' => 'text',
+            'value' => null,
+            'label' => 'Father Name',
+            'options' => []
+        ])->render();
     @endphp
     @if ($rows < 1)
         <div class="card shadow-sm rounded border-0" id="acaddemicContainer"> {{-- academy section --}}
@@ -24,7 +32,7 @@
                 <div class="card-body">
                     <div class="row mb-4" id="{{ $textViewId }}"> {{-- show data --}}
                         @foreach ($educationData as $key => $data)
-                            <x-inputs.text value="{{ $data }}" label="{{ $labels[$key] }}" />
+                            <x-inputs.text :value="$data" :label="$labels[$key]" />
                         @endforeach
                     </div>
 
@@ -32,13 +40,7 @@
 
                     <div class="row mb-4" id="{{ $editViewId }}" style="display: none"> {{-- edit data --}}
                         @foreach ($educationData as $key => $data)
-                            <x-inputs.edit
-                                id="{{ $key }}"
-                                name="{{ $key }}"
-                                type="{{ $types[$key] }}"
-                                value="{{ $data }}"
-                                label="{{ $labels[$key] }}"
-                            />
+                            <x-inputs.edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" />
                         @endforeach
                     </div>
                 </div>
@@ -50,6 +52,9 @@
 
 @section("profilescript")
     <script>
+        const fields = @json($fields);
+        const component = @json($component);
+
         $('#addEducation').click(function(e) {
             $('.alert').remove();
             const container = $('#acaddemicContainer');
@@ -60,13 +65,9 @@
                                 </button>
                             </div>
                             <div class="card-body">
-                                <div class="col-md-6 mt-2">
-                                    <div class="form-group">
-                                        <label for="firstName">Lavel</label>
-                                        <input class="form-control" id="" name="" type="text" value="">
-                                    </div>
-                                </div>
+                                    ${component}
                             </div>`
+            console.log(row)
             container.append(row);
         });
     </script>

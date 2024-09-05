@@ -1,27 +1,25 @@
-@extends("components.front.layouts.app")
-@section("title")
+@extends('components.front.layouts.app')
+@section('title')
     Profile
 @endsection
-@section("content")
-    @include("components.front.common.header", ["heading" => "Profile"])
+@section('content')
+    @include('components.front.common.header', ['heading' => 'Profile'])
     <div class="container-fluid p-4 wow fadeIn" style="background-color: #f8f9fa">
         <div class="row">
-            @include("components.front.profile.profile_sidebar")
+            @include('components.front.profile.profile_sidebar')
 
-            <div class="col-md-9 mt-xsm-3">
-                @yield("information")
+            <div class="col-md-9 mt-xsm-3" id="informationSection">
+                {{-- @yield("information") --}}
             </div>
         </div>
     </div>
 @endsection
 
-@section("script")
+@section('script')
     <script>
-        const labels = @json($labels);
-        
-
-        const rows = @json($rows);
-        const shouldEdit = Array(rows).fill(false);
+        const informationSection = $('#informationSection');
+        let rows;
+        let shouldEdit;
 
         function editInput(text, edit, id, rowIndex = 0) {
             shouldEdit[rowIndex] = !shouldEdit[rowIndex];
@@ -35,6 +33,27 @@
                 editButton.text(shouldEdit[rowIndex] ? 'Save' : 'Edit');
             }
         }
+
+        //personal
+        function appendHTML(route) {
+            $.get(route, function(data) {
+                rows = data.rows;
+                shouldEdit = Array(rows).fill(false);
+                informationSection.html('');
+                informationSection.html(data.view);
+            });
+        }
+
+        $(document).ready(function() {
+            appendHTML("{{ route('user.profile.personal') }}");
+
+            $('#personal').click(function (e) {
+                appendHTML("{{ route('user.profile.personal') }}");
+            });
+            $('#education').click(function (e) {
+                appendHTML("{{ route('user.profile.education') }}");
+            });
+        });
     </script>
-    @yield("profilescript")
+    @yield('profilescript')
 @endsection

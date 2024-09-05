@@ -1,24 +1,24 @@
+@section('css')
+    <style>
+        .links{
+            cursor: pointer;
+        }
+        .links:hover{
+            background-color: rgb(240, 240, 240)
+        }
+    </style>
+@endsection
 <div class="col-md-3 bg-white p-4 shadow-sm rounded">
     <ul class="list-group list-group-flush">
-        <li class="list-group-item p-0 {{ Route::is("user.profile.personal") ? "active" : "" }}">
-            <a class="nav-link p-2 {{ Route::is("user.profile.personal") ? "text-white" : "" }}" href="{{ route("user.profile.personal") }}">
-                <i class="fa fa-user me-3"></i> Personal Information
-            </a>
-        </li>
-        <li class="list-group-item p-0 {{ Route::is("user.profile.education") ? "active" : "" }}">
-            <a class="nav-link p-2 {{ Route::is("user.profile.education") ? "text-white" : "" }}" href="{{ route('user.profile.education') }}">
-                <i class="fa fa-cog me-3"></i> Education
-            </a>
-        </li>
-        <li class="list-group-item p-0">
-            <a class="nav-link p-2" href="#">
-                <i class="fa fa-bell me-3"></i> Notifications
-            </a>
-        </li>
-        <li class="list-group-item p-0">
-            <a class="nav-link p-2" href="#">
-                <i class="fa fa-sign-out-alt me-3"></i> Logout
-            </a>
-        </li>
+        @php
+            $links = ['Personal Information', 'Education'];
+            $icons = ['fa fa-user','fa fa-cog'];
+            $ids = ['personal', 'education'];
+        @endphp
+        @foreach ($links as $key => $item)
+            <li class="list-group-item p-2 links" id="{{ $ids[$key] }}">
+                <i class="{{ $icons[$key] }} me-3"></i> {{ $item }}
+            </li>
+        @endforeach
     </ul>
 </div>

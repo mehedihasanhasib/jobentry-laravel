@@ -15,6 +15,8 @@ Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
 Route::get('/about-us', [AboutUsController::class, 'index'])->name('about.us');
 
 
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+
 Route::prefix('/profile')->group(function(){
     Route::name('user.profile.')->group(function(){
         Route::get('/personal', [ProfileController::class, 'personal_information'])->name('personal');
@@ -29,7 +31,7 @@ Route::get('/test', function(){
 
 
 Route::get('/dashboard', function () {
-    return redirect()->route('user.profile.personal');
+    return redirect()->route('profile');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::middleware('auth')->group(function () {

@@ -1,5 +1,5 @@
-@extends("front.pages.profile.index")
-@section("information")
+{{-- @extends("front.pages.profile.index")
+@section("information") --}}
     @php
         $rows = $educations->count();
         $fields = ["degree", "exam", "institute", "passing_year", "group", "cgpa", "scale"];
@@ -47,7 +47,7 @@
             </div>
         @endforeach
     @endif
-@endsection
+{{-- @endsection --}}
 
 
 @section("profilescript")

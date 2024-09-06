@@ -1,3 +1,3 @@
-<div class="alert alert-primary text-center">
+<div {{$attributes->merge(['class' => ''])}}>
     No {{ $module }} information yet.
 </div>

@@ -14,21 +14,22 @@
         <div class="card-body">
             <div class="row mb-4" id="textView">
                 @foreach ($userData as $key => $data)
-                    <x-inputs.text :value="$data" :label="$labels[$key]" />
+                    <x-text :value="$data" :label="$labels[$key]" />
                 @endforeach
                 @foreach ($personalInfo as $key => $data)
-                    <x-inputs.text :value="$data" :label="$labels[$key]" />
+                    <x-text :value="$data" :label="$labels[$key]" />
                 @endforeach
             </div>
 
-            <div class="row mb-4" id="editView" style="display: none">
+            <form class="row mb-4" id="editView" style="display: none">
                 @foreach ($userData as $key => $data)
-                    <x-inputs.edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" />
+                    <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" />
                 @endforeach
                 @foreach ($personalInfo as $key => $data)
-                    <x-inputs.edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" :options="$genders" />
+                    <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" :options="$genders" />
                 @endforeach
-            </div>
+                <x-save_close_buttons />
+            </form>
         </div>
     </div>
 @else

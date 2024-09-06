@@ -41,7 +41,8 @@
             if (textView && editView && editButton) {
                 textView.toggle();
                 editView.toggle();
-                editButton.text(shouldEdit[rowIndex] ? 'Save' : 'Edit');
+                // editButton.text(shouldEdit[rowIndex] ? 'Save' : 'Edit');
+                editButton.toggle();
             }
         }
 
@@ -61,7 +62,6 @@
             $(element).addClass('active');
         }
 
-        // $(document).ready(function() {
         appendHTML("{{ route('user.profile.personal') }}");
 
         $('#personal').click(function(e) {
@@ -72,8 +72,7 @@
             active($(this));
             appendHTML("{{ route('user.profile.education') }}");
         });
-        // });
     </script>
 
-    @include('components.front.profile.js.education')
+    @include('components.front.profile.js.education_script')
 @endsection

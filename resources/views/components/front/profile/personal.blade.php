@@ -1,5 +1,3 @@
-{{-- @extends("front.pages.profile.index")
-@section('information') --}}
 @if ($user)
     @php
         $rows = $user->count();
@@ -9,7 +7,13 @@
 
         @php
             $userData = Arr::only($user->getAttributes(), ['name', 'email']);
-            $personalInfo = Arr::except($user->personalInfo->getAttributes(), ['user_id', 'image', 'id', 'created_at', 'updated_at']);
+            $personalInfo = Arr::except($user->personalInfo->getAttributes(), [
+                'user_id',
+                'image',
+                'id',
+                'created_at',
+                'updated_at',
+            ]);
         @endphp
         <div class="card-body">
             <div class="row mb-4" id="textView">
@@ -26,7 +30,8 @@
                     <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" />
                 @endforeach
                 @foreach ($personalInfo as $key => $data)
-                    <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" :options="$genders" />
+                    <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data"
+                        :label="$labels[$key]" :options="$genders" />
                 @endforeach
                 <x-save_close_buttons />
             </form>
@@ -38,4 +43,3 @@
     @endphp
     <x-front.no_data_alert module="personal" />
 @endif
-{{-- @endsection --}}

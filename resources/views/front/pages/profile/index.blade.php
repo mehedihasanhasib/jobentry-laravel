@@ -11,6 +11,10 @@
         .links:hover {
             background-color: rgb(240, 240, 240)
         }
+
+        #closeButton:hover{
+            color: white;
+        }
     </style>
 @endsection
 @section('content')
@@ -20,7 +24,6 @@
             @include('components.front.profile.profile_sidebar')
 
             <div class="col-md-9 mt-xsm-3" id="informationSection">
-                {{-- @yield("information") --}}
             </div>
         </div>
     </div>
@@ -36,12 +39,11 @@
             shouldEdit[rowIndex] = !shouldEdit[rowIndex];
             const textView = $(`#${text}`);
             const editView = $(`#${edit}`);
-            const editButton = $(`#${id}`).find('span');
+            const editButton = $(`#${id}`);
 
             if (textView && editView && editButton) {
                 textView.toggle();
                 editView.toggle();
-                // editButton.text(shouldEdit[rowIndex] ? 'Save' : 'Edit');
                 editButton.toggle();
             }
         }
@@ -75,4 +77,5 @@
     </script>
 
     @include('components.front.profile.js.education_script')
+    @include('components.front.profile.js.personal_script')
 @endsection

@@ -3,7 +3,7 @@
     $fields = ['degree', 'exam', 'institute', 'passing_year', 'group', 'cgpa', 'scale'];
     $components = [];
     foreach ($fields as $key => $field) {
-        $component = view('components.inputs.edit', [
+        $component = view('components.edit', [
             'id' => 1,
             'name' => $field,
             'type' => $types[$field],

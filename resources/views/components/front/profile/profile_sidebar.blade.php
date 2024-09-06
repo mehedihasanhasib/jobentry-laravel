@@ -1,4 +1,4 @@
-<div class="col-md-3 bg-white p-4 shadow-sm rounded" style="min-height: 50vh">
+<div class="col-md-3 bg-white p-4 shadow-sm rounded" style="min-height: 35vh">
     <ul class="list-group list-group-flush">
         @php
             $links = ['Personal Information', 'Education'];

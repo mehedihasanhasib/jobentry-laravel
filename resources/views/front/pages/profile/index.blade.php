@@ -2,6 +2,17 @@
 @section('title')
     Profile
 @endsection
+@section('css')
+    <style>
+        .links {
+            cursor: pointer;
+        }
+
+        .links:hover {
+            background-color: rgb(240, 240, 240)
+        }
+    </style>
+@endsection
 @section('content')
     @include('components.front.common.header', ['heading' => 'Profile'])
     <div class="container-fluid p-4 wow fadeIn" style="background-color: #f8f9fa">
@@ -34,7 +45,6 @@
             }
         }
 
-        //personal
         function appendHTML(route) {
             $.get(route, function(data) {
                 rows = data.rows;
@@ -44,16 +54,26 @@
             });
         }
 
-        $(document).ready(function() {
-            appendHTML("{{ route('user.profile.personal') }}");
+        function active(element) {
+            $.each($('.links'), function(indexInArray, valueOfElement) {
+                $(valueOfElement).removeClass('active');
+            });
+            $(element).addClass('active');
+        }
 
-            $('#personal').click(function (e) {
-                appendHTML("{{ route('user.profile.personal') }}");
-            });
-            $('#education').click(function (e) {
-                appendHTML("{{ route('user.profile.education') }}");
-            });
+        // $(document).ready(function() {
+        appendHTML("{{ route('user.profile.personal') }}");
+
+        $('#personal').click(function(e) {
+            active($(this));
+            appendHTML("{{ route('user.profile.personal') }}");
         });
+        $('#education').click(function(e) {
+            active($(this));
+            appendHTML("{{ route('user.profile.education') }}");
+        });
+        // });
     </script>
-    @yield('profilescript')
+
+    @include('components.front.profile.js.education')
 @endsection

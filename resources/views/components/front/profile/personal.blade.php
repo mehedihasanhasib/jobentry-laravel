@@ -4,7 +4,7 @@
     @php
         $rows = $user->count();
     @endphp
-    <div class="card shadow-sm rounded border-0 wow fadeIn">
+    <div class="card shadow-sm rounded border-0">
         <x-front.profile.card_header id="editButton" heading="Personal Information" click="editInput('textView', 'editView', 'editButton')" />
 
         @php

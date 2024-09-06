@@ -73,7 +73,7 @@ class RegisteredUserController extends Controller
             // return redirect(route('dashboard', absolute: false));
             return response()->json([
                 'success' => true,
-                'url' => route('user.profile.personal')
+                'url' => route('profile')
             ]);
         } catch (\Throwable $th) {
             Log::error($th->getMessage());

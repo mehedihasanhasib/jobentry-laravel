@@ -12,13 +12,11 @@ use App\Models\Front\EducationInformation;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function index()
     {
         return view('front.pages.profile.index');
     }
+
     public function personal_information(Request $request)
     {
         $table = 'personal_informations';
@@ -27,11 +25,15 @@ class ProfileController extends Controller
         $genders = $this->getEnumValues($table, $column);
         $user = User::with('personalInfo')->find(Auth::user()->id);
 
-        // return view('front.pages.profile.personal', ['user' => $user, 'genders' => $genders]);
         return response()->json([
             'view' => view('components.front.profile.personal', ['user' => $user, 'genders' => $genders])->render(),
             'rows' =>  $user->count()
         ]);
+    }
+
+    public function personal_information_update(Request $request)
+    {
+        dd($request->all());
     }
 
     public function education_information(Request $request)

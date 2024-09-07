@@ -5,4 +5,18 @@
         $('#textView').toggle();
         $('#editButton').toggle();
     });
+
+    informationSection.on('click', '#saveButton', function(e) {
+        e.preventDefault();
+        const form = $(this).closest('form')[0];
+        const formData = new FormData(form);
+        const url = $(form).attr('action');
+        submitForm({type:"post", url, formData})
+    });
+
+    // $('#editView').submit(function (e) { 
+    //     e.preventDefault();
+    //     const formData = new FormData(this);
+        
+    // });
 </script>

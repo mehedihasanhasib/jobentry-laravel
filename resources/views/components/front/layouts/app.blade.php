@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    
+
     @yield('css')
     <link href="{{ asset('logo.svg') }}" rel="icon">
 
@@ -19,18 +19,47 @@
     <div class="container-xxl bg-white p-0">
         <x-front.common.loader />
         <x-front.common.navbar />
-       
+
 
         @yield('content')
 
         <x-front.common.footer />
-        
+
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
 
     <x-front.common.js_links />
-
+    <script>
+        function submitForm({
+            type,
+            url,
+            formData
+        }) {
+            $.ajax({
+                type: type,
+                url: url,
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        window.location.href = response.url;
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        const errors = xhr.responseJSON.errors;
+                        $(`.errors`).text('');
+                        $.each(errors, function(key, value) {
+                            $(`.${key}`).text(value[0]);
+                        });
+                    }
+                }
+            });
+        }
+    </script>
     @yield('script')
 </body>
 

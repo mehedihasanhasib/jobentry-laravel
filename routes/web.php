@@ -21,12 +21,9 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::prefix('/profile')->group(function(){
         Route::name('user.profile.')->group(function(){
             Route::get('/personal', [ProfileController::class, 'personal_information'])->name('personal');
+            Route::post('/personal/update', [ProfileController::class, 'personal_information_update'])->name('personal.update');
             Route::get('/education', [ProfileController::class, 'education_information'])->name('education');
         });
-    });
-    
-    Route::get('/test', function(){
-        return view('welcome');
     });
 });
 

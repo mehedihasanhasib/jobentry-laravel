@@ -23,8 +23,7 @@
         <div class="row">
             @include('components.front.profile.profile_sidebar')
 
-            <div class="col-md-9 mt-xsm-3" id="informationSection">
-            </div>
+            <div class="col-md-9 mt-xsm-3" id="informationSection"></div>
         </div>
     </div>
 @endsection

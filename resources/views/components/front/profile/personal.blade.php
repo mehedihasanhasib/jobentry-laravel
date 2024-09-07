@@ -25,13 +25,13 @@
                 @endforeach
             </div>
 
-            <form class="row mb-4" id="editView" style="display: none">
+            <form action="{{route('user.profile.personal.update')}}" method="POST" class="row mb-4" id="editView" style="display: none">
+                @csrf
                 @foreach ($userData as $key => $data)
                     <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" />
                 @endforeach
                 @foreach ($personalInfo as $key => $data)
-                    <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data"
-                        :label="$labels[$key]" :options="$genders" />
+                    <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" :options="$genders" />
                 @endforeach
                 <x-save_close_buttons />
             </form>

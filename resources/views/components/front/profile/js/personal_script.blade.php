@@ -13,10 +13,4 @@
         const url = $(form).attr('action');
         submitForm({type:"post", url, formData})
     });
-
-    // $('#editView').submit(function (e) { 
-    //     e.preventDefault();
-    //     const formData = new FormData(this);
-        
-    // });
 </script>

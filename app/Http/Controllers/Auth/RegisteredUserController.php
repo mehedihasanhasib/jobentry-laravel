@@ -48,7 +48,6 @@ class RegisteredUserController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'success' => false,
                 'errors' => $validator->messages(),
             ], 422);
         }

@@ -11,4 +11,5 @@
             <input class="form-control" id="{{ $id }}" name="{{ $name }}" type="{{ $type }}" value="{{ $value }}">
         @endif
     </div>
+    <span class="{{ $name }} text-danger errors"></span>
 </div>

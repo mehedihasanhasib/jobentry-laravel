@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Front\EducationInformation;
 
 class ProfileController extends Controller
@@ -33,7 +34,20 @@ class ProfileController extends Controller
 
     public function personal_information_update(Request $request)
     {
-        dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,'. Auth::user()->id],
+            'phone' => ['required', 'max:11'],
+            'dob' => ['nullable', 'date'],
+            // 'gender' => ['required', 'in_enum:personal_informations.gender'],
+            'father_name' => ['nullable','max:255']
+        ],[
+            'dob' => 'Date of birth should be a valid date'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->messages()], 422);
+        }
     }
 
     public function education_information(Request $request)

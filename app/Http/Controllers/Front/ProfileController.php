@@ -10,21 +10,23 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Front\EducationInformation;
+use App\Models\Front\PersonalInformation;
 
 class ProfileController extends Controller
 {
+    public $user_id;
+    public function __construct(){
+        $this->user_id = Auth::user()->id;
+    }
     public function index()
     {
         return view('front.pages.profile.index');
     }
 
-    public function personal_information(Request $request)
+    public function personal_information()
     {
-        $table = 'personal_informations';
-        $column = 'gender';
-
-        $genders = $this->getEnumValues($table, $column);
-        $user = User::with('personalInfo')->find(Auth::user()->id);
+        $genders = $this->getEnumValues();
+        $user = User::with('personalInfo')->find($this->user_id);
 
         return response()->json([
             'view' => view('components.front.profile.personal', ['user' => $user, 'genders' => $genders])->render(),
@@ -36,26 +38,30 @@ class ProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,'. Auth::user()->id],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
             'phone' => ['required', 'max:11'],
-            'dob' => ['nullable', 'date'],
-            // 'gender' => ['required', 'in_enum:personal_informations.gender'],
-            'father_name' => ['nullable','max:255']
-        ],[
+            'dob' => ['required', 'date'],
+            'father_name' => ['nullable', 'max:255']
+        ], [
             'dob' => 'Date of birth should be a valid date'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->messages()], 422);
         }
+
+        try {
+            PersonalInformation::where('user_id', $this->user_id)->update($request->except(['name', 'email', '_token']));
+            User::where('id', $this->user_id)->update($request->only(['name', 'email']));
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
     }
 
     public function education_information(Request $request)
     {
         $educations = EducationInformation::where('user_id', 1)->get();
-        // return view('front.pages.profile.education', [
-        //     'educations' => $educations,
-        // ]);
         return response()->json([
             'view' => view('components.front.profile.education', ['educations' => $educations])->render(),
             'rows' =>  $educations->count()
@@ -91,8 +97,10 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    function getEnumValues($table, $column)
+    function getEnumValues()
     {
+        $table = 'personal_informations';
+        $column = 'gender';
         // Get the column's details using a direct query string
         $type = DB::select("SHOW COLUMNS FROM {$table} WHERE Field = '{$column}'")[0]->Type;
 

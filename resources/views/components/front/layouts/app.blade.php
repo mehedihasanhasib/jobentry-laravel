@@ -31,11 +31,7 @@
 
     <x-front.common.js_links />
     <script>
-        function submitForm({
-            type,
-            url,
-            formData
-        }) {
+        function submitForm({type, url, formData, successCallback}) {
             $.ajax({
                 type: type,
                 url: url,
@@ -45,7 +41,7 @@
                 contentType: false,
                 success: function(response) {
                     if (response.success) {
-                        window.location.href = response.url;
+                        successCallback(response)
                     }
                 },
                 error: function(xhr) {

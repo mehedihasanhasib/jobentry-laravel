@@ -11,6 +11,9 @@
         const form = $(this).closest('form')[0];
         const formData = new FormData(form);
         const url = $(form).attr('action');
-        submitForm({type:"post", url, formData})
+        function successCallback(response){
+            appendHTML("{{ route('user.profile.personal') }}");
+        }
+        submitForm({type:"post", url, formData, successCallback})
     });
 </script>

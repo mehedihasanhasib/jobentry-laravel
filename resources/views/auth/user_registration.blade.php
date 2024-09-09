@@ -97,7 +97,11 @@
         $('#registrationForm').submit(function(e) {
             e.preventDefault();
             const formData = new FormData(this)
-            submitForm({type:"post", url:"/register", formData})
+            function successCallback(response){
+                window.location.href = response.url;
+                // console.log("hello")
+            }
+            submitForm({type:"post", url:"/register", formData, successCallback})
         });
     </script>
 @endsection

@@ -32,6 +32,7 @@
     <x-front.common.js_links />
     <script>
         function submitForm({type, url, formData, successCallback}) {
+            formData.append("_token", "{{ csrf_token() }}");
             $.ajax({
                 type: type,
                 url: url,
@@ -42,6 +43,8 @@
                 success: function(response) {
                     if (response.success) {
                         successCallback(response)
+                    } else{
+                        console.log(response)
                     }
                 },
                 error: function(xhr) {

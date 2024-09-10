@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EducationUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +16,8 @@ use App\Models\Front\PersonalInformation;
 class ProfileController extends Controller
 {
     public $user_id;
-    public function __construct(){
+    public function __construct()
+    {
         $this->user_id = Auth::user()->id;
     }
     public function index()
@@ -36,14 +38,16 @@ class ProfileController extends Controller
 
     public function personal_information_update(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
-            'phone' => ['required', 'max:11'],
+            'phone' => ['required', 'max:11', 'numeric'],
             'dob' => ['required', 'date'],
             'father_name' => ['nullable', 'max:255']
         ], [
-            'dob' => 'Date of birth should be a valid date'
+            'dob' => 'Date of birth should be a valid date',
+            'phone' => 'Phone number should be 11 digits',
         ]);
 
         if ($validator->fails()) {
@@ -55,17 +59,35 @@ class ProfileController extends Controller
             User::where('id', $this->user_id)->update($request->only(['name', 'email']));
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            return response()->json([
+                'success' => false,
+                'errors' => $th->getMessage()
+            ]);
         }
     }
 
-    public function education_information(Request $request)
+    public function education_information()
     {
         $educations = EducationInformation::where('user_id', 1)->get();
         return response()->json([
             'view' => view('components.front.profile.education', ['educations' => $educations])->render(),
             'rows' =>  $educations->count()
         ]);
+    }
+
+    public function education_information_update(EducationUpdateRequest $request)
+    {
+        $validatedData = $request->validated();
+        $validatedData['user_id'] = $this->user_id;
+        try {
+            EducationInformation::where('user_id', $this->user_id)->updateOrCreate($validatedData);
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'errors' => $th->getMessage()
+            ]);
+        }
     }
 
     /**

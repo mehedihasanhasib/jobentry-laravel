@@ -23,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
             Route::get('/personal', [ProfileController::class, 'personal_information'])->name('personal');
             Route::post('/personal/update', [ProfileController::class, 'personal_information_update'])->name('personal.update');
             Route::get('/education', [ProfileController::class, 'education_information'])->name('education');
+            Route::post('/education/update', [ProfileController::class, 'education_information_update'])->name('education.update');
         });
     });
 });

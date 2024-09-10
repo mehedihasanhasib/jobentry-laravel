@@ -3,7 +3,7 @@
     $components = [];
     foreach ($fields as $key => $field) {
         $component = view('components.edit', [
-            'id' => 1,
+            'id' => $field,
             'name' => $field,
             'type' => $types[$field],
             'value' => null,
@@ -15,17 +15,40 @@
 @endphp
 
 <script>
-    const fields = @json($fields);
-    let view = @json($components).join('');
+    // const fields = @json($fields);
+    const view = @json($components).join('');
 
     informationSection.on('click', '#addEducation', function(e) {
-        view = `<div class="card shadow-sm rounded border-0">
-                    <div class="card-body">
-                        <div class="row mb-4">
-                            ${view}
-                        </div>
-                    </div>
-                </div>`
-        informationSection.html(view)
+        const view1 =  `<div class="card shadow-sm rounded border-0">
+                            <div class="card-body">
+                                <form action="{{route('user.profile.education.update')}}" class="row mb-4">
+                                    ${view}
+                                    <x-save_close_buttons closeId="educationCloseButton" saveId="educationSaveButton" />
+                                </form>
+                            </div>
+                        </div>`
+        informationSection.html('');
+        informationSection.html(view1)
     });
+
+    informationSection.on('click', '#educationCloseButton', function(e) {
+        e.preventDefault();
+        const view2 = `<div class="card shadow-sm rounded border-0 d-flex align-items-center">
+                        <x-front.no_data_alert module="education" class="mt-2" />
+                        <x-front.add_button id="addEducation" module="Education" class="mb-2" />
+                       </div>`;
+        informationSection.html('');
+        informationSection.html(view2);
+    });
+
+    informationSection.on('click', '#educationSaveButton', function(e){
+        e.preventDefault();
+        const form = $(this).closest('form')[0];
+        const formData = new FormData(form);
+        const url = $(form).attr('action');
+        function successCallback(){
+            appendHTML("{{ route('user.profile.education') }}");
+        }
+        submitForm({type:"post", url, formData, successCallback})
+    })
 </script>

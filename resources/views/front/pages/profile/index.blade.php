@@ -12,13 +12,13 @@
             background-color: rgb(240, 240, 240)
         }
 
-        #closeButton:hover{
-            color: white;
+        .closeButton:hover{
+            color: white !important;
         }
     </style>
 @endsection
 @section('content')
-    @include('components.front.common.header', ['heading' => 'Profile'])
+    {{-- @include('components.front.common.header', ['heading' => 'Profile']) --}}
     <div class="container-fluid p-4 wow fadeIn" style="background-color: #f8f9fa">
         <div class="row">
             @include('components.front.profile.profile_sidebar')

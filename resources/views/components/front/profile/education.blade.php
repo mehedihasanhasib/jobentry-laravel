@@ -9,7 +9,6 @@
     </div>
 @else
     @foreach ($educations as $key => $education)
-        {{-- ids for each academy section --}}
         @php
             $textViewId = 'textView' . $key;
             $editViewId = 'editView' . $key;
@@ -17,7 +16,7 @@
         @endphp
 
         <div class="card shadow-sm rounded border-0"> {{-- academy section --}}
-            <x-front.profile.card_header id="editButton" heading="Personal Information" click="editInput('{{ $textViewId }}', '{{ $editViewId }}', 'editButton', '{{ $key }}')" />
+            <x-front.profile.card_header id="editButton" heading="Academic {{$key+1}}" click="editInput('{{ $textViewId }}', '{{ $editViewId }}', 'editButton', '{{ $key }}')" />
 
             <div class="card-body">
                 <div class="row mb-4" id="{{ $textViewId }}"> {{-- show data --}}
@@ -30,10 +29,6 @@
                     @foreach ($educationData as $key => $data)
                         <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" />
                     @endforeach
-                    <div>
-                        <button>Close</button>
-                        <button>Save</button>
-                    </div>
                 </div>
             </div>
         </div>

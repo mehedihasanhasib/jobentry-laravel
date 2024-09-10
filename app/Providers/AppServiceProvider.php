@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
             "degree" => "Degree",
             "exam" => "Exam",
             "institute" => "Institute",
-            "passing_year" => "Year",
+            "passing_year" => "Passing Year",
             "group" => "Groub/Subject",
             "cgpa" => "CGPA",
             "scale" => "Scale",

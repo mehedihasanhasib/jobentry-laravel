@@ -15,40 +15,45 @@
 @endphp
 
 <script>
-    // const fields = @json($fields);
     const view = @json($components).join('');
+    const view1 = `<div class="card shadow-sm rounded border-0">
+                        <div class="card-body">
+                            <form action="{{ route('user.profile.education.update') }}" class="row mb-4">
+                                ${view}
+                                <x-save_close_buttons closeId="educationCloseButton" saveId="educationSaveButton" />
+                            </form>
+                        </div>
+                    </div>`
+    const view2 = `<div class="card shadow-sm rounded border-0 d-flex align-items-center">
+                    <x-front.no_data_alert module="education" class="mt-2" />
+                    <x-front.add_button id="addEducation" module="Education" class="mb-2" />
+                   </div>`;
 
     informationSection.on('click', '#addEducation', function(e) {
-        const view1 =  `<div class="card shadow-sm rounded border-0">
-                            <div class="card-body">
-                                <form action="{{route('user.profile.education.update')}}" class="row mb-4">
-                                    ${view}
-                                    <x-save_close_buttons closeId="educationCloseButton" saveId="educationSaveButton" />
-                                </form>
-                            </div>
-                        </div>`
         informationSection.html('');
         informationSection.html(view1)
     });
 
     informationSection.on('click', '#educationCloseButton', function(e) {
         e.preventDefault();
-        const view2 = `<div class="card shadow-sm rounded border-0 d-flex align-items-center">
-                        <x-front.no_data_alert module="education" class="mt-2" />
-                        <x-front.add_button id="addEducation" module="Education" class="mb-2" />
-                       </div>`;
         informationSection.html('');
         informationSection.html(view2);
     });
 
-    informationSection.on('click', '#educationSaveButton', function(e){
+    informationSection.on('click', '#educationSaveButton', function(e) {
         e.preventDefault();
         const form = $(this).closest('form')[0];
         const formData = new FormData(form);
         const url = $(form).attr('action');
-        function successCallback(){
+
+        function successCallback() {
             appendHTML("{{ route('user.profile.education') }}");
         }
-        submitForm({type:"post", url, formData, successCallback})
+        submitForm({
+            type: "post",
+            url,
+            formData,
+            successCallback
+        })
     })
 </script>

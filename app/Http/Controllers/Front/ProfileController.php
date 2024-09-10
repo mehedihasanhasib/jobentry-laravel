@@ -31,8 +31,7 @@ class ProfileController extends Controller
         $user = User::with('personalInfo')->find($this->user_id);
 
         return response()->json([
-            'view' => view('components.front.profile.personal', ['user' => $user, 'genders' => $genders])->render(),
-            'rows' =>  $user->count()
+            'view' => view('components.front.profile.personal', ['user' => $user, 'genders' => $genders])->render()
         ]);
     }
 
@@ -70,8 +69,7 @@ class ProfileController extends Controller
     {
         $educations = EducationInformation::where('user_id', 1)->get();
         return response()->json([
-            'view' => view('components.front.profile.education', ['educations' => $educations])->render(),
-            'rows' =>  $educations->count()
+            'view' => view('components.front.profile.education', ['educations' => $educations])->render()
         ]);
     }
 

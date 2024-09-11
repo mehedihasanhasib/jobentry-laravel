@@ -12,7 +12,7 @@
             background-color: rgb(240, 240, 240)
         }
 
-        .closeButton:hover{
+        .closeButton:hover {
             color: white !important;
         }
     </style>
@@ -26,6 +26,9 @@
             <div class="col-md-9 mt-xsm-3" id="informationSection"></div>
         </div>
     </div>
+    <form id="logout-form" action="{{ route('logout') }}" method="post">
+        @csrf
+    </form>
 @endsection
 
 @section('script')
@@ -34,7 +37,10 @@
         let rows;
         let shouldEdit;
 
-        function editInput(text, edit, id, rowIndex = 0) {
+        function editInput(text, edit, id, rowIndex = 0, event = null) {
+            if (event) {
+                event.preventDefault();
+            }
             shouldEdit[rowIndex] = !shouldEdit[rowIndex];
             const textView = $(`#${text}`);
             const editView = $(`#${edit}`);
@@ -72,6 +78,9 @@
         $('#education').click(function(e) {
             active($(this));
             appendHTML("{{ route('user.profile.education') }}");
+        });
+        $('#logout').click(function(e) {
+            $('#logout-form').submit();
         });
     </script>
 

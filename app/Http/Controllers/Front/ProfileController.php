@@ -31,7 +31,8 @@ class ProfileController extends Controller
         $user = User::with('personalInfo')->find($this->user_id);
 
         return response()->json([
-            'view' => view('components.front.profile.personal', ['user' => $user, 'genders' => $genders])->render()
+            'view' => view('components.front.profile.personal', ['user' => $user, 'genders' => $genders])->render(),
+            'rows' => $user->count()
         ]);
     }
 
@@ -41,12 +42,12 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
-            'phone' => ['required', 'max:11', 'numeric'],
+            'phone' => ['required', 'digits:11', 'numeric'],
             'dob' => ['required', 'date'],
             'father_name' => ['nullable', 'max:255']
         ], [
             'dob' => 'Date of birth should be a valid date',
-            'phone' => 'Phone number should be 11 digits',
+            'phone.digits' => 'Phone number should be 11 digits',
         ]);
 
         if ($validator->fails()) {
@@ -69,7 +70,8 @@ class ProfileController extends Controller
     {
         $educations = EducationInformation::where('user_id', 1)->get();
         return response()->json([
-            'view' => view('components.front.profile.education', ['educations' => $educations])->render()
+            'view' => view('components.front.profile.education', ['educations' => $educations])->render(),
+            'rows' => $educations->count()
         ]);
     }
 
@@ -78,7 +80,7 @@ class ProfileController extends Controller
         $validatedData = $request->validated();
         $validatedData['user_id'] = $this->user_id;
         try {
-            EducationInformation::where('user_id', $this->user_id)->updateOrCreate($validatedData);
+            EducationInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->education_id], $validatedData);
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
             return response()->json([

@@ -3,37 +3,36 @@
     // $fields = ['degree', 'exam', 'institute', 'passing_year', 'group', 'cgpa', 'scale'];
 @endphp
 @if ($rows < 1)
-    <div class="card shadow-sm rounded border-0 d-flex align-items-center"> {{-- academy section --}}
-        <x-front.no_data_alert class="mt-2" module="education" />
+    {{-- <div class="card shadow-sm rounded border-0 d-flex align-items-center" id="noEducationSection"> --}}
         <x-front.add_button class="mb-2" id="addEducation" module="Education" />
-    </div>
+    {{-- </div> --}}
 @else
     @foreach ($educations as $key => $education)
         @php
             $textViewId = 'textView' . $key;
             $editViewId = 'editView' . $key;
+            $editButton = 'editButton' . $key;
             $educationData = Arr::except($education->getAttributes(), ['user_id', 'id', 'created_at', 'updated_at']);
         @endphp
 
         <div class="card shadow-sm rounded border-0"> {{-- academy section --}}
-            <x-front.profile.card_header id="editButton" heading="Academic {{ $key + 1 }}" click="editInput('{{ $textViewId }}', '{{ $editViewId }}', 'editButton', '{{ $key }}')" />
-
+            <x-front.profile.card_header :id="$editButton" heading="{{ $education->degree }}" click="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}')" />
             <div class="card-body">
                 <div class="row mb-4" id="{{ $textViewId }}"> {{-- show data --}}
-                    @foreach ($educationData as $key => $data)
-                        <x-text :value="$data" :label="$labels[$key]" />
+                    @foreach ($educationData as $key1 => $data)
+                        <x-text :value="$data" :label="$labels[$key1]" />
                     @endforeach
-                    <x-front.add_button id="addEducation" module="Education" />
                 </div>
 
-                <div class="row mb-4" id="{{ $editViewId }}" style="display: none"> {{-- edit data --}}
-                    @foreach ($educationData as $key => $data)
-                        <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" />
+                <form action="{{ route('user.profile.education.update') }}" class="row mb-4" id="{{ $editViewId }}" style="display: none"> {{-- edit data --}}
+                    <input type="hidden" name="education_id" value="{{ $education->id }}">
+                    @foreach ($educationData as $key2 => $data)
+                        <x-edit :id="$key2" :name="$key2" :type="$types[$key2]" :value="$data" :label="$labels[$key2]" />
                     @endforeach
-
-                    <x-save_close_buttons closeId="educationUpdateCloseButton" saveId="educationUpdateSaveButton" />
-                </div>
+                    <x-save_close_buttons closeId="educationUpdateCloseButton" click="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}', event)" />
+                </form>
             </div>
         </div>
     @endforeach
+    <x-front.add_button id="addEducation" module="Education" />
 @endif

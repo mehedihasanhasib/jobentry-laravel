@@ -33,6 +33,7 @@
     <script>
         function submitForm({type, url, formData, successCallback}) {
             formData.append("_token", "{{ csrf_token() }}");
+            spinner.toggleClass('show')
             $.ajax({
                 type: type,
                 url: url,
@@ -55,6 +56,7 @@
                             $(`.${key}`).text(value[0]);
                         });
                     }
+                    spinner.toggleClass('show')
                 }
             });
         }

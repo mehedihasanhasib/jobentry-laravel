@@ -34,6 +34,7 @@
 @section('script')
     <script>
         const informationSection = $('#informationSection');
+        const spinner = $('#spinner');
         let rows;
         let shouldEdit;
 
@@ -59,6 +60,7 @@
                 shouldEdit = Array(rows).fill(false);
                 informationSection.html('');
                 informationSection.html(data.view);
+                spinner.removeClass('show');
             });
         }
 
@@ -74,10 +76,12 @@
         $('#personal').click(function(e) {
             active($(this));
             appendHTML("{{ route('user.profile.personal') }}");
+            spinner.toggleClass('show');
         });
         $('#education').click(function(e) {
             active($(this));
             appendHTML("{{ route('user.profile.education') }}");
+            spinner.toggleClass('show');
         });
         $('#logout').click(function(e) {
             $('#logout-form').submit();

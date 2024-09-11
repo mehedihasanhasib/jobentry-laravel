@@ -34,8 +34,7 @@
 
     informationSection.on('click', '#educationCloseButton', function(e) {
         e.preventDefault();
-        // informationSection.html('');
-        // informationSection.html(view2);
+        spinner.toggleClass('show')
         appendHTML("{{ route('user.profile.education') }}");
     });
 

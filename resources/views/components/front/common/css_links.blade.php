@@ -16,3 +16,6 @@
 
 <!-- Template Stylesheet -->
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+<!-- Sweet Alert -->
+<link href="{{ asset('css/sweetAlert.css') }}" rel="stylesheet">

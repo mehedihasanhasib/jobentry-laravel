@@ -10,3 +10,6 @@
 
  <!-- Template Javascript -->
  <script src="{{ asset('assets/js/main.js') }}"></script>
+
+  <!-- SweetAlert Javascript -->
+<script src="{{ asset('js/sweetalert2.js') }}"></script>

@@ -12,7 +12,6 @@
     <link href="{{ asset('logo.svg') }}" rel="icon">
 
     <x-front.common.css_links />
-
 </head>
 
 <body>
@@ -30,8 +29,14 @@
 
 
     <x-front.common.js_links />
+    <script src="{{ asset('js/alerts.js') }}"></script>
     <script>
-        function submitForm({type, url, formData, successCallback}) {
+        function submitForm({
+            type,
+            url,
+            formData,
+            successCallback
+        }) {
             formData.append("_token", "{{ csrf_token() }}");
             spinner.toggleClass('show')
             $.ajax({
@@ -44,7 +49,7 @@
                 success: function(response) {
                     if (response.success) {
                         successCallback(response)
-                    } else{
+                    } else {
                         console.log(response)
                     }
                 },

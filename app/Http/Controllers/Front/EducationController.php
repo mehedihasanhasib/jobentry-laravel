@@ -20,12 +20,12 @@ class EducationController extends Controller
         $educations = EducationInformation::where('user_id', 1)->get();
         return response()->json([
             'view' => view('components.front.profile.informations', [
-                'informations' => $educations,
-                'module' => 'Education',
-                'callBackRoute' =>  route('user.profile.education'),
-                'submitRoute' => route('user.profile.education.update'),
+                'informations' => $educations, // all information
+                'module' => 'Education', // to identify which module
+                'callBackRoute' =>  route('user.profile.education'), // route for redirect if click close button or after submitting form
+                'submitRoute' => route('user.profile.education.update'), // route form submitting informations form
             ])->render(),
-            'rows' => $educations->count()
+            'rows' => $educations->count() // important for showing edit and text view if multiple educations or training and others
         ]);
     }
 

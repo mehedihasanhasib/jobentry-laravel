@@ -3,6 +3,7 @@
     $rows = $informations->count();
 @endphp
 @if ($rows < 1)
+    {{-- This is for add info. If no data, add button is in index blade. Bottom one is same --}}
     <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
 @else
     @foreach ($informations as $key => $information)

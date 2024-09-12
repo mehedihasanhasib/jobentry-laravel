@@ -1,4 +1,5 @@
 @php
+    // add database fields name for new module
     $fields = [
         'education' => ['degree', 'exam', 'institute', 'passing_year', 'group', 'cgpa', 'scale'],
         'training' => ['title', 'institute', 'duration', 'start_date', 'topic', 'location'],
@@ -20,6 +21,8 @@
 
         $components[$key] = $array;
     }
+
+    // add index function route for new module
     $routes = [
         'personal' => route('user.profile.personal'),
         'education' => route('user.profile.education'),

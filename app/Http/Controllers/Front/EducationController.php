@@ -20,7 +20,10 @@ class EducationController extends Controller
     {
         $educations = EducationInformation::where('user_id', 1)->get();
         return response()->json([
-            'view' => view('components.front.profile.informations', ['informations' => $educations])->render(),
+            'view' => view('components.front.profile.informations', [
+                'informations' => $educations,
+                'module' => 'Education'
+            ])->render(),
             'rows' => $educations->count()
         ]);
     }

@@ -6,7 +6,7 @@ use App\Http\Controllers\Front\JobsController;
 use App\Http\Controllers\Front\AboutUsController;
 use App\Http\Controllers\Front\EducationController;
 use App\Http\Controllers\Front\ProfileController;
-
+use App\Http\Controllers\Front\TrainingController;
 
 require __DIR__ . '/recruiter.php';
 require __DIR__ . '/admin.php';
@@ -27,7 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
             Route::get('/education', [EducationController::class, 'index'])->name('education');
             Route::post('/education/update', [EducationController::class, 'update'])->name('education.update');
 
-            
+            Route::get('/training', [TrainingController::class, 'index'])->name('training');
         });
     });
 });

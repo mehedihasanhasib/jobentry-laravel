@@ -29,6 +29,14 @@
     <form id="logout-form" action="{{ route('logout') }}" method="post">
         @csrf
     </form>
+
+    @php
+        $routes = [
+            'personal' => route('user.profile.personal'),
+            'education' => route('user.profile.education'),
+            'training' => route('user.profile.training'),
+        ];
+    @endphp
 @endsection
 
 @section('script')
@@ -37,6 +45,7 @@
         const spinner = $('#spinner');
         let rows;
         let shouldEdit;
+        let moduleRoute;
 
         function editInput(text, edit, id, rowIndex = 0, event = null) {
             if (event) {
@@ -74,20 +83,38 @@
         appendHTML("{{ route('user.profile.personal') }}");
 
         $('#personal').click(function(e) {
-            active($(this));
+            const thisLink = $(this);
+            const id = $(this).attr('id');
+            moduleRoute = routes[id];
+            active(thisLink);
             appendHTML("{{ route('user.profile.personal') }}");
             spinner.toggleClass('show');
         });
         $('#education').click(function(e) {
-            active($(this));
+            const thisLink = $(this);
+            const id = $(this).attr('id');
+            moduleRoute = routes[id];
+            console.log(moduleRoute)
+            active(thisLink);
             appendHTML("{{ route('user.profile.education') }}");
             spinner.toggleClass('show');
         });
+        $('#training').click(function(e) {
+            const thisLink = $(this);
+            const id = $(this).attr('id');
+            moduleRoute = routes[id];
+            active(thisLink);
+            appendHTML("{{ route('user.profile.training') }}");
+            spinner.toggleClass('show');
+        });
+
         $('#logout').click(function(e) {
             $('#logout-form').submit();
         });
+
+        
     </script>
 
-    @include('components.front.profile.js.education_script')
+    @include('components.front.profile.js.education_script', ['route' => $routes])
     @include('components.front.profile.js.personal_script')
 @endsection

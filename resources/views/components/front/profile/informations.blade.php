@@ -2,7 +2,7 @@
     $rows = $informations->count();
 @endphp
 @if ($rows < 1)
-        <x-front.add_button module="Education" />
+    <x-front.add_button :module="$module ?? null" />
 @else
     @foreach ($informations as $key => $information)
         @php
@@ -31,5 +31,5 @@
             </div>
         </div>
     @endforeach
-    <x-front.add_button module="Education" />
+    <x-front.add_button :module="$module ?? null" />
 @endif

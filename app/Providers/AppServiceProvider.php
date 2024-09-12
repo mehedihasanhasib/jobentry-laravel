@@ -38,6 +38,14 @@ class AppServiceProvider extends ServiceProvider
             "group" => "Groub/Subject",
             "cgpa" => "CGPA",
             "scale" => "Scale",
+
+            //training
+            "title" => "Title",
+            "institute" => "Institute",
+            "duration" => "Duration",
+            "start_date" => "Start Date",
+            "topic" => "Topic",
+            "location" => "Location"
         ];
 
         $types = [
@@ -58,6 +66,14 @@ class AppServiceProvider extends ServiceProvider
             "group" => "text",
             "cgpa" => "number",
             "scale" => "number",
+
+            //training
+            "title" => "text",
+            "institute" => "text",
+            "duration" => "text",
+            "start_date" => "date",
+            "topic" => "text",
+            "location" => "text"
         ];
 
         View::share('labels', $labels);

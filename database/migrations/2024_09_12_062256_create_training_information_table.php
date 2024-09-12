@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('training_information', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('title');
+            $table->string('institute');
+            $table->string('duration');
+            $table->date('start_date');
+            $table->string('topic');
+            $table->string('location');
             $table->timestamps();
         });
     }

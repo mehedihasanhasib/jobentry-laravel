@@ -29,14 +29,6 @@
     <form id="logout-form" action="{{ route('logout') }}" method="post">
         @csrf
     </form>
-
-    @php
-        $routes = [
-            'personal' => route('user.profile.personal'),
-            'education' => route('user.profile.education'),
-            'training' => route('user.profile.training'),
-        ];
-    @endphp
 @endsection
 
 @section('script')
@@ -115,6 +107,6 @@
         
     </script>
 
-    @include('components.front.profile.js.education_script', ['route' => $routes])
+    @include('components.front.profile.js.script')
     @include('components.front.profile.js.personal_script')
 @endsection

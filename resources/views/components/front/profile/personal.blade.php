@@ -27,7 +27,7 @@
                     <x-edit :id="$key" :name="$key" :type="$types[$key]" :value="$data" :label="$labels[$key]" :options="$genders" />
                 @endforeach
                 {{-- <x-save_close_buttons closeId="personalCloseButton" saveId="personalSaveButton" /> --}}
-                <x-save_close_buttons saveId="personalSaveButton" click="editInput('textView', 'editView', 'editButton', 0, event)" />
+                <x-save_close_buttons saveButtonClick="save(event, $(this), '{{ route('user.profile.personal') }}')" closeButtonClick="editInput('textView', 'editView', 'editButton', 0, event)" />
             </form>
         </div>
     </div>

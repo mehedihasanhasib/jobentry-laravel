@@ -22,7 +22,8 @@ class EducationController extends Controller
         return response()->json([
             'view' => view('components.front.profile.informations', [
                 'informations' => $educations,
-                'module' => 'Education'
+                'module' => 'Education',
+                'callBackRoute' =>  route('user.profile.education'),
             ])->render(),
             'rows' => $educations->count()
         ]);

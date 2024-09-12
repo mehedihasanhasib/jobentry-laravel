@@ -1,8 +1,11 @@
+{{-- this is the page for all informations, all the data is comming from controller --}}
 @php
     $rows = $informations->count();
 @endphp
 @if ($rows < 1)
-    <x-front.add_button :module="$module ?? null" />
+    
+        <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
+    
 @else
     @foreach ($informations as $key => $information)
         @php
@@ -21,7 +24,7 @@
                     @endforeach
                 </div>
 
-                <form action="{{ route('user.profile.education.update') }}" class="row mb-4" id="{{ $editViewId }}" style="display: none"> {{-- edit data --}}
+                <form action="{{ $submitRoute ?? null }}" class="row mb-4" id="{{ $editViewId }}" style="display: none"> {{-- edit data --}}
                     <input type="hidden" name="education_id" value="{{ $information->id }}">
                     @foreach ($informationData as $key2 => $data)
                         <x-edit :id="$key2" :name="$key2" :type="$types[$key2]" :value="$data" :label="$labels[$key2]" />
@@ -31,5 +34,7 @@
             </div>
         </div>
     @endforeach
-    <x-front.add_button :module="$module ?? null" />
+    
+        <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
+    
 @endif

@@ -24,6 +24,7 @@ class EducationController extends Controller
                 'informations' => $educations,
                 'module' => 'Education',
                 'callBackRoute' =>  route('user.profile.education'),
+                'submitRoute' => route('user.profile.education.update'),
             ])->render(),
             'rows' => $educations->count()
         ]);

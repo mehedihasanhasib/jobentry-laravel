@@ -1,16 +1,24 @@
 @php
-    $fields = ['degree', 'exam', 'institute', 'passing_year', 'group', 'cgpa', 'scale'];
+    $fields = [
+        'education' => ['degree', 'exam', 'institute', 'passing_year', 'group', 'cgpa', 'scale'],
+        'training' => ['title', 'institute', 'duration', 'start_date', 'topic', 'location'],
+    ];
     $components = [];
     foreach ($fields as $key => $field) {
-        $component = view('components.edit', [
-            'id' => $field,
-            'name' => $field,
-            'type' => $types[$field],
-            'value' => null,
-            'label' => $labels[$field],
-            'options' => [],
-        ])->render();
-        $components[] = $component;
+        $array = [];
+        foreach ($field as $key2 => $value) {
+            $component = view('components.edit', [
+                'id' => $value,
+                'name' => $value,
+                'type' => $types[$value],
+                'value' => null,
+                'label' => $labels[$value],
+                'options' => [],
+            ])->render();
+            $array[] = $component;
+        }
+
+        $components[$key] = $array;
     }
     $routes = [
         'personal' => route('user.profile.personal'),
@@ -20,32 +28,35 @@
 @endphp
 
 <script>
-    const fields = @json($components).join('');
+    const fields = @json($components);
     const routes = @json($routes);
 
-    function view1(moduleRoute) {
+    function view1(moduleRoute, moduleFields, submitRoute) {
         return `<div class="card shadow-sm rounded border-0" id="addEducationForm">
                     <div class="card-body">
-                        <form action="{{ route('user.profile.education.update') }}" class="row mb-4">
-                            ${fields}
-                            <x-save_close_buttons saveButtonClick="save(event, $(this), '${moduleRoute}')" closeButtonClick="close(event, '${moduleRoute}')" />
+                        <form action="${submitRoute}" class="row mb-4">
+                            ${moduleFields}
+                            <x-save_close_buttons saveButtonClick="save(event, $(this), '${moduleRoute}')" closeButtonClick="Close(event, '${moduleRoute}')" />
                         </form>
                     </div>
                 </div>`
     }
 
-    informationSection.on('click', '#addInformation', function(e) {
-        informationSection.html('');
-        informationSection.html(view1(moduleRoute))
-    });
-
-    function close(event, url) {
+    function Close(event, url) {
         event.preventDefault();
         spinner.toggleClass('show')
         appendHTML(url);
     };
-    
-    function save(event, button, callBackRoute){
+
+    function addInformation(button) {
+        const id = button.attr('id');
+        const submitRoute = button.attr('data-submitroute');
+        console.log(submitRoute)
+        informationSection.html('');
+        informationSection.html(view1(moduleRoute, fields[id].join(''), submitRoute))
+    }
+
+    function save(event, button, callBackRoute) {
         event.preventDefault();
         const form = button.closest('form')[0];
         const formData = new FormData(form);

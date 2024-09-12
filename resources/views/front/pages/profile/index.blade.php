@@ -86,7 +86,6 @@
             const thisLink = $(this);
             const id = $(this).attr('id');
             moduleRoute = routes[id];
-            console.log(moduleRoute)
             active(thisLink);
             appendHTML("{{ route('user.profile.education') }}");
             spinner.toggleClass('show');

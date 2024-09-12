@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
             Route::post('/education/update', [EducationController::class, 'update'])->name('education.update');
 
             Route::get('/training', [TrainingController::class, 'index'])->name('training');
+            Route::post('/training/update', [TrainingController::class, 'update'])->name('training.update');
         });
     });
 });

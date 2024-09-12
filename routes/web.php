@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\JobsController;
 use App\Http\Controllers\Front\AboutUsController;
+use App\Http\Controllers\Front\EducationController;
 use App\Http\Controllers\Front\ProfileController;
 
 
@@ -22,8 +23,11 @@ Route::middleware(['auth', 'verified'])->group(function(){
         Route::name('user.profile.')->group(function(){
             Route::get('/personal', [ProfileController::class, 'personal_information'])->name('personal');
             Route::post('/personal/update', [ProfileController::class, 'personal_information_update'])->name('personal.update');
-            Route::get('/education', [ProfileController::class, 'education_information'])->name('education');
-            Route::post('/education/update', [ProfileController::class, 'education_information_update'])->name('education.update');
+
+            Route::get('/education', [EducationController::class, 'index'])->name('education');
+            Route::post('/education/update', [EducationController::class, 'update'])->name('education.update');
+
+            
         });
     });
 });

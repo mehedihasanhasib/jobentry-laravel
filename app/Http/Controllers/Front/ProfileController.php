@@ -66,41 +66,6 @@ class ProfileController extends Controller
         }
     }
 
-    public function education_information()
-    {
-        $educations = EducationInformation::where('user_id', 1)->get();
-        return response()->json([
-            'view' => view('components.front.profile.education', ['educations' => $educations])->render(),
-            'rows' => $educations->count()
-        ]);
-    }
-
-    public function education_information_update(EducationUpdateRequest $request)
-    {
-        $validatedData = $request->validated();
-        $validatedData['user_id'] = $this->user_id;
-        try {
-            EducationInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->education_id], $validatedData);
-            return response()->json(['success' => true]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
-        }
-    }
-
-    /**
-     * Update the user's profile information.
-     */
-    public function update()
-    {
-        //
-    }
-
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request)
     {
         $request->validateWithBag('userDeletion', [

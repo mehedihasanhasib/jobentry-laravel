@@ -1,11 +1,4 @@
 <script>
-    informationSection.on('click', '#personalCloseButton', function(e) {
-        e.preventDefault();
-        $('#editView').toggle();
-        $('#textView').toggle();
-        $('#editButton').toggle();
-    });
-
     informationSection.on('click', '#personalSaveButton', function(e) {
         e.preventDefault();
         const form = $(this).closest('form')[0];

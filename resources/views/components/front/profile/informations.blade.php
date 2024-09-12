@@ -3,9 +3,7 @@
     $rows = $informations->count();
 @endphp
 @if ($rows < 1)
-    
-        <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
-    
+    <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
 @else
     @foreach ($informations as $key => $information)
         @php
@@ -16,7 +14,7 @@
         @endphp
 
         <div class="card shadow-sm rounded border-0"> {{-- academy section --}}
-            <x-front.profile.card_header :id="$editButton" heading="Academic {{ $key + 1 }}" click="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}')" />
+            <x-front.profile.card_header :id="$editButton" heading="{{ $module . ' ' . $key + 1 }}" click="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}')" />
             <div class="card-body">
                 <div class="row mb-4" id="{{ $textViewId }}"> {{-- show data --}}
                     @foreach ($informationData as $key1 => $data)
@@ -25,7 +23,7 @@
                 </div>
 
                 <form action="{{ $submitRoute ?? null }}" class="row mb-4" id="{{ $editViewId }}" style="display: none"> {{-- edit data --}}
-                    <input type="hidden" name="education_id" value="{{ $information->id }}">
+                    <input type="hidden" name="{{ Str::lower($module ?? '') }}_id" value="{{ $information->id }}">
                     @foreach ($informationData as $key2 => $data)
                         <x-edit :id="$key2" :name="$key2" :type="$types[$key2]" :value="$data" :label="$labels[$key2]" />
                     @endforeach
@@ -34,7 +32,5 @@
             </div>
         </div>
     @endforeach
-    
-        <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
-    
+    <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
 @endif

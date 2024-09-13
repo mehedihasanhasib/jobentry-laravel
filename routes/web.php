@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
 
             Route::get('/education', [EducationController::class, 'index'])->name('education');
             Route::post('/education/update', [EducationController::class, 'update'])->name('education.update');
+            Route::delete('education/delete', [EducationController::class, 'delete'])->name('education.delete');
 
             Route::get('/training', [TrainingController::class, 'index'])->name('training');
             Route::post('/training/update', [TrainingController::class, 'update'])->name('training.update');

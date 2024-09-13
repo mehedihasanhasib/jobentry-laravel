@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @yield('css')
     <link href="{{ asset('logo.svg') }}" rel="icon">
@@ -37,15 +38,18 @@
             formData,
             successCallback
         }) {
-            formData.append("_token", "{{ csrf_token() }}");
-            spinner.toggleClass('show')
-            $.ajax({
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            spinner.toggleClass('show');
+
+            let ajaxOptions = {
                 type: type,
                 url: url,
                 dataType: "json",
                 data: formData,
-                processData: false,
-                contentType: false,
                 success: function(response) {
                     if (response.success) {
                         successCallback(response)
@@ -63,7 +67,15 @@
                     }
                     spinner.toggleClass('show')
                 }
-            });
+            };
+
+            // Check if formData is an instance of FormData
+            if (formData instanceof FormData) {
+                ajaxOptions.processData = false;
+                ajaxOptions.contentType = false;
+            }
+
+            $.ajax(ajaxOptions);
         }
     </script>
     @yield('script')

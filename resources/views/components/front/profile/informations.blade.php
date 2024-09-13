@@ -28,7 +28,7 @@
                     @foreach ($informationData as $key2 => $data)
                         <x-edit :id="$key2" :name="$key2" :type="$types[$key2]" :value="$data" :label="$labels[$key2]" />
                     @endforeach
-                    <x-save_close_buttons saveButtonClick="save(event, $(this), '{{ $callBackRoute }}')" closeButtonClick="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}', event)" />
+                    <x-save_close_buttons saveButtonClick="save(event, $(this), '{{ $callBackRoute }}')" closeButtonClick="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}', event)" :delete="true" deleteButtonClick="deleteInfo(event, $(this), '{{ $deleteRoute }}', '{{ $callBackRoute }}')" />
                 </form>
             </div>
         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Front\EducationInformation;
@@ -24,6 +25,7 @@ class EducationController extends Controller
                 'module' => 'Education', // to identify which module
                 'callBackRoute' =>  route('user.profile.education'), // route for redirect if click close button or after submitting form
                 'submitRoute' => route('user.profile.education.update'), // route form submitting informations form
+                'deleteRoute' => route('user.profile.education.delete') // route for deleting informations
             ])->render(),
             'rows' => $educations->count() // important for showing edit and text view if multiple educations or training and others
         ]);
@@ -42,5 +44,10 @@ class EducationController extends Controller
                 'errors' => $th->getMessage()
             ]);
         }
+    }
+
+    public function delete(Request $request)
+    {
+        dd($request->all());
     }
 }

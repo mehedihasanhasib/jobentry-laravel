@@ -31,7 +31,10 @@ class ProfileController extends Controller
         $user = User::with('personalInfo')->find($this->user_id);
 
         return response()->json([
-            'view' => view('components.front.profile.personal', ['user' => $user, 'genders' => $genders])->render(),
+            'view' => view('components.front.profile.personal', [
+                'user' => $user,
+                'genders' => $genders
+            ])->render(),
             'rows' => $user->count()
         ]);
     }

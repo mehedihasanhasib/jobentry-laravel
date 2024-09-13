@@ -75,4 +75,23 @@
             successCallback
         })
     }
+
+    function deleteInfo(event, button, deleteRoute, callBackRoute) {
+        event.preventDefault();
+        const form = button.closest('form');
+        const id = $(form).find('input[type="hidden"]').val();
+        const url = deleteRoute;
+
+        function successCallback() {
+            appendHTML(callBackRoute);
+        }
+        submitForm({
+            type: "DELETE",
+            url,
+            formData: {
+                id: id
+            },
+            successCallback
+        })
+    }
 </script>

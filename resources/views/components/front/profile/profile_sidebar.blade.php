@@ -1,4 +1,4 @@
-<div class="col-md-3 bg-white p-4 shadow-sm rounded" style="min-height: 35vh">
+<div class="col-md-3 bg-white p-4 shadow-sm rounded">
     <ul class="list-group list-group-flush">
         @php
             $links = ['Personal', 'Education', 'Training', 'Employment', 'Log out']; // Add sidebar links here

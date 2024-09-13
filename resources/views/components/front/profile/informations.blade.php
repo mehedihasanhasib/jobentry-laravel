@@ -4,7 +4,9 @@
 @endphp
 @if ($rows < 1)
     {{-- This is for add info. If no data, add button is in index blade. Bottom one is same --}}
-    <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
+    <div class="card shadow-sm rounded border-0 d-flex justify-content-center align-items-center" style="min-height: 100%">
+        <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
+    </div>
 @else
     @foreach ($informations as $key => $information)
         @php

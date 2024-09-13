@@ -34,7 +34,6 @@
 @section('script')
     <script>
         const informationSection = $('#informationSection');
-        const spinner = $('#spinner');
         let rows;
         let shouldEdit;
         let moduleRoute;
@@ -56,25 +55,24 @@
         }
 
         function appendHTML(route) {
-            spinner.toggleClass('show');
+            loader.toggleClass('show');
             $.get(route, function(data) {
+                loader.removeClass('show');
                 rows = data.rows;
                 shouldEdit = Array(rows).fill(false);
                 informationSection.html('');
                 informationSection.html(data.view);
-                spinner.removeClass('show');
             });
         }
 
         function active(element) {
-            $.each($('.links'), function(indexInArray, valueOfElement) {
-                $(valueOfElement).removeClass('active');
+            $.each($('.links'), function(index, Element) {
+                $(Element).removeClass('active');
             });
             $(element).addClass('active');
         }
 
         appendHTML("{{ route('user.profile.personal') }}");
-
 
         function changeModule(clickedLink, linkRoute){
             const id = clickedLink.attr('id');

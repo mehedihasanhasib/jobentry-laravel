@@ -5,6 +5,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\JobsController;
 use App\Http\Controllers\Front\AboutUsController;
 use App\Http\Controllers\Front\EducationController;
+use App\Http\Controllers\Front\EmploymentController;
 use App\Http\Controllers\Front\ProfileController;
 use App\Http\Controllers\Front\TrainingController;
 
@@ -30,7 +31,11 @@ Route::middleware(['auth', 'verified'])->group(function(){
 
             Route::get('/training', [TrainingController::class, 'index'])->name('training');
             Route::post('/training/update', [TrainingController::class, 'update'])->name('training.update');
-            Route::delete('training/delete', [TrainingController::class, 'delete'])->name('training.delete');
+            Route::delete('/training/delete', [TrainingController::class, 'delete'])->name('training.delete');
+
+            Route::get('/employment', [EmploymentController::class, 'index'])->name('employment');
+            Route::post('/employment/update', [EmploymentController::class, 'update'])->name('employment.update');
+            Route::delete('/employment/delete', [EmploymentController::class, 'delete'])->name('employment.delete');
         });
     });
 });

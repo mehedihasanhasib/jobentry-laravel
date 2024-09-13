@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Front\EducationInformation;
+use App\Models\Front\EmploymentInformation;
 use App\Models\Front\PersonalInformation;
 use App\Models\Front\TrainingInformation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,11 +33,15 @@ class User extends Authenticatable
     }
     public function educationInfo()
     {
-        return $this->hasOne(EducationInformation::class);
+        return $this->hasMany(EducationInformation::class);
     }
     public function trainingInfo()
     {
-        return $this->hasOne(TrainingInformation::class);
+        return $this->hasMany(TrainingInformation::class);
+    }
+    public function employmentInfo()
+    {
+        return $this->hasMany(EmploymentInformation::class);
     }
 
     /**

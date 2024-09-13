@@ -9,8 +9,8 @@
                 'Personal' => route('user.profile.personal'),
                 'Education' => route('user.profile.education'),
                 'Training' => route('user.profile.training'),
-                'Employment' => null,
-                'Log out' => null
+                'Employment' => route('user.profile.employment'),
+                'Log out' => null,
             ];
         @endphp
         @foreach ($links as $key => $link)

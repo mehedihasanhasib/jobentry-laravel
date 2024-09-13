@@ -18,7 +18,7 @@ class EducationController extends Controller
     
     public function index()
     {
-        $educations = EducationInformation::where('user_id', 1)->get();
+        $educations = EducationInformation::where('user_id', $this->user_id)->get();
         return response()->json([
             'view' => view('components.front.profile.informations', [
                 'informations' => $educations, // all information
@@ -48,7 +48,6 @@ class EducationController extends Controller
 
     public function delete(Request $request)
     {
-        // dd($request->all());
         try {
             EducationInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
             return response()->json(['success' => true]);

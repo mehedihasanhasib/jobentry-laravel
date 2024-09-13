@@ -45,7 +45,15 @@ class AppServiceProvider extends ServiceProvider
             "duration" => "Duration",
             "start_date" => "Start Date",
             "topic" => "Topic",
-            "location" => "Location"
+            "location" => "Location",
+
+            // employment
+            "company_name" => "Company Name",
+            "company_location" => "Company Location",
+            "designation" => "Designation",
+            "responsibilities" => "Responsibilities",
+            "from" => "Start Date",
+            "to" => "End Date",
         ];
 
         $types = [
@@ -73,7 +81,15 @@ class AppServiceProvider extends ServiceProvider
             "duration" => "text",
             "start_date" => "date",
             "topic" => "text",
-            "location" => "text"
+            "location" => "text",
+
+            // employment
+            "company_name" => "text",
+            "company_location" => "text",
+            "designation" => "text",
+            "responsibilities" => "text",
+            "from" => "date",
+            "to" => "date",
         ];
 
         

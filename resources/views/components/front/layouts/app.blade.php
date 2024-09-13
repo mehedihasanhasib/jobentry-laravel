@@ -32,6 +32,7 @@
     <x-front.common.js_links />
     <script src="{{ asset('js/alerts.js') }}"></script>
     <script>
+        const loader = $('#spinner');
         function submitForm({
             type,
             url,
@@ -43,7 +44,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            spinner.toggleClass('show');
+            loader.toggleClass('show');
 
             let ajaxOptions = {
                 type: type,
@@ -65,7 +66,7 @@
                             $(`.${key}`).text(value[0]);
                         });
                     }
-                    spinner.toggleClass('show')
+                    loader.toggleClass('show')
                 }
             };
 

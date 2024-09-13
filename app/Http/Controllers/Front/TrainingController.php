@@ -16,7 +16,7 @@ class TrainingController extends Controller
     }
     public function index()
     {
-        $educations = TrainingInformation::where('user_id', 1)->get();
+        $educations = TrainingInformation::where('user_id', $this->user_id)->get();
         return response()->json([
             'view' => view('components.front.profile.informations', [
                 'informations' => $educations,
@@ -31,7 +31,6 @@ class TrainingController extends Controller
 
     public function update(Request $request)
     {
-        // dd($request->all());
         $data = $request->except(['_token', 'training_id']);
         $data['user_id'] = $this->user_id;
         TrainingInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->training_id], $data);

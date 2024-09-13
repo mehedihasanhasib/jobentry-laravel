@@ -3,6 +3,7 @@
     $fields = [
         'education' => ['degree', 'exam', 'institute', 'passing_year', 'group', 'cgpa', 'scale'],
         'training' => ['title', 'institute', 'duration', 'start_date', 'topic', 'location'],
+        'employment' =>  ['company_name', 'company_location', 'designation', 'responsibilities', 'from', 'to'],
     ];
     $components = [];
     foreach ($fields as $key => $field) {
@@ -27,6 +28,7 @@
         'personal' => route('user.profile.personal'),
         'education' => route('user.profile.education'),
         'training' => route('user.profile.training'),
+        'employment' => route('user.profile.employment'),
     ];
 @endphp
 
@@ -47,7 +49,6 @@
 
     function Close(event, url) {
         event.preventDefault();
-        spinner.toggleClass('show')
         appendHTML(url);
     };
 

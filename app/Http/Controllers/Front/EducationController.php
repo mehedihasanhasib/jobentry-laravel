@@ -48,6 +48,15 @@ class EducationController extends Controller
 
     public function delete(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
+        try {
+            EducationInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'errors' => $th->getMessage()
+            ]);
+        }
     }
 }

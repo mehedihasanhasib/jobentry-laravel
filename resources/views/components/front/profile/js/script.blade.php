@@ -54,7 +54,6 @@
     function addInformation(button) {
         const id = button.attr('id');
         const submitRoute = button.attr('data-submitroute');
-        console.log(submitRoute)
         informationSection.html('');
         informationSection.html(view1(moduleRoute, fields[id].join(''), submitRoute))
     }

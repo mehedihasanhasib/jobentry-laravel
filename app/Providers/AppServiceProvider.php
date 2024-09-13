@@ -76,6 +76,8 @@ class AppServiceProvider extends ServiceProvider
             "location" => "text"
         ];
 
+        
+
         View::share('labels', $labels);
         View::share('types', $types);
     }

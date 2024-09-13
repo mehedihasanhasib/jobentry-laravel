@@ -56,6 +56,7 @@
         }
 
         function appendHTML(route) {
+            spinner.toggleClass('show');
             $.get(route, function(data) {
                 rows = data.rows;
                 shouldEdit = Array(rows).fill(false);
@@ -74,36 +75,17 @@
 
         appendHTML("{{ route('user.profile.personal') }}");
 
-        $('#personal').click(function(e) {
-            const thisLink = $(this);
-            const id = $(this).attr('id');
-            moduleRoute = routes[id];
-            active(thisLink);
-            appendHTML("{{ route('user.profile.personal') }}");
-            spinner.toggleClass('show');
-        });
-        $('#education').click(function(e) {
-            const thisLink = $(this);
-            const id = $(this).attr('id');
-            moduleRoute = routes[id];
-            active(thisLink);
-            appendHTML("{{ route('user.profile.education') }}");
-            spinner.toggleClass('show');
-        });
-        $('#training').click(function(e) {
-            const thisLink = $(this);
-            const id = $(this).attr('id');
-            moduleRoute = routes[id];
-            active(thisLink);
-            appendHTML("{{ route('user.profile.training') }}");
-            spinner.toggleClass('show');
-        });
 
-        $('#logout').click(function(e) {
-            $('#logout-form').submit();
-        });
-
-        
+        function changeModule(clickedLink, linkRoute){
+            const id = clickedLink.attr('id');
+            if(id == 'logout'){
+                $('#logout-form').submit();
+                return false;
+            }
+            moduleRoute = routes[id];
+            active(clickedLink);
+            appendHTML(linkRoute);
+        }    
     </script>
 
     @include('components.front.profile.js.script')

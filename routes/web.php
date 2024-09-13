@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
 
             Route::get('/training', [TrainingController::class, 'index'])->name('training');
             Route::post('/training/update', [TrainingController::class, 'update'])->name('training.update');
+            Route::delete('training/delete', [TrainingController::class, 'delete'])->name('training.delete');
         });
     });
 });

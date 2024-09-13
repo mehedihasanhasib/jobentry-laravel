@@ -22,7 +22,8 @@ class TrainingController extends Controller
                 'informations' => $educations,
                 'module' => 'Training',
                 'callBackRoute' =>  route('user.profile.training'),
-                'submitRoute' => route('user.profile.training.update')
+                'submitRoute' => route('user.profile.training.update'),
+                'deleteRoute' => route('user.profile.training.delete')
             ])->render(),
             'rows' => $educations->count()
         ]);
@@ -35,5 +36,18 @@ class TrainingController extends Controller
         $data['user_id'] = $this->user_id;
         TrainingInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->training_id], $data);
         return response()->json(['success' => true]);
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            TrainingInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'errors' => $th->getMessage()
+            ]);
+        }
     }
 }

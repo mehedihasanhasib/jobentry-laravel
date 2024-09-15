@@ -4,9 +4,9 @@
     Find Jobs
 @endsection
 @section('content')
-    @include('components.front.common.header', [
+    {{-- @include('components.front.common.header', [
         'heading' => 'Job List',
-    ])
+    ]) --}}
     <!-- Jobs Start -->
     <div class="container-xxl py-5">
         @include('components.front.filter_jobs')

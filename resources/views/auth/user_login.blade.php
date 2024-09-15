@@ -3,8 +3,8 @@
     Login
 @endsection
 @section('content')
-@include('components.front.common.header', ['heading' => 'Login'])
-    <div class="container-fluid d-flex align-items-center justify-content-center wow fadeInUp" data-wow-delay="0.1s">
+{{-- @include('components.front.common.header', ['heading' => 'Login']) --}}
+    <div class="container-fluid mt-5 d-flex align-items-center justify-content-center wow fadeIn" data-wow-delay="0.1s">
         <div class="row w-100">
             <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
                 <div class="card shadow-lg border-0 rounded-lg">

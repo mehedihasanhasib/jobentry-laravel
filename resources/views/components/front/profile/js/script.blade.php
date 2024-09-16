@@ -3,7 +3,7 @@
     $fields = [
         'education' => ['degree', 'exam', 'institute', 'passing_year', 'group', 'cgpa', 'scale'],
         'training' => ['title', 'institute', 'duration', 'start_date', 'topic', 'location'],
-        'employment' =>  ['company_name', 'company_location', 'designation', 'responsibilities', 'from', 'to'],
+        'employment' => ['company_name', 'company_location', 'designation', 'responsibilities', 'from', 'to'],
     ];
     $components = [];
     foreach ($fields as $key => $field) {
@@ -85,13 +85,22 @@
         function successCallback() {
             appendHTML(callBackRoute);
         }
-        submitForm({
-            type: "DELETE",
-            url,
-            formData: {
-                id: id
-            },
-            successCallback
-        })
+        sweetAlertConfirm({
+            icon: 'warning',
+            title: 'Are you sure?',
+            text: 'Do you want to proceed with this action?'
+        }).then((confirmed) => {
+            if (confirmed) {
+                submitForm({
+                    type: "DELETE",
+                    url,
+                    formData: {
+                        id: id
+                    },
+                    successCallback
+                })
+            }
+        });
+
     }
 </script>

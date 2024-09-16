@@ -36,7 +36,7 @@ class TrainingController extends Controller
         $data['user_id'] = $this->user_id;
         try {
             TrainingInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->training_id], $data);
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Training information updated successfully']);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
@@ -49,7 +49,7 @@ class TrainingController extends Controller
     {
         try {
             TrainingInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Training information deleted successfully']);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

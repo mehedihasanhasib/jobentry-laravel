@@ -45,9 +45,10 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
-            'phone' => ['required', 'digits:11', 'numeric'],
+            'phone' => ['required', 'numeric', 'digits:11'],
             'dob' => ['required', 'date'],
-            'father_name' => ['nullable', 'max:255']
+            'father_name' => ['nullable', 'max:255'],
+            'mother_name' => ['nullable', 'max:255']
         ], [
             'dob' => 'Date of birth should be a valid date',
             'phone.digits' => 'Phone number should be 11 digits',
@@ -60,7 +61,7 @@ class ProfileController extends Controller
         try {
             PersonalInformation::where('user_id', $this->user_id)->update($request->except(['name', 'email', '_token']));
             User::where('id', $this->user_id)->update($request->only(['name', 'email']));
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Personal information updated successfully']);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

@@ -37,7 +37,7 @@ class EducationController extends Controller
         $validatedData['user_id'] = $this->user_id;
         try {
             EducationInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->education_id], $validatedData);
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Education information updated successfully']);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
@@ -50,7 +50,7 @@ class EducationController extends Controller
     {
         try {
             EducationInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Education information deleted successfully']);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

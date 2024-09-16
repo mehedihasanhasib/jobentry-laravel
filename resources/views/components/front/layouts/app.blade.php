@@ -54,8 +54,13 @@
                 success: function(response) {
                     if (response.success) {
                         successCallback(response)
+                        notification({icon:"success", text:response.message});
                     } else {
-                        console.log(response)
+                        loader.toggleClass('show')
+                        setTimeout(() => {
+                            // sweetAlert({icon:"error", title:"Error", text:response.errors});
+                            notification({icon:"error", text:response.errors});
+                        }, 500);
                     }
                 },
                 error: function(xhr) {
@@ -65,6 +70,9 @@
                         $.each(errors, function(key, value) {
                             $(`.${key}`).text(value[0]);
                         });
+                        setTimeout(() => {
+                            notification({icon:"error", text:"Validation Failed!"});
+                        }, 500);
                     }
                     loader.toggleClass('show')
                 }

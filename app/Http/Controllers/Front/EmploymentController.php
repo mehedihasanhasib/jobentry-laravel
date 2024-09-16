@@ -36,8 +36,8 @@ class EmploymentController extends Controller
         $data = $request->validated();
         $data['user_id'] = $this->user_id;
         try {
-            EmploymentInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->training_id], $data);
-            return response()->json(['success' => true]);
+            EmploymentInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->employment_id], $data);
+            return response()->json(['success' => true, 'message' => 'Employment information updated successfully']);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
@@ -50,7 +50,7 @@ class EmploymentController extends Controller
     {
         try {
             EmploymentUpdateRequest::where('id', $request->id)->where('user_id', $this->user_id)->delete();
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'Employment information deleted successfully']);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

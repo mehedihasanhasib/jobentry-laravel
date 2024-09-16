@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TrainingUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Front\TrainingInformation;
 
@@ -29,12 +30,19 @@ class TrainingController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(TrainingUpdateRequest $request)
     {
-        $data = $request->except(['_token', 'training_id']);
+        $data = $request->validated();
         $data['user_id'] = $this->user_id;
-        TrainingInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->training_id], $data);
-        return response()->json(['success' => true]);
+        try {
+            TrainingInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->training_id], $data);
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'errors' => $th->getMessage()
+            ]);
+        }
     }
 
     public function delete(Request $request)

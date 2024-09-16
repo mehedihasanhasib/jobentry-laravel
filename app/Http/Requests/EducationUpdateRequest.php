@@ -38,6 +38,7 @@ class EducationUpdateRequest extends FormRequest
     {
         return [
             'degree.required' => 'Degree is required',
+            'degree.string' => 'Degree must be a string',
             'degree.max' => 'Degree should not be greater than 255 characters',
 
             'exam.required' => 'Exam is required',

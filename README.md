@@ -1,6 +1,6 @@
 # JobSite
 
-JobSite is a job portal platform, built using Laravel, MySql, Jquery, Bootstrap.
+This project is a job portal website. Built using Laravel, MySql, Jquery, Bootstrap.
 
 ## Features
 

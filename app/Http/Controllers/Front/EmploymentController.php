@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmploymentUpdateRequest;
 use App\Models\Front\EmploymentInformation;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,13 +31,31 @@ class EmploymentController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(EmploymentUpdateRequest $request)
     {
-        dd($request->all());
+        $data = $request->validated();
+        $data['user_id'] = $this->user_id;
+        try {
+            EmploymentInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->training_id], $data);
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'errors' => $th->getMessage()
+            ]);
+        }
     }
 
     public function delete(Request $request)
     {
-        dd($request->all());
+        try {
+            EmploymentUpdateRequest::where('id', $request->id)->where('user_id', $this->user_id)->delete();
+            return response()->json(['success' => true]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'errors' => $th->getMessage()
+            ]);
+        }
     }
 }

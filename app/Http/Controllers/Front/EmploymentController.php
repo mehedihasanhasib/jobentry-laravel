@@ -49,7 +49,7 @@ class EmploymentController extends Controller
     public function delete(Request $request)
     {
         try {
-            EmploymentUpdateRequest::where('id', $request->id)->where('user_id', $this->user_id)->delete();
+            EmploymentInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
             return response()->json(['success' => true, 'message' => 'Employment information deleted successfully']);
         } catch (\Throwable $th) {
             return response()->json([

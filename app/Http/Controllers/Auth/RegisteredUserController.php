@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use App\Models\Front\PersonalInformation;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RegisteredUserController extends Controller
@@ -60,7 +60,6 @@ class RegisteredUserController extends Controller
             $file = $request->file('profile_picture');
             $path = $file->store('users_profile_picture', 'public');
         }
-        dd($path);
         try {
             $user = User::create([
                 'name' => $request->name,
@@ -68,8 +67,9 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
     
-            $personalInformation = PersonalInformation::create([
+            PersonalInformation::create([
                 'user_id' => $user->id,
+                'image' => $path,
                 'dob' => $request->dob,
                 'phone' => $request->phone,
             ]);
@@ -81,10 +81,18 @@ class RegisteredUserController extends Controller
             // return redirect(route('dashboard', absolute: false));
             return response()->json([
                 'success' => true,
-                'url' => route('profile')
+                'url' => route('profile'),
+                'message' => 'Registration successfull'
             ]);
         } catch (\Throwable $th) {
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
             Log::error($th->getMessage());
+            return response()->json([
+                'success' => false,
+                'errors' => $th->getMessage()
+            ]);
         }
     }
 }

@@ -1,0 +1,66 @@
+.position-relative {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.rounded-circle {
+    width: 165px;
+    height: 165px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #00b074;
+    transition: all 0.3s ease;
+}
+
+.camera-label {
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-bottom: 4px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    padding-top: 6px;
+}
+
+.camera-label::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(255, 255, 255, 0.6),
+            transparent);
+    transition: 0.5s;
+}
+
+.position-relative:hover .camera-label::before {
+    left: 100%;
+}
+
+.camera-label i {
+    font-size: 18px;
+    margin-top: -15px;
+    transition: all 0.3s ease;
+}
+
+.position-relative:hover .camera-label i {
+    transform: scale(1.2);
+}
+
+.profile_picture {
+    font-size: 14px;
+    margin-top: 10px;
+}

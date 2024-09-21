@@ -34,6 +34,7 @@ class RegisteredUserController extends Controller
             'password_confirmation' =>  ['required'],
             'dob' =>  ['required', 'date'],
             'phone' =>  ['required', 'numeric', 'digits:11'],
+            'profile_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ], [
             'name.required' => 'Name is required',
             'email.required' => 'Email is required',
@@ -44,6 +45,9 @@ class RegisteredUserController extends Controller
             'phone.required' => 'Phone Number is required',
             'phone.digits' => 'Phone Number should be 11 digits',
             'dob.date' => 'Invalid Date of Birth',
+            'profile_picture.image' => 'Invalid Image',
+            'profile_picture.mimes' => 'Image should be in jpg, jpeg, png format',
+            'profile_picture.max' => 'Image size should not exceed 2MB',
         ]);
 
         if ($validator->fails()) {
@@ -52,6 +56,11 @@ class RegisteredUserController extends Controller
             ], 422);
         }
 
+        if($request->hasFile('profile_picture')){
+            $file = $request->file('profile_picture');
+            $path = $file->store('users_profile_picture', 'public');
+        }
+        dd($path);
         try {
             $user = User::create([
                 'name' => $request->name,

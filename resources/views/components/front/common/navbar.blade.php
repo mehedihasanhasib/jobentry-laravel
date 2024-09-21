@@ -33,7 +33,7 @@
 <!-- Navbar End -->
 
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-    <a to="/" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+    <a href="/" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
         <h1 class="m-0 text-primary">JobEntry</h1>
     </a>
 
@@ -61,6 +61,6 @@
                 </a>
             @endauth
         </div>
-        <a href="{{ route('recruiter.about') }}" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
+        <a href="{{ route('recruiter.dashboard') }}" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
     </div>
 </nav>

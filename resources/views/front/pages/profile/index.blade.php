@@ -3,6 +3,8 @@
     Profile
 @endsection
 @section('css')
+    <link rel="stylesheet" href="{{ asset('css/userAvatar.css') }}">
+
     <style>
         .links {
             cursor: pointer;
@@ -14,6 +16,10 @@
 
         .closeButton:hover {
             color: white !important;
+        }
+
+        .card{
+            height: 100% !important;
         }
     </style>
 @endsection

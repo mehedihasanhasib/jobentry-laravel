@@ -8,15 +8,16 @@
         <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
     </div>
 @else
-    @foreach ($informations as $key => $information)
-        @php
-            $textViewId = 'textView' . $key;
-            $editViewId = 'editView' . $key;
-            $editButton = 'editButton' . $key;
-            $informationData = Arr::except($information->getAttributes(), ['user_id', 'id', 'created_at', 'updated_at']);
-        @endphp
+    <div class="card shadow-sm rounded border-0"> {{-- academy section --}}
+        @foreach ($informations as $key => $information)
+            @php
+                $textViewId = 'textView' . $key;
+                $editViewId = 'editView' . $key;
+                $editButton = 'editButton' . $key;
+                $informationData = Arr::except($information->getAttributes(), ['user_id', 'id', 'created_at', 'updated_at']);
+            @endphp
 
-        <div class="card shadow-sm rounded border-0"> {{-- academy section --}}
+
             <x-front.profile.card_header :id="$editButton" heading="{{ $module . ' ' . $key + 1 }}" click="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}')" />
             <div class="card-body">
                 <div class="row mb-4" id="{{ $textViewId }}"> {{-- show data --}}
@@ -33,7 +34,7 @@
                     <x-save_close_buttons saveButtonClick="save(event, $(this), '{{ $callBackRoute }}')" closeButtonClick="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}', event)" :delete="true" deleteButtonClick="deleteInfo(event, $(this), '{{ $deleteRoute }}', '{{ $callBackRoute }}')" />
                 </form>
             </div>
-        </div>
-    @endforeach
-    <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
+        @endforeach
+        <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
+    </div>
 @endif

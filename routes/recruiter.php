@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::domain('recruiter.jobentry.com')->group(function () {
+Route::domain('recruiter.localhost')->group(function () {
     Route::name('recruiter.')->group(function () {
         Route::get('/', function () {
-            echo "<h1>Recruiter Page</h1>";
+            return view('recruiter.dashboard.index');
         })->name('dashboard');
 
         Route::get('/about', function () {

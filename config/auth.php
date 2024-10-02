@@ -71,6 +71,11 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
+        'recruiters' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Recruiter::class),
+        ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

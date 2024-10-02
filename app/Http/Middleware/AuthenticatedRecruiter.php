@@ -17,7 +17,7 @@ class AuthenticatedRecruiter
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::guard('recruiter')->check()) {
-            return redirect('/admin/login');
+            return redirect()->route('recruiter.login');
         }
         return $next($request);
     }

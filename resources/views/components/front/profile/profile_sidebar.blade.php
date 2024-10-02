@@ -1,4 +1,4 @@
-<div class="col-md-3 bg-white p-4 shadow-sm rounded">
+<div class="col-md-3 bg-white p-lg-4 p-md-3 p-sm-2 shadow-sm rounded">
     <ul class="list-group list-group-flush">
         <x-front.user_avatar :user="$user" />
         @php

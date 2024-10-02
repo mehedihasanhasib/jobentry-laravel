@@ -1,19 +1,22 @@
-@extends('components.front.layouts.app')
+@extends('components.recruiter.layouts.guest')
 @section('title')
-    Signup
+    SignUp
 @endsection
-
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/userAvatar.css') }}">
+    <style>
+        .container-fluid {
+            width: 73vw !important;
+        }
+    </style>
 @endsection
 @section('content')
-    {{-- @include('components.front.common.header', ['heading' => 'Sign Up']) --}}
-    <div class="container-fluid mt-5 d-flex align-items-center justify-content-center wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid d-flex align-items-center justify-content-center wow fadeIn" data-wow-delay="0.1s">
         <div class="row w-100">
             <div class="col-md-8 col-lg-10 col-xl-8 mx-auto">
                 <div class="card shadow-lg border-0 rounded-lg">
                     <div class="card-body p-5">
-                        <h2 class="text-center mb-4">Create an Account</h2>
+                        <h2 class="text-center mb-4">Create A Recruiter Account</h2>
                         <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <x-front.user_avatar />
@@ -76,7 +79,7 @@
                         <div class="text-center">
                             <p>
                                 Already have an account?
-                                <a class="text-primary" href="{{ route('login') }}">Sign in</a>
+                                <a class="text-primary" href="{{ route('recruiter.login') }}">Sign in</a>
                             </p>
                         </div>
                     </div>
@@ -86,22 +89,6 @@
     </div>
 @endsection
 
-
 @section('script')
-    <script>
-        $('#registrationForm').submit(function(e) {
-            e.preventDefault();
-            const formData = new FormData(this)
-
-            function successCallback(response) {
-                window.location.href = response.url;
-            }
-            submitForm({
-                type: "post",
-                url: "/register",
-                formData,
-                successCallback
-            })
-        });
-    </script>
+    <x-front.js.user_avatar_script />
 @endsection

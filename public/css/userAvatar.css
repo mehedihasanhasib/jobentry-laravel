@@ -32,6 +32,17 @@
     padding-top: 6px;
 }
 
+@media (max-width: 768px) {
+    .camera-label {
+        width: 150%;
+    }
+}
+@media (max-width: 576px) {
+    .camera-label {
+        width: 100%;
+    }
+}
+
 .camera-label::before {
     content: '';
     position: absolute;

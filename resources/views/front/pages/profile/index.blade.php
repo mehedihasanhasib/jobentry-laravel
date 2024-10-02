@@ -18,7 +18,7 @@
             color: white !important;
         }
 
-        .card{
+        .card {
             height: 100% !important;
         }
     </style>
@@ -27,7 +27,7 @@
     {{-- @include('components.front.common.header', ['heading' => 'Profile']) --}}
     <div class="container-fluid p-4 wow fadeIn" style="background-color: #f8f9fa">
         <div class="row">
-            @include('components.front.profile.profile_sidebar')
+            <x-front.profile.profile_sidebar :user="$user" />
 
             <div class="col-md-9 mt-xsm-3 p-0" id="informationSection"></div>
         </div>
@@ -80,16 +80,36 @@
 
         appendHTML("{{ route('user.profile.personal') }}");
 
-        function changeModule(clickedLink, linkRoute){
+        function changeModule(clickedLink, linkRoute) {
             const id = clickedLink.attr('id');
-            if(id == 'logout'){
+            if (id == 'logout') {
                 $('#logout-form').submit();
                 return false;
             }
             moduleRoute = routes[id];
             active(clickedLink);
             appendHTML(linkRoute);
-        }    
+        }
+
+        $('#image').change(function(e) {
+            e.preventDefault();
+            const file = e.target.files;
+            
+            if (file.length > 0) {
+                const formData = new FormData();
+                formData.append('profile_picture', file[0]);
+                function successCallback() {
+                    loader.toggleClass('show');
+                }
+                const url = "{{ route('user.profile.picture.update') }}";
+                submitForm({
+                    type: "post",
+                    url,
+                    formData,
+                    successCallback
+                })
+            }
+        });
     </script>
 
     @include('components.front.profile.js.script')

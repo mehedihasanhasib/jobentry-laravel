@@ -8,4 +8,5 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/profile/personal/{id}', [ProfileController::class, 'personal_information']);
+Route::get('/profile/personal/{id}', [ProfileController::class, 'show']);
+Route::post('/profile/personal/{id}', [ProfileController::class, 'update']);

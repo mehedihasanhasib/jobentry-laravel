@@ -6,11 +6,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EducationUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Front\EducationInformation;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Front\PersonalInformation;
 
 class ProfileController extends Controller
@@ -22,7 +21,10 @@ class ProfileController extends Controller
     }
     public function index()
     {
-        return view('front.pages.profile.index');
+        $user = User::find($this->user_id);
+        return view('front.pages.profile.index', [
+            'user' => $user,
+        ]);
     }
 
     public function personal_information()
@@ -86,6 +88,36 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function update_picture(Request $request)
+    {
+        try {
+            $user = User::find($this->user_id);
+            $path = $user->personalInfo->image;
+
+            if ($path) {
+                if (Storage::disk('public')->exists($path)) {
+                    Storage::disk('public')->delete($path);
+                }
+            }
+
+            if ($request->hasFile('profile_picture')) {
+                $file = $request->file('profile_picture');
+                $image = $file->store('users_profile_picture', 'public');
+
+                PersonalInformation::where('user_id', $this->user_id)->update([
+                    'image' => $image
+                ]);
+            }
+
+            return response()->json(['success' => true, 'message' => 'Profile Picture updated successfully']);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'errors' => $th->getMessage()
+            ]);
+        }
     }
 
     function getEnumValues()

@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
             ], 422);
         }
 
-        if($request->hasFile('profile_picture')){
+        if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
             $path = $file->store('users_profile_picture', 'public');
         }
@@ -66,18 +66,18 @@ class RegisteredUserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-    
+
             PersonalInformation::create([
                 'user_id' => $user->id,
-                'image' => $path,
+                'image' => $path ?? null,
                 'dob' => $request->dob,
                 'phone' => $request->phone,
             ]);
-    
+
             event(new Registered($user));
-    
+
             Auth::login($user);
-    
+
             // return redirect(route('dashboard', absolute: false));
             return response()->json([
                 'success' => true,
@@ -85,8 +85,10 @@ class RegisteredUserController extends Controller
                 'message' => 'Registration successfull'
             ]);
         } catch (\Throwable $th) {
-            if (Storage::disk('public')->exists($path)) {
-                Storage::disk('public')->delete($path);
+            if ($path) {
+                if (Storage::disk('public')->exists($path)) {
+                    Storage::disk('public')->delete($path);
+                }
             }
             Log::error($th->getMessage());
             return response()->json([

@@ -105,5 +105,5 @@
             })
         });
     </script>
-    @include('components.front.js.user_avatar_script')
+    {{-- @include('components.front.js.user_avatar_script') --}}
 @endsection

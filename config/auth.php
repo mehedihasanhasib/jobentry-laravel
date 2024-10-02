@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
             'home' => '/'
         ],
+
+        'recruiter' => [
+            'driver' => 'session',
+            'provider' => 'recruiters',
+        ],
     ],
 
     /*

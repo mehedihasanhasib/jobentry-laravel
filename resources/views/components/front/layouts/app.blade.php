@@ -30,14 +30,22 @@
 
 
     <x-front.common.js_links />
+
+
+    @if (Route::is('register') || Route::is('profile'))
+        <x-front.js.user_avatar_script />
+    @endif
+
+
     <script src="{{ asset('js/alerts.js') }}"></script>
     <script>
         const loader = $('#spinner');
+
         function submitForm({
             type,
             url,
             formData,
-            successCallback
+            successCallback = undefined
         }) {
             $.ajaxSetup({
                 headers: {
@@ -53,13 +61,21 @@
                 data: formData,
                 success: function(response) {
                     if (response.success) {
-                        successCallback(response)
-                        notification({icon:"success", text:response.message});
+                        if (successCallback != undefined) {
+                            successCallback(response)
+                        }
+                        notification({
+                            icon: "success",
+                            text: response.message
+                        });
                     } else {
                         loader.toggleClass('show')
                         setTimeout(() => {
                             // sweetAlert({icon:"error", title:"Error", text:response.errors});
-                            notification({icon:"error", text:response.errors});
+                            notification({
+                                icon: "error",
+                                text: response.errors
+                            });
                         }, 500);
                     }
                 },
@@ -71,7 +87,10 @@
                             $(`.${key}`).text(value[0]);
                         });
                         setTimeout(() => {
-                            notification({icon:"error", text:"Validation Failed!"});
+                            notification({
+                                icon: "error",
+                                text: "Validation Failed!"
+                            });
                         }, 500);
                     }
                     loader.toggleClass('show')

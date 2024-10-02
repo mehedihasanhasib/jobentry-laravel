@@ -36,6 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function(){
             Route::get('/employment', [EmploymentController::class, 'index'])->name('employment');
             Route::post('/employment/update', [EmploymentController::class, 'update'])->name('employment.update');
             Route::delete('/employment/delete', [EmploymentController::class, 'delete'])->name('employment.delete');
+
+            Route::post('/profile/picture/update',  [ProfileController::class, 'update_picture'])->name('picture.update');
         });
     });
 });

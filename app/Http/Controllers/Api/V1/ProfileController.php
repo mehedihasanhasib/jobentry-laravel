@@ -8,25 +8,28 @@ use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {
-    public function personal_information($id)
+    public function show($id)
     {
-        $userData = User::with('personalInfo')->find($id);
-        $personal_info = $userData->personalInfo;
+        try {
+            $userData = User::with(['personalInfo', 'educationInfo', 'trainingInfo', 'employmentInfo'])->findOrFail($id);
+            $personal_info = $userData->personalInfo;
 
-        $is_set_user = isset($userData) && isset($personal_info) ? true : false;
-        if ($is_set_user) {
-            $user = [
-                'name' => $userData->name,
-                'email' => $userData->email,
-                'fatherName' => $personal_info->father_name,
-                'motherName' => $personal_info->mother_name,
-                'phone' => $personal_info->phone,
-                'dob' => $personal_info->dob,
-                'gender' => $personal_info->gender,
-            ];
-            return $user;
-        } else {
-            return response()->json(['message' => 'User not found'], 404);
+            $is_set_user = isset($userData) && isset($personal_info) ? true : false;
+            if ($is_set_user) {
+                return response()->json([
+                    'status' => true,
+                    'data' => $userData
+                ]);
+            } else {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+        } catch (\Throwable $th) {
+            return  response()->json(['message' => $th->getMessage()], 404);
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        dd($request->all(), $id);
     }
 }

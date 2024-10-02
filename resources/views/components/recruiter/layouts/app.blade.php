@@ -29,7 +29,7 @@
             --accent-color: #4299e1;
         }
 
-        .btn{
+        .btn {
             color: #fff
         }
 
@@ -234,7 +234,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title mb-3">Open Jobs</h5>
                                 <h2 class="mb-3">24</h2>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title mb-3">New Applications</h5>
                                 <h2 class="mb-3">87</h2>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -252,7 +252,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title mb-3">Interviews Scheduled</h5>
                                 <h2 class="mb-3">12</h2>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -261,7 +261,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title mb-3">Offers Sent</h5>
                                 <h2 class="mb-3">5</h2>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -359,7 +359,7 @@
 
     @include('components.front.common.js_links')
     <script>
-        document.getElementById('sidebarCollapse').addEventListener('click', function () {
+        document.getElementById('sidebarCollapse').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('active');
         });
     </script>

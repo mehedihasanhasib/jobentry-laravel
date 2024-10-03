@@ -13,7 +13,7 @@ class RegistrationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,35 +30,18 @@ class RegistrationRequest extends FormRequest
             'password_confirmation' =>  ['required'],
             'phone' =>  ['required', 'numeric', 'digits:11'],
             'company_name' => ['required', 'string', 'max:255'],
-            'website' => ['nullable',  'string', 'max:255'],
+            'website' => ['nullable',  'string', 'max:255', 'url', 'unique:' . Recruiter::class],
             'address' => ['required', 'string', 'max:255'],
             'company_logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ];
     }
 
-    // public function messages(): array
-    // {
-    //     return [
-    //         'name.required' => 'Name is required',
-    //         'name.string' => 'Name should be a string',
-    //         'name.max' => 'Name should not exceed 255 characters',
-
-    //         'email.required' => 'Email is required',
-    //         'email.unique' => 'Email is already taken',
-
-    //         'password.confirmed' => 'Password and confirm password do not match',
-    //         'password_confirmation.required' => "Confirm Password is required",
-
-    //         'phone.required' => 'Phone Number is required',
-    //         'phone.digits' => 'Phone Number should be 11 digits',
-
-    //         'company_logo.image' => 'Invalid Image',
-    //         'company_logo.mimes' => 'Image should be in jpg, jpeg, png format',
-    //         'company_logo.max' => 'Image size should not exceed 2MB',
-
-    //         'company_name.required' => 'Company Name is required',
-    //         'company_name.string' => 'Company Name should be a string',
-    //         'company_name.max' => 'Company Name should not exceed 255 characters',
-    //     ];
-    // }
+    public function messages(): array
+    {
+        return [
+            'company_logo.image' => 'Invalid Image',
+            'company_logo.mimes' => 'Image should be in jpg, jpeg, png format',
+            'company_logo.max' => 'Image size should not exceed 2MB',
+        ];
+    }
 }

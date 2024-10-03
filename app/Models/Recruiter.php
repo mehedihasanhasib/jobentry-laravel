@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Recruiter extends Model
+class Recruiter extends Model implements AuthenticatableContract
 {
-    use HasFactory;
+    use HasFactory, Authenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +20,8 @@ class Recruiter extends Model
         'name',
         'email',
         'password',
-        'company',
+        'company_name',
+        'company_logo',
         'phone',
         'website',
         'address',

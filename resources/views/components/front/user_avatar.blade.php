@@ -6,5 +6,6 @@
         </label>
     </div>
     <input class="d-none" id="image" name="{{ $name }}" type="file" accept="image/*" />
-    <span class="profile_picture text-danger errors mt-2"></span>
+    <label class="form-label">{{ Str::ucfirst(Str::replace('_', ' ', $name)) }}</label>
+    <span class="{{ $name }} text-danger errors mt-2"></span>
 </div>

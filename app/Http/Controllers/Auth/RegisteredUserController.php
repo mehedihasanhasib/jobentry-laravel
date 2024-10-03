@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +65,7 @@ class RegisteredUserController extends Controller
             $path = $file->store('users_profile_picture', 'public');
         }
         try {
+            DB::beginTransaction();
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -80,7 +82,7 @@ class RegisteredUserController extends Controller
             event(new Registered($user));
 
             Auth::login($user);
-
+            DB::commit();
             // return redirect(route('dashboard', absolute: false));
             return response()->json([
                 'success' => true,
@@ -88,6 +90,7 @@ class RegisteredUserController extends Controller
                 'message' => 'Registration successfull'
             ]);
         } catch (\Throwable $th) {
+            DB::rollBack();
             if ($path) {
                 if (Storage::disk('public')->exists($path)) {
                     Storage::disk('public')->delete($path);

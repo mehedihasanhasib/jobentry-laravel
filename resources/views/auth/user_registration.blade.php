@@ -63,7 +63,7 @@
                                     <div class="form-group mb-3 col-lg-6">
                                         <label class="form-label">{{ $field['label'] }}</label>
                                         <div class="input-group">
-                                            <input class="form-control" name="{{ $key }}" type="{{ $field['type'] }}" value="{{ old($key) }}" placeholder="{{ $field['placeholder'] }}" />
+                                            <input class="form-control" name="{{ $key }}" type="{{ $field['type'] }}" value="{{ old($key) }}" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
                                         </div>
                                         <span class="{{ $key }} text-danger errors"></span>
                                     </div>

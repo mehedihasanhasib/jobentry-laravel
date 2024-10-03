@@ -17,9 +17,9 @@
                 <div class="card shadow-lg border-0 rounded-lg">
                     <div class="card-body p-5">
                         <h2 class="text-center mb-4">Create A Recruiter Account</h2>
-                        <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+                        <form id="recruiterRegistrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <x-front.user_avatar name="company_logo"/>
+                            <x-front.user_avatar name="company_logo" />
 
                             @php
                                 $fields = [
@@ -78,7 +78,7 @@
                                     <div class="form-group mb-3 col-lg-6">
                                         <label class="form-label">{{ $field['label'] }}</label>
                                         <div class="input-group">
-                                            <input class="form-control" name="{{ $key }}" type="{{ $field['type'] }}" value="{{ old($key) }}" placeholder="{{ $field['placeholder'] }}" />
+                                            <input class="form-control" name="{{ $key }}" type="{{ $field['type'] }}" value="{{ old($key) }}" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
                                         </div>
                                         <span class="{{ $key }} text-danger errors"></span>
                                     </div>
@@ -103,4 +103,22 @@
 
 @section('script')
     <x-front.js.user_avatar_script />
+
+    <script>
+        $('#recruiterRegistrationForm').submit(function(e) {
+            e.preventDefault();
+            const formData = new FormData(this)
+
+            function successCallback(response) {
+                window.location.href = response.url;
+            }
+
+            submitForm({
+                type: "post",
+                url: "{{ route('recruiter.register') }}",
+                formData,
+                successCallback
+            })
+        });
+    </script>
 @endsection

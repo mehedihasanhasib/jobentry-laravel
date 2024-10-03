@@ -11,9 +11,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use App\Models\Front\PersonalInformation;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Front\PersonalInformation;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class RegisteredUserController extends Controller
 {
@@ -29,14 +30,16 @@ class RegisteredUserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'lowercase', 'email:dns', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Password::defaults()],
             'password_confirmation' =>  ['required'],
             'dob' =>  ['required', 'date'],
             'phone' =>  ['required', 'numeric', 'digits:11'],
             'profile_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ], [
             'name.required' => 'Name is required',
+            'name.string' => 'Name should be a string',
+            'name.max' => 'Name should not exceed 255 characters',
             'email.required' => 'Email is required',
             'email.unique' => 'Email is already taken',
             'password.confirmed' => 'Password and confirm password do not match',

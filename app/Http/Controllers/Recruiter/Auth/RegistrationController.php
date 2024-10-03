@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Recruiter;
+namespace App\Http\Controllers\Recruiter\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

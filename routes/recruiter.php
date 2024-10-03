@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Recruiter\LoginController;
-use App\Http\Controllers\Recruiter\RegistrationController;
-use App\Http\Middleware\AuthenticatedRecruiter;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AuthenticatedRecruiter;
+use App\Http\Controllers\Recruiter\Auth\LoginController;
+use App\Http\Controllers\Recruiter\Auth\RegistrationController;
 
 Route::domain('recruiter.localhost')->group(function () {
     Route::name('recruiter.')->group(function () {

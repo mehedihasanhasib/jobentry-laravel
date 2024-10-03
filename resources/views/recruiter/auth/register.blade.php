@@ -19,7 +19,7 @@
                         <h2 class="text-center mb-4">Create A Recruiter Account</h2>
                         <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <x-front.user_avatar />
+                            <x-front.user_avatar name="company_logo"/>
 
                             @php
                                 $fields = [
@@ -35,10 +35,22 @@
                                         'placeholder' => 'Enter your email',
                                         'required' => true,
                                     ],
-                                    'dob' => [
-                                        'label' => 'Date of Birth',
-                                        'type' => 'date',
-                                        'placeholder' => 'Select Date of Birth',
+                                    'company_name' => [
+                                        'label' => 'Company Name',
+                                        'type' => 'text',
+                                        'placeholder' => 'Company Name',
+                                        'required' => true,
+                                    ],
+                                    'website' => [
+                                        'label' => 'Website',
+                                        'type' => 'text',
+                                        'placeholder' => 'Company Website',
+                                        'required' => false,
+                                    ],
+                                    'address' => [
+                                        'label' => 'Address',
+                                        'type' => 'text',
+                                        'placeholder' => 'Company Address',
                                         'required' => true,
                                     ],
                                     'phone' => [

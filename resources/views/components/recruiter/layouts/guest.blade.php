@@ -16,8 +16,6 @@
     </a>
     @yield('content')
 
-
-    
     <x-front.common.js_links />
     @yield('script')
 </body>

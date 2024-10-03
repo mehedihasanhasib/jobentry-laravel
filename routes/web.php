@@ -16,8 +16,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
 Route::get('/about-us', [AboutUsController::class, 'index'])->name('about.us');
 
-
-
 Route::middleware(['auth', 'verified'])->group(function(){
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::prefix('/profile')->group(function(){

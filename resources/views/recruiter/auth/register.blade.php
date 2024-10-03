@@ -11,13 +11,13 @@
     </style>
 @endsection
 @section('content')
-    <div class="container-fluid d-flex align-items-center justify-content-center wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid d-flex align-items-center justify-content-center">
         <div class="row w-100">
             <div class="col-md-8 col-lg-10 col-xl-8 mx-auto">
                 <div class="card shadow-lg border-0 rounded-lg">
                     <div class="card-body p-5">
                         <h2 class="text-center mb-4">Create A Recruiter Account</h2>
-                        <form id="recruiterRegistrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+                        <form id="recruiterRegistrationForm" enctype="multipart/form-data">
                             @csrf
                             <x-front.user_avatar name="company_logo" />
 

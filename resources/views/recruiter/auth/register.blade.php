@@ -15,7 +15,7 @@
         <div class="row w-100">
             <div class="col-md-8 col-lg-10 col-xl-8 mx-auto">
                 <div class="card shadow-lg border-0 rounded-lg">
-                    <div class="card-body p-5">
+                    <div class="card-body px-5 py-4">
                         <h2 class="text-center mb-4">Create A Recruiter Account</h2>
                         <form id="recruiterRegistrationForm" enctype="multipart/form-data">
                             @csrf

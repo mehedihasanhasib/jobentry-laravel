@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthenticatedRecruiter;
 use App\Http\Controllers\Recruiter\Auth\LoginController;
 use App\Http\Controllers\Recruiter\Auth\RegistrationController;
+use App\Http\Controllers\Recruiter\RecruiterJobsController;
 
 Route::domain('recruiter.localhost')->group(function () {
     Route::name('recruiter.')->group(function () {
@@ -19,6 +20,8 @@ Route::domain('recruiter.localhost')->group(function () {
             Route::get('/', function () {
                 return view('recruiter.dashboard.index');
             })->name('dashboard');
+
+            Route::get('/jobs', [RecruiterJobsController::class, 'index'])->name('jobs');
         });
     });
 });

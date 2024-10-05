@@ -1,6 +1,6 @@
 <div class="col-md-3 bg-white p-lg-4 p-md-3 p-sm-2 shadow-sm rounded">
     <ul class="list-group list-group-flush">
-        <x-front.user_avatar :user="$user" />
+        <x-front.user_avatar :user="$user" name="profile_picture" />
         @php
             $links = ['Personal', 'Education', 'Training', 'Employment', 'Log out']; // Add sidebar links here
             $icons = ['fa fa-user', 'fa fa-graduation-cap', 'fa fa-cog', 'fa fa-briefcase', 'fa fa-sign-out-alt']; // Add icons here

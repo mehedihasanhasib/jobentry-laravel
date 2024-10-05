@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Password::defaults()],
             'password_confirmation' =>  ['required'],
             'dob' =>  ['required', 'date'],
-            'phone' =>  ['required', 'numeric', 'digits:11'],
+            'phone' =>  ['required', 'numeric', 'digits:11', 'unique:' . User::class],
             'profile_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ], [
             'name.required' => 'Name is required',
@@ -48,6 +48,7 @@ class RegisteredUserController extends Controller
             'dob.required' => 'Date of Birth is required',
             'phone.required' => 'Phone Number is required',
             'phone.digits' => 'Phone Number should be 11 digits',
+            'phone.unique' => 'The phone number has already been taken.',
             'dob.date' => 'Invalid Date of Birth',
             'profile_picture.image' => 'Invalid Image',
             'profile_picture.mimes' => 'Image should be in jpg, jpeg, png format',

@@ -28,7 +28,7 @@ class RegistrationRequest extends FormRequest
             'email' => ['required', 'string', 'lowercase', 'email:dns', 'max:255', 'unique:' . Recruiter::class],
             'password' => ['required', 'confirmed', Password::defaults()],
             'password_confirmation' =>  ['required'],
-            'phone' =>  ['required', 'numeric', 'digits:11'],
+            'phone' =>  ['required', 'numeric', 'digits:11', 'unique:' . Recruiter::class],
             'company_name' => ['required', 'string', 'max:255'],
             'website' => ['nullable',  'string', 'max:255', 'url', 'unique:' . Recruiter::class],
             'address' => ['required', 'string', 'max:255'],
@@ -42,6 +42,9 @@ class RegistrationRequest extends FormRequest
             'company_logo.image' => 'Invalid Image',
             'company_logo.mimes' => 'Image should be in jpg, jpeg, png format',
             'company_logo.max' => 'Image size should not exceed 2MB',
+            'phone.unique' => 'The phone number has already been taken.',
+            'phone.required' => 'Phone Number is required',
+            'phone.digits' => 'Phone Number should be 11 digits',
         ];
     }
 }

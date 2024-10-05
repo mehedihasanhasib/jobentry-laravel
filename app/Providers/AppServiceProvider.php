@@ -87,7 +87,7 @@ class AppServiceProvider extends ServiceProvider
             "company_name" => "text",
             "company_location" => "text",
             "designation" => "text",
-            "responsibilities" => "text",
+            "responsibilities" => "textarea",
             "from" => "date",
             "to" => "date",
         ];

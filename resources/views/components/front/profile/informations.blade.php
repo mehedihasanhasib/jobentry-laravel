@@ -17,8 +17,12 @@
                 $informationData = Arr::except($information->getAttributes(), ['user_id', 'id', 'created_at', 'updated_at']);
             @endphp
 
-
-            <x-front.profile.card_header :id="$editButton" heading="{{ $module . ' ' . $key + 1 }}" click="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}')" />
+            <x-front.profile.card_header
+                :id="$editButton" heading="{{ $module . ' ' . $key + 1 }}"
+                click="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}')"
+                :module="$module ?? null"
+                :addbuttonid="Str::lower($module ?? '')"
+                :submitroute="$submitRoute ?? null" />
             <div class="card-body">
                 <div class="row mb-4" id="{{ $textViewId }}"> {{-- show data --}}
                     @foreach ($informationData as $key1 => $data)
@@ -35,6 +39,5 @@
                 </form>
             </div>
         @endforeach
-        <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
     </div>
 @endif

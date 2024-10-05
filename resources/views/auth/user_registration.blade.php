@@ -16,7 +16,7 @@
                         <h2 class="text-center mb-4">Create an Account</h2>
                         <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <x-front.user_avatar name="profile_picture"/>
+                            <x-front.user_avatar name="profile_picture" />
 
                             @php
                                 $fields = [

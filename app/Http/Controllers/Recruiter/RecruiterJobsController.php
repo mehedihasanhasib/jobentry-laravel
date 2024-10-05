@@ -11,4 +11,9 @@ class RecruiterJobsController extends Controller
     {
         return view('recruiter.jobs.index');
     }
+
+    public function create()
+    {
+        return view('recruiter.jobs.create');
+    }
 }

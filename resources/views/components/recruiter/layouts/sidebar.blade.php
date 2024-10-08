@@ -26,7 +26,7 @@
     <ul class="list-unstyled">
         @foreach ($links as $link)
             <li>
-                <a href="{{ $link['route'] }}" class="nav-link d-flex align-items-center @if (Request::path() == $link['url']) active @endif">
+                <a href="{{ $link['route'] }}" class="text-white nav-link d-flex align-items-center @if (Request::path() == $link['url']) active @endif">
                     <i class="{{ $link['icon'] }} mb-1"></i>{{ $link['name'] }}
                 </a>
             </li>

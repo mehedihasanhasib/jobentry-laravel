@@ -106,9 +106,10 @@
 
         $(addRequirementButton).click(function(e) {
             e.preventDefault();
+            var $originalInput = $(this).closest('.requirementSection').find('input');
             const div = $(this).closest('.col-lg-4');
             const textInput = `<div class="d-flex justify-content-between align-items-center mt-2 gap-1 position-relative">
-                                    <input type="text" class="form-control" name="" placeholder="" />
+                                    <input type="text" class="form-control" name="${$originalInput.attr('name')}" placeholder="${$originalInput.attr('placeholder')}" />
                                     <button type="button" class="btn btn-sm btn-danger position-absolute end-0 me-1 removeRequirementButton">
                                         <i class="fa fa-minus"></i>
                                     </button>
@@ -118,9 +119,7 @@
 
         $(document).on('click', '.removeRequirementButton', function(e) {
             e.preventDefault();
-            $(this).closest('div').fadeOut(function() {
-                $(this).remove();
-            });
+            $(this).closest('div').remove();
         });
     </script>
 @endsection

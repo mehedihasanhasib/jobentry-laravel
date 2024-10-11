@@ -22,7 +22,9 @@
     ];
 @endphp
 <nav id="sidebar" class="px-3 py-3">
-    <h3 class="text-center mb-4 text-white fw-bold">JobEntry</h3>
+    <a href="http://localhost:8000">
+        <h3 class="text-center mb-4 text-white fw-bold">JobEntry</h3>
+    </a>
     <ul class="list-unstyled">
         @foreach ($links as $link)
             <li>

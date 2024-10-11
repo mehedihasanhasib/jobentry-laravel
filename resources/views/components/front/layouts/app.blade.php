@@ -30,7 +30,7 @@
 
 
     <x-front.common.js_links />
-    
+
 
 
     @if (Route::is('register') || Route::is('profile'))
@@ -38,7 +38,13 @@
     @endif
 
 
-    
+
+    <script>
+        $('button').click(function(e) {
+            e.preventDefault();
+            $(this).blur();
+        });
+    </script>
     @yield('script')
 </body>
 

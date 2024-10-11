@@ -1,9 +1,19 @@
 @extends('components.recruiter.layouts.app')
 
 @section('css')
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         .text-gray {
             color: #6c757d;
+        }
+
+        .editor {
+            height: 30vh;
+            overflow-y: auto;
         }
     </style>
 @endsection
@@ -32,6 +42,27 @@
                     'placeholder' => 'Enter vacancy',
                     'required' => true,
                 ],
+                'deadline' => [
+                    'name' => 'deadline',
+                    'label' => 'Deadline',
+                    'type' => 'date',
+                    'placeholder' => 'Select deadline',
+                    'required' => true,
+                ],
+                'location' => [
+                    'name' => 'location',
+                    'label' => 'Location',
+                    'type' => 'select',
+                    'placeholder' => 'Select location',
+                    'required' => true,
+                ],
+                'work_status' => [
+                    'name' => 'work_status',
+                    'label' => 'Work Status',
+                    'type' => 'select',
+                    'placeholder' => 'Select work status',
+                    'required' => true,
+                ],
                 'details' => [
                     'name' => 'details',
                     'label' => 'Job Details',
@@ -39,19 +70,35 @@
                     'placeholder' => 'Enter job details',
                     'required' => true,
                 ],
+                'other_benefits' => [
+                    'name' => 'other_benefits',
+                    'label' => 'Other Benefits',
+                    'type' => 'textarea',
+                    'placeholder' => 'Enter other benefits',
+                    'required' => false,
+                ]
             ];
         @endphp
         <div class="row g-2">
+            <!--fields starts-->
             @foreach ($fields as $key => $field)
-                <div class="col-lg-6">
+                <div class="col-lg-{{ $field['type'] == 'textarea' ? '12' : '6' }}">
                     <div>
-                        <label class="form-label">{{ $field['label'] }}
-                            @if ($field['required'])
+                        <label class="form-label">{{ $field['label'] }}@if ($field['required'])
                                 <span class="text-danger">*</span>
                             @endif
                         </label>
                         @if ($field['type'] == 'textarea')
-                            <textarea name="{{ $field['name'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required'])></textarea>
+                            <div class="editor" id="{{ $key }}"></div>
+                            {{-- <textarea name="{{ $field['name'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" rows="6" @required($field['required'])></textarea> --}}
+                        @elseif($field['type'] == 'select')
+                            <select class="form-select" name="{{ $field['name'] }}">
+                                <option value="" disabled selected>{{ $field['placeholder'] }}</option>
+                                @if ($key == 'work_status')
+                                    <option value="Full Time">Full Time</option>
+                                    <option value="Part Time">Part Time</option>
+                                @endif
+                            </select>
                         @else
                             <input id="{{ $key }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
                         @endif
@@ -59,6 +106,9 @@
                     <span class="{{ $key }} text-danger errors"></span>
                 </div>
             @endforeach
+            <!--fields ends-->
+
+            <!--requirement starts-->
             <div class="row g-2">
                 <h4 class="text-black">Requirements</h4>
                 @php
@@ -96,14 +146,20 @@
                     </div>
                 @endforeach
             </div>
+            <!--requirement starts-->
+        </div>
+        <div class="mt-3">
+            <input type="submit" class="btn btn-primary"></input>
         </div>
     </form>
 @endsection
 
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <script>
         const addRequirementButton = $('.addRequirementButton');
 
+        // add requirements
         $(addRequirementButton).click(function(e) {
             e.preventDefault();
             var $originalInput = $(this).closest('.requirementSection').find('input');
@@ -117,9 +173,37 @@
             $(div).append(textInput);
         });
 
+        // remove requirements
         $(document).on('click', '.removeRequirementButton', function(e) {
             e.preventDefault();
             $(this).closest('div').remove();
         });
+
+        // fetching location
+        $.ajax({
+            url: "https://bdapis.com/api/v1.2/districts",
+            success: function(response) {
+                if (response.status.code === 200) {
+                    const locations = response.data;
+                    locations.forEach(location => {
+                        // create option and append the option to a select named "location"
+                        const option = `<option value="${location.district}">${location.district}</option>`
+                        $('select[name="location"]').append(option);
+                    });
+                }
+            }
+        });
+
+        // quil editor
+        const details = new Quill('#details', {
+            theme: 'snow',
+            placeholder: 'Write Responsibilities & Job Details',
+        });
+        const otherBenefits = new Quill('#other_benefits', {
+            theme: 'snow',
+            placeholder: 'Write Responsibilities & Job Details',
+        });
+
+        // submit form
     </script>
 @endsection

@@ -18,72 +18,109 @@
                     'placeholder' => 'Enter job title',
                     'required' => true,
                 ],
-                // 'details' => [
-                //     'name' => 'details',
-                //     'label' => 'Job Details',
-                //     'type' => 'textarea',
-                //     'placeholder' => 'Enter job details',
-                //     'required' => true,
-                // ],
-                'requirements' => [
-                    'name' => 'requirements[]',
-                    'label' => 'Job Requirements',
+                'salary' => [
+                    'name' => 'salary',
+                    'label' => 'Salary',
                     'type' => 'text',
-                    'placeholder' => 'Enter job requirement',
+                    'placeholder' => 'Enter salary',
+                    'required' => true,
+                ],
+                'vacancy' => [
+                    'name' => 'vacancy',
+                    'label' => 'Vacancy',
+                    'type' => 'number',
+                    'placeholder' => 'Enter vacancy',
+                    'required' => true,
+                ],
+                'details' => [
+                    'name' => 'details',
+                    'label' => 'Job Details',
+                    'type' => 'textarea',
+                    'placeholder' => 'Enter job details',
                     'required' => true,
                 ],
             ];
         @endphp
-        <div class="row g-4">
+        <div class="row g-2">
             @foreach ($fields as $key => $field)
                 <div class="col-lg-6">
                     <div>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <label class="form-label">{{ $field['label'] }}
-                                @if ($field['required'])
-                                    <span class="text-danger">*</span>
-                                @endif
-                            </label>
-                            @if ($key == 'requirements')
-                                <span>
-                                    <button id="addRequirement" type="button" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-plus text-white"></i>
-                                    </button>
-                                </span>
+                        <label class="form-label">{{ $field['label'] }}
+                            @if ($field['required'])
+                                <span class="text-danger">*</span>
                             @endif
-                        </div>
-
-                        <div>
-                            @if ($field['type'] == 'text')
-                                <input id="{{ $key }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
-                            @elseif ($field['type'] == 'textarea')
-                                <textarea name="{{ $field['name'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required'])></textarea>
-                            @endif
-                        </div>
+                        </label>
+                        @if ($field['type'] == 'textarea')
+                            <textarea name="{{ $field['name'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required'])></textarea>
+                        @else
+                            <input id="{{ $key }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
+                        @endif
                     </div>
                     <span class="{{ $key }} text-danger errors"></span>
                 </div>
             @endforeach
+            <div class="row g-2">
+                <h4 class="text-black">Requirements</h4>
+                @php
+                    $requirements = [
+                        'education' => [
+                            'title' => 'Education',
+                            'name' => 'education[]',
+                            'placeholder' => 'Educational Qualification',
+                            'required' => true,
+                        ],
+                        'experience' => [
+                            'title' => 'Experience',
+                            'name' => 'experience[]',
+                            'placeholder' => 'Work Experience',
+                            'required' => true,
+                        ],
+                        'additional' => [
+                            'title' => 'Additional',
+                            'name' => 'additional[]',
+                            'placeholder' => 'Additional Requirements',
+                            'required' => false,
+                        ],
+                    ];
+                @endphp
+                @foreach ($requirements as $key => $requirement)
+                    <div class="col-lg-4 requirementSection">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label class="form-label">{{ $requirement['title'] }} @if ($requirement['required'])
+                                    <span class="text-danger">*</span>
+                                @endif
+                            </label>
+                            <button type="button" class="btn btn-sm btn-primary addRequirementButton"><i class="fa fa-plus"></i></button>
+                        </div>
+                        <input class="form-control" id="{{ $key }}" type="text" name="{{ $requirement['name'] }}" placeholder="{{ $requirement['placeholder'] }}" @required($requirement['required']) />
+                    </div>
+                @endforeach
+            </div>
         </div>
     </form>
 @endsection
 
 @section('script')
     <script>
-        const addRequirementButton = $('#addRequirement');
+        const addRequirementButton = $('.addRequirementButton');
 
         $(addRequirementButton).click(function(e) {
             e.preventDefault();
+            const div = $(this).closest('.col-lg-4');
+            const textInput = `<div class="d-flex justify-content-between align-items-center mt-2 gap-1 position-relative">
+                                    <input type="text" class="form-control" name="" placeholder="" />
+                                    <button type="button" class="btn btn-sm btn-danger position-absolute end-0 me-1 removeRequirementButton">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>`
+            $(div).append(textInput);
+        });
 
-            // Find the input field and its parent div
-            const textInput = $('#requirements'); // Assuming 'requirements' is the id of the input field
-            const div = textInput.closest('div');
-
-            // Clone the input field and clear its value (if needed)
-            const clonedInput = textInput.clone().val('');
-            $(clonedInput).addClass('mt-2');
-            // Append the cloned input to the div
-            $(div).append(clonedInput);
+        $(document).on('click', '.removeRequirementButton', function(e) {
+            e.preventDefault();
+            $(this).closest('div').fadeOut(function() {
+                $(this).remove();
+            });
         });
     </script>
 @endsection

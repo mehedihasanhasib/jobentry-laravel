@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -16,8 +14,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Front\PersonalInformation;
 use App\Traits\ReturnResponse;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
 
 class RegisteredUserController extends Controller
 {
@@ -63,11 +59,7 @@ class RegisteredUserController extends Controller
                     Storage::disk('public')->delete($path);
                 }
             }
-            Log::error($th->getMessage());
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 }

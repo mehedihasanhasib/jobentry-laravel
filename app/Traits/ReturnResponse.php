@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Log;
+
 trait ReturnResponse
 {
     public function successResponse(string $route = null, string $message = null)
@@ -24,6 +26,15 @@ trait ReturnResponse
                 'deleteRoute' => $deleteRoute // route for deleting informations
             ])->render(),
             'rows' => $collection->count() // important for showing edit and text view if multiple educations or training and others
+        ]);
+    }
+
+    public function  errorResponse(string $message = "Something went wrong")
+    {
+        Log::error($message);
+        return response()->json([
+            'success' => false,
+            'errors' => $message
         ]);
     }
 }

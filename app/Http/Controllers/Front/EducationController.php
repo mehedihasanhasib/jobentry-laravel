@@ -39,10 +39,7 @@ class EducationController extends Controller
             EducationInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->education_id], $validatedData);
             return $this->successResponse(route: null, message: "Education information updated successfully");
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 
@@ -52,10 +49,7 @@ class EducationController extends Controller
             EducationInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
             return $this->successResponse(route: null, message: "Education information deleted successfully");
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 }

@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Recruiter\Auth;
 
 use App\Models\Recruiter;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Recruiter\Auth\RegistrationRequest;
+use App\Traits\ReturnResponse;
 
 class RegistrationController extends Controller
 {
+    use ReturnResponse;
     public function create()
     {
         return view('recruiter.auth.register');
@@ -44,11 +44,8 @@ class RegistrationController extends Controller
 
             Auth::guard('recruiter')->login($recruiter);
             DB::commit();
-            return response()->json([
-                'success' => true,
-                'url' => route('recruiter.dashboard'),
-                'message' => 'Registration successfull'
-            ]);
+
+            $this->successResponse(route: route('recruiter.dashboard'), message: 'Registration successfull');
         } catch (\Throwable $th) {
             DB::rollBack();
             if (isset($path)) {
@@ -56,11 +53,7 @@ class RegistrationController extends Controller
                     Storage::disk('public')->delete($path);
                 }
             }
-            Log::error($th->getMessage());
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 }

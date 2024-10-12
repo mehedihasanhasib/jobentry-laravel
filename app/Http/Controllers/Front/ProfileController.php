@@ -66,10 +66,7 @@ class ProfileController extends Controller
             User::where('id', $this->user_id)->update($request->only(['name', 'email']));
             return $this->successResponse(route: null, message: "Personal information updated successfully");
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 
@@ -114,10 +111,7 @@ class ProfileController extends Controller
 
             return $this->successResponse(route: null, message: "Profile Picture updated successfully");
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 

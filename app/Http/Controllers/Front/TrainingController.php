@@ -39,10 +39,7 @@ class TrainingController extends Controller
             TrainingInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->training_id], $data);
             return $this->successResponse(route: null,  message: 'Training information updated successfully');
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 
@@ -52,10 +49,7 @@ class TrainingController extends Controller
             TrainingInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
             return $this->successResponse(route: null,  message: 'Training information deleted successfully');
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 }

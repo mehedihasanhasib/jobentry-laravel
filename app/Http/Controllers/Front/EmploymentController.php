@@ -39,10 +39,7 @@ class EmploymentController extends Controller
             EmploymentInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->employment_id], $data);
             return $this->successResponse(route: null,  message: 'Employment information updated successfully');
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 
@@ -52,10 +49,7 @@ class EmploymentController extends Controller
             EmploymentInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
             return $this->successResponse(route: null,   message: 'Employment information deleted successfully');
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'errors' => $th->getMessage()
-            ]);
+            return $this->errorResponse(message: $th->getMessage());
         }
     }
 }

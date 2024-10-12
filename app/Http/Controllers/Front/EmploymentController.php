@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmploymentUpdateRequest;
 use App\Models\Front\EmploymentInformation;
+use App\Traits\ReturnResponse;
 use Illuminate\Support\Facades\Auth;
 
 class EmploymentController extends Controller
 {
+    use ReturnResponse;
     public $user_id;
     public function __construct()
     {
@@ -19,16 +21,14 @@ class EmploymentController extends Controller
     public function index()
     {
         $employments = EmploymentInformation::where('user_id', $this->user_id)->get();
-        return response()->json([
-            'view' => view('components.front.profile.informations', [
-                'informations' => $employments,
-                'module' => 'Employment',
-                'callBackRoute' => route('user.profile.employment'),
-                'submitRoute' => route('user.profile.employment.update'),
-                'deleteRoute' => route('user.profile.employment.delete')
-            ])->render(),
-            'rows' =>  $employments->count()
-        ]);
+        return $this->profileSuccessResponse(
+            collection: $employments,
+            module: 'Employment',
+            callBackRoute: route('user.profile.employment'),
+            submitRoute: route('user.profile.employment.update'),
+            deleteRoute: route('user.profile.employment.delete'),
+            view_component: 'components.front.profile.informations'
+        );
     }
 
     public function update(EmploymentUpdateRequest $request)
@@ -37,7 +37,7 @@ class EmploymentController extends Controller
         $data['user_id'] = $this->user_id;
         try {
             EmploymentInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->employment_id], $data);
-            return response()->json(['success' => true, 'message' => 'Employment information updated successfully']);
+            return $this->successResponse(route: null,  message: 'Employment information updated successfully');
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
@@ -50,7 +50,7 @@ class EmploymentController extends Controller
     {
         try {
             EmploymentInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
-            return response()->json(['success' => true, 'message' => 'Employment information deleted successfully']);
+            return $this->successResponse(route: null,   message: 'Employment information deleted successfully');
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

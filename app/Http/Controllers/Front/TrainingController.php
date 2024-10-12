@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TrainingUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Front\TrainingInformation;
+use App\Traits\ReturnResponse;
 
 class TrainingController extends Controller
 {
+    use ReturnResponse;
     public $user_id;
     public function __construct()
     {
@@ -17,17 +19,16 @@ class TrainingController extends Controller
     }
     public function index()
     {
-        $educations = TrainingInformation::where('user_id', $this->user_id)->get();
-        return response()->json([
-            'view' => view('components.front.profile.informations', [
-                'informations' => $educations,
-                'module' => 'Training',
-                'callBackRoute' =>  route('user.profile.training'),
-                'submitRoute' => route('user.profile.training.update'),
-                'deleteRoute' => route('user.profile.training.delete')
-            ])->render(),
-            'rows' => $educations->count()
-        ]);
+        $trainings = TrainingInformation::where('user_id', $this->user_id)->get();
+
+        return $this->profileSuccessResponse(
+            collection: $trainings,
+            view_component: 'components.front.profile.informations',
+            module: 'Training',
+            callBackRoute: route('user.profile.training'),
+            submitRoute: route('user.profile.training.update'),
+            deleteRoute: route('user.profile.training.delete')
+        );
     }
 
     public function update(TrainingUpdateRequest $request)
@@ -36,7 +37,7 @@ class TrainingController extends Controller
         $data['user_id'] = $this->user_id;
         try {
             TrainingInformation::where('user_id', $this->user_id)->updateOrCreate(['id' => $request->training_id], $data);
-            return response()->json(['success' => true, 'message' => 'Training information updated successfully']);
+            return $this->successResponse(route: null,  message: 'Training information updated successfully');
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
@@ -49,7 +50,7 @@ class TrainingController extends Controller
     {
         try {
             TrainingInformation::where('id', $request->id)->where('user_id', $this->user_id)->delete();
-            return response()->json(['success' => true, 'message' => 'Training information deleted successfully']);
+            return $this->successResponse(route: null,  message: 'Training information deleted successfully');
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

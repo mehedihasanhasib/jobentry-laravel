@@ -19,8 +19,10 @@ Route::domain('recruiter.localhost')->group(function () {
 
         Route::middleware([AuthenticatedRecruiter::class])->group(function () {
             Route::get('/', [RecruiterDashboardController::class, 'index'])->name('dashboard');
+
             Route::get('/jobs', [RecruiterJobsController::class, 'index'])->name('jobs');
             Route::get('/jobs/create', [RecruiterJobsController::class, 'create'])->name('jobs.create');
+            Route::post('/jobs/store', [RecruiterJobsController::class, 'store'])->name('jobs.store');
         });
     });
 });

@@ -41,9 +41,7 @@
                                 </div>
                                 <a href="#" class="text-primary">Forgot password?</a>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 mb-4">
-                                Sign In
-                            </button>
+                            <input value="Sign In" type="submit" class="btn btn-primary w-100 mb-4"></input>
                         </form>
                         <div class="text-center">
                             <p>Don't have an account? <a href="{{ route('register') }}" class="text-primary">Sign up</a></p>

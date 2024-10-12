@@ -26,8 +26,8 @@
 
         .dataTables_wrapper .dataTables_length select {
             /* border: 1px solid #ced4da;
-            border-radius: 4px;
-            padding: 6px 12px; */
+                    border-radius: 4px;
+                    padding: 6px 12px; */
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -525,6 +525,11 @@
                     <td>$112,000</td>
                 </tr>
             </tbody>
+            {{-- <div class="bg-white position-relative" style="height: 68vh">
+                <div class="spinner-border text-primary position-absolute top-50 start-50" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div> --}}
         </table>
     </div>
 @endsection

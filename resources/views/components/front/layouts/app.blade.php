@@ -29,7 +29,8 @@
     </div>
 
 
-    <x-front.common.js_links />
+    {{-- <x-front.common.js_links /> --}}
+    @include('components.front.common.js_links')
 
 
 

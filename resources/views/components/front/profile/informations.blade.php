@@ -5,7 +5,10 @@
 @if ($rows < 1)
     {{-- This is for add info. If no data, add button is in index blade. Bottom one is same --}}
     <div class="card shadow-sm rounded border-0 d-flex justify-content-center align-items-center" style="min-height: 100%">
-        <x-front.add_button :module="$module ?? null" :id="Str::lower($module ?? '')" :submitroute="$submitRoute ?? null" />
+        <x-front.add_button
+            :module="$module ?? null"
+            :id="Str::lower($module ?? '')"
+            :submitroute="$submitRoute ?? null" />
     </div>
 @else
     <div class="card shadow-sm rounded border-0"> {{-- academy section --}}
@@ -35,7 +38,11 @@
                     @foreach ($informationData as $key2 => $data)
                         <x-edit :id="$key2" :name="$key2" :type="$types[$key2]" :value="$data" :label="$labels[$key2]" />
                     @endforeach
-                    <x-save_close_buttons saveButtonClick="save(event, $(this), '{{ $callBackRoute }}')" closeButtonClick="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}', event)" :delete="true" deleteButtonClick="deleteInfo(event, $(this), '{{ $deleteRoute }}', '{{ $callBackRoute }}')" />
+                    <x-save_close_buttons
+                        saveButtonClick="save(event, $(this), '{{ $callBackRoute }}')"
+                        closeButtonClick="editInput('{{ $textViewId }}', '{{ $editViewId }}', '{{ $editButton }}', '{{ $key }}', event)"
+                        :delete="true"
+                        deleteButtonClick="deleteInfo(event, $(this), '{{ $deleteRoute }}', '{{ $callBackRoute }}')" />
                 </form>
             </div>
         @endforeach

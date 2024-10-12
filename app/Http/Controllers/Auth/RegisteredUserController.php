@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Front\PersonalInformation;
+use App\Traits\ReturnResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
 class RegisteredUserController extends Controller
 {
+    use ReturnResponse;
     /**
      * Display the registration view.
      */
@@ -35,7 +37,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Password::defaults()],
             'password_confirmation' =>  ['required'],
             'dob' =>  ['required', 'date'],
-            'phone' =>  ['required', 'numeric', 'digits:11', 'unique:' . User::class],
+            'phone' =>  ['required', 'numeric', 'digits:11', 'unique:' . PersonalInformation::class],
             'profile_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ], [
             'name.required' => 'Name is required',
@@ -84,15 +86,10 @@ class RegisteredUserController extends Controller
 
             Auth::login($user);
             DB::commit();
-            // return redirect(route('dashboard', absolute: false));
-            return response()->json([
-                'success' => true,
-                'url' => route('profile'),
-                'message' => 'Registration successfull'
-            ]);
+            return $this->successResponse(route: route('profile'), message: 'Registration successfull');
         } catch (\Throwable $th) {
             DB::rollBack();
-            if ($path) {
+            if (isset($path)) {
                 if (Storage::disk('public')->exists($path)) {
                     Storage::disk('public')->delete($path);
                 }

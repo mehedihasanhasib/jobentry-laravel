@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Front\PersonalInformation;
+use App\Traits\ReturnResponse;
 
 class ProfileController extends Controller
 {
+    use ReturnResponse;
     public $user_id;
     public function __construct()
     {
@@ -43,7 +45,6 @@ class ProfileController extends Controller
 
     public function personal_information_update(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
@@ -63,7 +64,7 @@ class ProfileController extends Controller
         try {
             PersonalInformation::where('user_id', $this->user_id)->update($request->except(['name', 'email', '_token']));
             User::where('id', $this->user_id)->update($request->only(['name', 'email']));
-            return response()->json(['success' => true, 'message' => 'Personal information updated successfully']);
+            return $this->successResponse(route: null, message: "Personal information updated successfully");
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
@@ -111,7 +112,7 @@ class ProfileController extends Controller
                 ]);
             }
 
-            return response()->json(['success' => true, 'message' => 'Profile Picture updated successfully']);
+            return $this->successResponse(route: null, message: "Profile Picture updated successfully");
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

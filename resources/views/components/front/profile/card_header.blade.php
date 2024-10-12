@@ -4,7 +4,7 @@
 
     <div class="d-flex">
         @if (isset($module) && isset($addbuttonid) && isset($submitroute))
-            <x-front.add_button :module="$module ?? null" :id="$addbuttonid ?? null" :submitroute="$submitRoute ?? null" />
+            <x-front.add_button :module="$module ?? null" :id="$addbuttonid ?? null" :submitroute="$submitroute ?? null" />
         @endif
         <button class="btn" style="color: white;" id="{{ $id }}" onclick="{{ $click }}">
             <span>Edit</span>

@@ -17,6 +17,7 @@
 
  <script>
      const loader = $('#spinner');
+
      function submitForm({
          type,
          url,
@@ -28,8 +29,11 @@
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
              }
          });
-         loader.toggleClass('show');
-
+         if (loader) {
+             loader.toggleClass('show');
+         } else {
+             console.log("no loader found")
+         }
          let ajaxOptions = {
              type: type,
              url: url,

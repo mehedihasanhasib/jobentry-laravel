@@ -69,9 +69,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <button class="btn btn-primary w-100 mb-4" type="submit">
-                                Sign Up
-                            </button>
+                            <input class="btn btn-primary w-100 mb-4" value="Sign Up" type="submit"></input>
                         </form>
                         <div class="text-center">
                             <p>

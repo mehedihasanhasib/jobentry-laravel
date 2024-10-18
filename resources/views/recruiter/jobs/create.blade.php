@@ -63,9 +63,29 @@
                     'placeholder' => 'Select work status',
                     'required' => true,
                 ],
+                'requirements' => [
+                    'education' => [
+                        'title' => 'Education',
+                        'name' => 'education[]',
+                        'placeholder' => 'Educational Qualification',
+                        'required' => true,
+                    ],
+                    'experience' => [
+                        'title' => 'Experience',
+                        'name' => 'experience[]',
+                        'placeholder' => 'Work Experience',
+                        'required' => true,
+                    ],
+                    'additional' => [
+                        'title' => 'Additional',
+                        'name' => 'additional[]',
+                        'placeholder' => 'Additional Requirements',
+                        'required' => false,
+                    ],
+                ],
                 'details' => [
                     'name' => 'details',
-                    'label' => 'Job Details',
+                    'label' => 'Responsibilities & Job Details',
                     'type' => 'textarea',
                     'placeholder' => 'Enter job details',
                     'required' => true,
@@ -82,34 +102,51 @@
         <div class="row g-2">
             <!--fields starts-->
             @foreach ($fields as $key => $field)
-                <div class="col-lg-{{ $field['type'] == 'textarea' ? '12' : '6' }}">
-                    <div>
-                        <label class="form-label">{{ $field['label'] }}@if ($field['required'])
-                                <span class="text-danger">*</span>
-                            @endif
-                        </label>
-                        @if ($field['type'] == 'textarea')
-                            <div class="editor" id="{{ $key }}"></div>
-                            {{-- <textarea name="{{ $field['name'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" rows="6" @required($field['required'])></textarea> --}}
-                        @elseif($field['type'] == 'select')
-                            <select class="form-select" name="{{ $field['name'] }}">
-                                <option value="" disabled selected>{{ $field['placeholder'] }}</option>
-                                @if ($key == 'work_status')
-                                    <option value="Full Time">Full Time</option>
-                                    <option value="Part Time">Part Time</option>
-                                @endif
-                            </select>
-                        @else
-                            <input id="{{ $key }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
-                        @endif
+                @if ($key == 'requirements')
+                    <div class="row g-2 mb-3">
+                        <h4 class="text-black">Requirements</h4>
+                        @foreach ($field as $key => $requirement)
+                            <div class="col-lg-4 requirementSection">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <label class="form-label">{{ $requirement['title'] }} @if ($requirement['required'])
+                                            <span class="text-danger">*</span>
+                                        @endif
+                                    </label>
+                                    <button type="button" class="btn btn-sm btn-primary addRequirementButton"><i class="fa fa-plus"></i></button>
+                                </div>
+                                <input class="form-control" id="{{ $key }}" type="text" name="{{ $requirement['name'] }}" placeholder="{{ $requirement['placeholder'] }}" @required($requirement['required']) />
+                            </div>
+                        @endforeach
                     </div>
-                    <span class="{{ $key }} text-danger errors"></span>
-                </div>
+                @else
+                    <div class="col-lg-{{ $field['type'] == 'textarea' ? '12' : '6' }}">
+                        <div>
+                            <label class="form-label">{{ $field['label'] }}@if ($field['required'])
+                                    <span class="text-danger">*</span>
+                                @endif
+                            </label>
+                            @if ($field['type'] == 'textarea')
+                                <div class="editor" id="{{ $key }}"></div>
+                            @elseif($field['type'] == 'select')
+                                <select class="form-select" name="{{ $field['name'] }}">
+                                    <option value="" disabled selected>{{ $field['placeholder'] }}</option>
+                                    @if ($key == 'work_status')
+                                        <option value="{{ base64_encode('Full Time') }}">Full Time</option>
+                                        <option value="{{ base64_encode('Full Time') }}">Part Time</option>
+                                    @endif
+                                </select>
+                            @else
+                                <input id="{{ $key }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
+                            @endif
+                        </div>
+                        <span class="{{ $key }} text-danger errors"></span>
+                    </div>
+                @endif
             @endforeach
             <!--fields ends-->
 
             <!--requirement starts-->
-            <div class="row g-2">
+            {{-- <div class="row g-2">
                 <h4 class="text-black">Requirements</h4>
                 @php
                     $requirements = [
@@ -145,8 +182,8 @@
                         <input class="form-control" id="{{ $key }}" type="text" name="{{ $requirement['name'] }}" placeholder="{{ $requirement['placeholder'] }}" @required($requirement['required']) />
                     </div>
                 @endforeach
-            </div>
-            <!--requirement starts-->
+            </div> --}}
+            <!--requirement ends-->
         </div>
         <div class="mt-3">
             <input type="submit" class="btn btn-primary"></input>
@@ -201,7 +238,7 @@
         });
         const otherBenefits = new Quill('#other_benefits', {
             theme: 'snow',
-            placeholder: 'Write Responsibilities & Job Details',
+            placeholder: 'Write other benefits',
         });
 
         // submit form
@@ -212,6 +249,8 @@
 
             formData.append('details', details.root.innerHTML);
             formData.append('other_benefits', otherBenefits.root.innerHTML);
+
+            console.log(details.root.innerHTML)
 
             function successCallback(response) {
                 console.log(response);

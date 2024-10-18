@@ -18,7 +18,7 @@
     </style>
 @endsection
 @section('content')
-    <form action="#" class="card rounded rounded-md p-3">
+    <form id="createJobForm" action="{{ route('recruiter.jobs.store') }}" method="POST" enctype="multipart/form-data" class="card rounded rounded-md p-3">
         @php
             $fields = [
                 'title' => [
@@ -26,7 +26,7 @@
                     'label' => 'Title',
                     'type' => 'text',
                     'placeholder' => 'Enter job title',
-                    'required' => true,
+                    'required' => false,
                 ],
                 'salary' => [
                     'name' => 'salary',
@@ -76,7 +76,7 @@
                     'type' => 'textarea',
                     'placeholder' => 'Enter other benefits',
                     'required' => false,
-                ]
+                ],
             ];
         @endphp
         <div class="row g-2">
@@ -205,5 +205,23 @@
         });
 
         // submit form
+        $('#createJobForm').submit(function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const url = $(this).attr('action');
+
+            formData.append('details', details.root.innerHTML);
+            formData.append('other_benefits', otherBenefits.root.innerHTML);
+
+            function successCallback(response) {
+                console.log(response);
+            }
+            submitForm({
+                type: "post",
+                url,
+                formData,
+                successCallback
+            })
+        });
     </script>
 @endsection

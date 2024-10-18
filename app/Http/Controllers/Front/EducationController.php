@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Front\EducationInformation;
-use App\Http\Requests\EducationUpdateRequest;
+use App\Http\Requests\Front\EducationUpdateRequest;
 use App\Traits\ReturnResponse;
 
 class EducationController extends Controller

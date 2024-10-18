@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TrainingUpdateRequest;
+use App\Http\Requests\Front\TrainingUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Front\TrainingInformation;
 use App\Traits\ReturnResponse;

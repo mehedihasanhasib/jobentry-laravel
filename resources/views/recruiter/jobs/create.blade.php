@@ -140,6 +140,14 @@
                                     @if ($key == 'work_status')
                                         <option value="{{ base64_encode('Full Time') }}">Full Time</option>
                                         <option value="{{ base64_encode('Full Time') }}">Part Time</option>
+                                    @elseif($key == 'category')
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                        @endforeach
+                                    @elseif($key == 'location')
+                                        @foreach ($locations as $location)
+                                            <option value="{{ $location->id }}">{{ $location->location_name_en }}</option>
+                                        @endforeach
                                     @endif
                                 </select>
                             @else
@@ -221,21 +229,6 @@
         $(document).on('click', '.removeRequirementButton', function(e) {
             e.preventDefault();
             $(this).closest('div').remove();
-        });
-
-        // fetching location
-        $.ajax({
-            url: "https://bdapis.com/api/v1.2/districts",
-            success: function(response) {
-                if (response.status.code === 200) {
-                    const locations = response.data;
-                    locations.forEach(location => {
-                        // create option and append the option to a select named "location"
-                        const option = `<option value="${location.district}">${location.district}</option>`
-                        $('select[name="location"]').append(option);
-                    });
-                }
-            }
         });
 
         // quil editor

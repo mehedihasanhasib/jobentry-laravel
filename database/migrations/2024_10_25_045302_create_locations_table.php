@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('location_name_en');
             $table->string('location_name_bn');
+            $table->string('slug');
             $table->timestamps();
         });
     }

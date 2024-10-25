@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Location;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -23,11 +24,12 @@ class LocationSeeder extends Seeder
                 // Insert location data into the database
                 Location::Create([
                     'location_name_en' =>  $location['district'],
-                    'location_name_bn' => $location['districtbn']
+                    'location_name_bn' => $location['districtbn'],
+                    'slug' =>  Str::slug($location['district']),
                 ]);
             }
 
-            $this->command->info('Locations fetched and stored successfully!');
+            $this->command->info('Locations stored successfully!');
         } else {
             $this->command->error('Failed to fetch locations from the API.');
         }

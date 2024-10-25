@@ -71,11 +71,6 @@
             document.getElementById('sidebarCollapse').addEventListener('click', function() {
                 document.getElementById('sidebar').classList.toggle('active');
             });
-
-            $('button').click(function(e) {
-                e.preventDefault();
-                $(this).blur();
-            });
         </script>
         @yield('script')
 </body>

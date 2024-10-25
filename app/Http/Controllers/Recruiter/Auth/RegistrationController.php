@@ -45,7 +45,7 @@ class RegistrationController extends Controller
             Auth::guard('recruiter')->login($recruiter);
             DB::commit();
 
-            $this->successResponse(route: route('recruiter.dashboard'), message: 'Registration successfull');
+            return $this->successResponse(route: route('recruiter.dashboard'), message: 'Registration successfull');
         } catch (\Throwable $th) {
             DB::rollBack();
             if (isset($path)) {

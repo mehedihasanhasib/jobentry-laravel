@@ -11,7 +11,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="container-fluid d-flex align-items-center justify-content-center">
+    <div class="d-flex align-items-center justify-content-center">
         <div class="row w-100">
             <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
                 <div class="card shadow-lg border-0 rounded-lg">

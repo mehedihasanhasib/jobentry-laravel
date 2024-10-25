@@ -21,7 +21,9 @@
         <x-front.common.navbar />
 
 
-        @yield('content')
+        <main>
+            @yield('content')
+        </main>
 
         <x-front.common.footer />
 

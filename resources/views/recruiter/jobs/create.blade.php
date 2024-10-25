@@ -63,6 +63,13 @@
                     'placeholder' => 'Select work status',
                     'required' => true,
                 ],
+                'category' => [
+                    'name' => 'category',
+                    'label' => 'Category',
+                    'type' => 'select',
+                    'placeholder' => 'Select category',
+                    'required' => true,
+                ],
                 'requirements' => [
                     'education' => [
                         'title' => 'Education',
@@ -186,7 +193,7 @@
             <!--requirement ends-->
         </div>
         <div class="mt-3">
-            <input type="submit" class="btn btn-primary"></input>
+            <input type="submit" value="Create" class="btn btn-primary"></input>
         </div>
     </form>
 @endsection

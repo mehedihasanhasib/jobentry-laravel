@@ -15,11 +15,13 @@
     </style>
 </head>
 
-<body class="d-flex align-items-center justify-content-center flex-column">
+<body>
     <a href="http://localhost:8000" class="navbar-brand d-flex align-items-center justify-content-center text-center pb-4">
         <h1 class="m-0 text-primary text-center">JobEntry</h1>
     </a>
-    @yield('content')
+    <main>
+        @yield('content')
+    </main>
 
     <x-front.common.js_links />
     @yield('script')

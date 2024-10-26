@@ -8,12 +8,18 @@
         .container-fluid {
             width: 65vw !important;
         }
+
+        .texts{
+            @media(width < 641px){
+                font-size: .82rem;
+            }
+        }
     </style>
 @endsection
 @section('content')
     <div class="d-flex align-items-center justify-content-center">
         <div class="row w-100">
-            <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
+            <div class="col-md-10 col-lg-10 col-xl-6 mx-auto">
                 <div class="card shadow-lg border-0 rounded-lg">
                     <div class="card-body p-5">
                         <h2 class="text-center mb-4">Recruiter Sign In</h2>
@@ -44,11 +50,11 @@
                             <div class="mb-4 d-flex justify-content-between align-items-center">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="rememberMe" />
-                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                    <label class="form-check-label texts" for="rememberMe">Remember me</label>
                                 </div>
-                                <a href="#" class="text-primary">Forgot password?</a>
+                                <a href="#" class="text-primary texts">Forgot password?</a>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 mb-4">
+                            <button type="submit" class="btn btn-primary w-100 mb-4 texts">
                                 Sign In
                             </button>
                         </form>

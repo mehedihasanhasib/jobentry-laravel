@@ -2,6 +2,7 @@
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+
     <style>
         html {
             scroll-behavior: smooth;
@@ -15,6 +16,10 @@
             height: 30vh;
             overflow-y: auto;
         }
+
+        .time {
+            display: block
+        }
     </style>
 @endsection
 @section('content')
@@ -26,14 +31,16 @@
                     'label' => 'Title',
                     'type' => 'text',
                     'placeholder' => 'Enter job title',
-                    'required' => false,
+                    'required' => true,
+                    'col' => 12,
                 ],
                 'salary' => [
                     'name' => 'salary',
                     'label' => 'Salary',
-                    'type' => 'text',
+                    'type' => 'number',
                     'placeholder' => 'Enter salary',
                     'required' => true,
+                    'col' => 4,
                 ],
                 'vacancy' => [
                     'name' => 'vacancy',
@@ -41,6 +48,15 @@
                     'type' => 'number',
                     'placeholder' => 'Enter vacancy',
                     'required' => true,
+                    'col' => 4,
+                ],
+                'experience' => [
+                    'name' => 'experience',
+                    'label' => 'Work Experience',
+                    'type' => 'number',
+                    'placeholder' => 'Enter experience in years',
+                    'required' => true,
+                    'col' => 4,
                 ],
                 'deadline' => [
                     'name' => 'deadline',
@@ -48,6 +64,7 @@
                     'type' => 'date',
                     'placeholder' => 'Select deadline',
                     'required' => true,
+                    'col' => 4,
                 ],
                 'location' => [
                     'name' => 'location',
@@ -55,6 +72,7 @@
                     'type' => 'select',
                     'placeholder' => 'Select location',
                     'required' => true,
+                    'col' => 4,
                 ],
                 'work_status' => [
                     'name' => 'work_status',
@@ -62,6 +80,7 @@
                     'type' => 'select',
                     'placeholder' => 'Select work status',
                     'required' => true,
+                    'col' => 4,
                 ],
                 'category' => [
                     'name' => 'category',
@@ -69,6 +88,23 @@
                     'type' => 'select',
                     'placeholder' => 'Select category',
                     'required' => true,
+                    'col' => 4,
+                ],
+                'working_days' => [
+                    'name' => 'working_days[]',
+                    'label' => 'Working Days',
+                    'type' => 'select',
+                    'placeholder' => 'Select working days',
+                    'required' => true,
+                    'col' => 4,
+                ],
+                'working_hours' => [
+                    'name' => 'working_hours',
+                    'label' => 'Working Hours',
+                    'type' => 'select',
+                    'placeholder' => 'Select working hours',
+                    'required' => true,
+                    'col' => 4,
                 ],
                 'requirements' => [
                     'education' => [
@@ -96,6 +132,7 @@
                     'type' => 'textarea',
                     'placeholder' => 'Enter job details',
                     'required' => true,
+                    'col' => 12,
                 ],
                 'other_benefits' => [
                     'name' => 'other_benefits',
@@ -103,6 +140,7 @@
                     'type' => 'textarea',
                     'placeholder' => 'Enter other benefits',
                     'required' => false,
+                    'col' => 12,
                 ],
             ];
         @endphp
@@ -122,11 +160,25 @@
                                     <button type="button" class="btn btn-sm btn-primary addRequirementButton"><i class="fa fa-plus"></i></button>
                                 </div>
                                 <input class="form-control" id="{{ $key }}" type="text" name="{{ $requirement['name'] }}" placeholder="{{ $requirement['placeholder'] }}" @required($requirement['required']) />
+                                <span class="{{ $key }} text-danger errors"></span>
                             </div>
                         @endforeach
                     </div>
+                @elseif ($key == 'working_hours')
+                    <div class="col-lg-{{ $field['col'] }} mt-lg-4">
+                        <label class="form-label">{{ $field['label'] }}@if ($field['required'])
+                                <span class="text-danger">*</span>
+                            @endif
+                        </label>
+                        <div class="d-flex gap-2 align-items-center">
+                            <label>From:</label>
+                            <input name="working_hour_from" class="form-control time" type="time" placeholder="{{ $field['placeholder'] }}" @required($field['required'])>
+                            <label>To:</label>
+                            <input name="working_hour_to" class="form-control time" type="time" placeholder="{{ $field['placeholder'] }}" @required($field['required'])>
+                        </div>
+                    </div>
                 @else
-                    <div class="col-lg-{{ $field['type'] == 'textarea' ? '12' : '6' }}">
+                    <div class="col-lg-{{ $field['col'] }} mt-lg-4">
                         <div>
                             <label class="form-label">{{ $field['label'] }}@if ($field['required'])
                                     <span class="text-danger">*</span>
@@ -135,8 +187,8 @@
                             @if ($field['type'] == 'textarea')
                                 <div class="editor" id="{{ $key }}"></div>
                             @elseif($field['type'] == 'select')
-                                <select class="form-select" name="{{ $field['name'] }}">
-                                    <option value="" disabled selected>{{ $field['placeholder'] }}</option>
+                                <select class="form-select" name="{{ $field['name'] }}" @if ($key == 'working_days') multiple @endif>
+                                    <option value="" disabled @if ($key != 'working_days') selected @endif>{{ $field['placeholder'] }}</option>
                                     @if ($key == 'work_status')
                                         <option value="{{ base64_encode('Full Time') }}">Full Time</option>
                                         <option value="{{ base64_encode('Full Time') }}">Part Time</option>
@@ -148,8 +200,17 @@
                                         @foreach ($locations as $location)
                                             <option value="{{ $location->id }}">{{ $location->location_name_en }}</option>
                                         @endforeach
+                                    @elseif($key == 'working_days')
+                                        @php
+                                            $days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+                                        @endphp
+                                        @foreach ($days as $day)
+                                            <option value="{{ $day }}">{{ $day }}</option>
+                                        @endforeach
                                     @endif
                                 </select>
+                            @elseif($field['type'] == 'number')
+                                <input id="{{ $key }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) min="0" />
                             @else
                                 <input id="{{ $key }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
                             @endif
@@ -159,46 +220,6 @@
                 @endif
             @endforeach
             <!--fields ends-->
-
-            <!--requirement starts-->
-            {{-- <div class="row g-2">
-                <h4 class="text-black">Requirements</h4>
-                @php
-                    $requirements = [
-                        'education' => [
-                            'title' => 'Education',
-                            'name' => 'education[]',
-                            'placeholder' => 'Educational Qualification',
-                            'required' => true,
-                        ],
-                        'experience' => [
-                            'title' => 'Experience',
-                            'name' => 'experience[]',
-                            'placeholder' => 'Work Experience',
-                            'required' => true,
-                        ],
-                        'additional' => [
-                            'title' => 'Additional',
-                            'name' => 'additional[]',
-                            'placeholder' => 'Additional Requirements',
-                            'required' => false,
-                        ],
-                    ];
-                @endphp
-                @foreach ($requirements as $key => $requirement)
-                    <div class="col-lg-4 requirementSection">
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <label class="form-label">{{ $requirement['title'] }} @if ($requirement['required'])
-                                    <span class="text-danger">*</span>
-                                @endif
-                            </label>
-                            <button type="button" class="btn btn-sm btn-primary addRequirementButton"><i class="fa fa-plus"></i></button>
-                        </div>
-                        <input class="form-control" id="{{ $key }}" type="text" name="{{ $requirement['name'] }}" placeholder="{{ $requirement['placeholder'] }}" @required($requirement['required']) />
-                    </div>
-                @endforeach
-            </div> --}}
-            <!--requirement ends-->
         </div>
         <div class="mt-3">
             <input type="submit" value="Create" class="btn btn-primary"></input>
@@ -208,59 +229,63 @@
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+
     <script>
         const addRequirementButton = $('.addRequirementButton');
+        $(document).ready(function() {
 
-        // add requirements
-        $(addRequirementButton).click(function(e) {
-            e.preventDefault();
-            var $originalInput = $(this).closest('.requirementSection').find('input');
-            const div = $(this).closest('.col-lg-4');
-            const textInput = `<div class="d-flex justify-content-between align-items-center mt-2 gap-1 position-relative">
+            // add requirements
+            $(addRequirementButton).click(function(e) {
+                e.preventDefault();
+                console.log("clicked")
+                var $originalInput = $(this).closest('.requirementSection').find('input');
+                const div = $(this).closest('.col-lg-4');
+                const textInput = `<div class="d-flex justify-content-between align-items-center mt-2 gap-1 position-relative">
                                     <input type="text" class="form-control" name="${$originalInput.attr('name')}" placeholder="${$originalInput.attr('placeholder')}" />
                                     <button type="button" class="btn btn-sm btn-danger position-absolute end-0 me-1 removeRequirementButton">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>`
-            $(div).append(textInput);
-        });
+                $(div).append(textInput);
+            });
 
-        // remove requirements
-        $(document).on('click', '.removeRequirementButton', function(e) {
-            e.preventDefault();
-            $(this).closest('div').remove();
-        });
+            // remove requirements
+            $(document).on('click', '.removeRequirementButton', function(e) {
+                e.preventDefault();
+                $(this).closest('div').remove();
+            });
 
-        // quil editor
-        const details = new Quill('#details', {
-            theme: 'snow',
-            placeholder: 'Write Responsibilities & Job Details',
-        });
-        const otherBenefits = new Quill('#other_benefits', {
-            theme: 'snow',
-            placeholder: 'Write other benefits',
-        });
+            // quil editor
+            const details = new Quill('#details', {
+                theme: 'snow',
+                placeholder: 'Write Responsibilities & Job Details',
+            });
+            const otherBenefits = new Quill('#other_benefits', {
+                theme: 'snow',
+                placeholder: 'Write other benefits',
+            });
 
-        // submit form
-        $('#createJobForm').submit(function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const url = $(this).attr('action');
+            // submit form
+            $('#createJobForm').submit(function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const url = $(this).attr('action');
 
-            formData.append('details', details.root.innerHTML);
-            formData.append('other_benefits', otherBenefits.root.innerHTML);
+                formData.append('details', details.root.innerHTML);
+                formData.append('other_benefits', otherBenefits.root.innerHTML);
 
-            console.log(details.root.innerHTML)
+                console.log(details.root.innerHTML)
 
-            function successCallback(response) {
-                console.log(response);
-            }
-            submitForm({
-                type: "post",
-                url,
-                formData,
-                successCallback
-            })
+                function successCallback(response) {
+                    console.log(response);
+                }
+                submitForm({
+                    type: "post",
+                    url,
+                    formData,
+                    successCallback
+                })
+            });
         });
     </script>
 @endsection

@@ -16,10 +16,12 @@
 </head>
 
 <body>
-    <a href="http://localhost:8000" class="navbar-brand d-flex align-items-center justify-content-center text-center pb-4">
-        <h1 class="m-0 text-primary text-center">JobEntry</h1>
-    </a>
-    <main>
+    <header class="mt-3">
+        <a href="http://localhost:8000" class="navbar-brand d-flex align-items-center justify-content-center text-center pb-4">
+            <h1 class="m-0 text-primary text-center">JobEntry</h1>
+        </a>
+    </header>
+    <main class="container">
         @yield('content')
     </main>
 

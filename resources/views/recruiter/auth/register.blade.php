@@ -43,7 +43,7 @@
                                     ],
                                     'website' => [
                                         'label' => 'Website',
-                                        'type' => 'text',
+                                        'type' => 'url',
                                         'placeholder' => 'Company Website',
                                         'required' => false,
                                     ],

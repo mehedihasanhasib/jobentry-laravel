@@ -50,8 +50,8 @@
                     'required' => true,
                     'col' => 4,
                 ],
-                'experience' => [
-                    'name' => 'experience',
+                'work_experience' => [
+                    'name' => 'work_experience',
                     'label' => 'Work Experience',
                     'type' => 'number',
                     'placeholder' => 'Enter experience in years',
@@ -114,10 +114,10 @@
                         'required' => true,
                     ],
                     'experience' => [
-                        'title' => 'Experience',
+                        'title' => 'Work Experience',
                         'name' => 'experience[]',
                         'placeholder' => 'Work Experience',
-                        'required' => true,
+                        'required' => false,
                     ],
                     'additional' => [
                         'title' => 'Additional',
@@ -197,6 +197,7 @@
                                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                         @endforeach
                                     @elseif($key == 'location')
+                                        
                                         @foreach ($locations as $location)
                                             <option value="{{ $location->id }}">{{ $location->location_name_en }}</option>
                                         @endforeach
@@ -258,11 +259,11 @@
             // quil editor
             const details = new Quill('#details', {
                 theme: 'snow',
-                placeholder: 'Write Responsibilities & Job Details',
+                placeholder: 'Write Responsibilities & Job Details. (Write in bullet point for best results)',
             });
             const otherBenefits = new Quill('#other_benefits', {
                 theme: 'snow',
-                placeholder: 'Write other benefits',
+                placeholder: 'Write other benefits. (Write in bullet point for best results)',
             });
 
             // submit form

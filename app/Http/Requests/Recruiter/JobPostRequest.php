@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Recruiter;
 
+use App\Rules\Recruiters\Jobs\JobDetailsRequired;
 use Illuminate\Foundation\Http\FormRequest;
 
 class JobPostRequest extends FormRequest
@@ -22,17 +23,11 @@ class JobPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'title' => ['required', 'string', 'max:255'],
-            // 'salary' => ['required', 'string', 'max:255'],
-            // 'vacancy' => ['required', 'min:1'],
-            // 'details' => ['required', function ($attribute, $value, $fail) {
-            //     $cleaned = trim(strip_tags($value));
-                
-            //     if ($cleaned === '' || $value === '<p><br></p>') {
-            //         $fail('The responsibilities field is required.');
-            //     }
-            // }]
-            
+            'title' => ['required', 'string', 'max:255'],
+            'salary' => ['required', 'numeric','min:1', 'max:2147483647'],
+            'vacancy' => ['required', 'numeric','min:1', 'max:2147483647'],
+            'work_experience' => ['required', 'numeric','min:1', 'max:2147483647'],
+            'details' => [new JobDetailsRequired]
         ];
     }
 }

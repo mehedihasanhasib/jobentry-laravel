@@ -23,6 +23,7 @@
     <!-- Sweet Alert -->
     <link href="{{ asset('css/sweetAlert.css') }}" rel="stylesheet">
 
+    <!-- Layout CSS -->
     <link rel="stylesheet" href="{{ asset('recruiter/style.css') }}">
 
     @yield('css')

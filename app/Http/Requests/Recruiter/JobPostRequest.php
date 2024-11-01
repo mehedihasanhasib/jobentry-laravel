@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\Recruiter;
 
-use App\Rules\Recruiters\Jobs\JobDetailsRequired;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\Recruiters\Jobs\JobDetailsRequired;
 
 class JobPostRequest extends FormRequest
 {
@@ -27,6 +28,10 @@ class JobPostRequest extends FormRequest
             'salary' => ['required', 'numeric','min:1', 'max:2147483647'],
             'vacancy' => ['required', 'numeric','min:1', 'max:2147483647'],
             'work_experience' => ['required', 'numeric','min:1', 'max:2147483647'],
+            'deadline' => ['required', 'date'],
+            'location' => ['required', 'exists:locations,id'],
+            'work_status' => ['required', Rule::in(['Full Time', 'Part Time'])],
+            'category' => ['required', 'exists:categories,id'],
             'details' => [new JobDetailsRequired]
         ];
     }

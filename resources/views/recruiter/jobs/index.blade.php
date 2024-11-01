@@ -67,7 +67,7 @@
                     <th>Salary</th>
                 </tr>
             </thead>
-            <tbody id="table-body" class="d-none">
+            <tbody id="table-body">
                 <tr>
                     <td>Tiger Nixon</td>
                     <td>System Architect</td>
@@ -542,7 +542,6 @@
 
     <script>
         $(document).ready(function() {
-            $('#table-body').removeClass('d-none');
             var table = $('#example').DataTable({
                 responsive: true,
                 scrollX: true,

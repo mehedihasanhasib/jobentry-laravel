@@ -90,20 +90,20 @@
                     'required' => true,
                     'col' => 4,
                 ],
-                'working_days' => [
-                    'name' => 'working_days[]',
-                    'label' => 'Working Days',
-                    'type' => 'select',
-                    'placeholder' => 'Select working days',
-                    'required' => true,
-                    'col' => 4,
-                ],
+                // 'working_days' => [
+                //     'name' => 'working_days[]',
+                //     'label' => 'Working Days',
+                //     'type' => 'select',
+                //     'placeholder' => 'Select working days',
+                //     'required' => true,
+                //     'col' => 4,
+                // ],
                 'working_hours' => [
                     'name' => 'working_hours',
                     'label' => 'Working Hours',
                     'type' => 'select',
                     'placeholder' => 'Select working hours',
-                    'required' => true,
+                    'required' => false,
                     'col' => 4,
                 ],
                 'requirements' => [
@@ -146,11 +146,11 @@
         @endphp
         <div class="row g-2">
             <!--fields starts-->
-            @foreach ($fields as $key => $field)
-                @if ($key == 'requirements')
+            @foreach ($fields as $field_name => $field)
+                @if ($field_name == 'requirements')
                     <div class="row g-2 mb-3">
                         <h4 class="text-black">Requirements</h4>
-                        @foreach ($field as $key => $requirement)
+                        @foreach ($field as $k2 => $requirement)
                             <div class="col-lg-4 requirementSection">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <label class="form-label">{{ $requirement['title'] }} @if ($requirement['required'])
@@ -159,23 +159,26 @@
                                     </label>
                                     <button type="button" class="btn btn-sm btn-primary addRequirementButton"><i class="fa fa-plus"></i></button>
                                 </div>
-                                <input class="form-control" id="{{ $key }}" type="text" name="{{ $requirement['name'] }}" placeholder="{{ $requirement['placeholder'] }}" @required($requirement['required']) />
-                                <span class="{{ $key }} text-danger errors"></span>
+                                <input class="form-control" id="{{ $k2 }}" type="text" name="{{ $requirement['name'] }}" placeholder="{{ $requirement['placeholder'] }}" @required($requirement['required']) />
+                                <span class="{{ $k2 }} text-danger errors"></span>
                             </div>
                         @endforeach
                     </div>
-                @elseif ($key == 'working_hours')
+                @elseif ($field_name == 'working_hours')
                     <div class="col-lg-{{ $field['col'] }} mt-lg-4">
-                        <label class="form-label">{{ $field['label'] }}@if ($field['required'])
-                                <span class="text-danger">*</span>
-                            @endif
-                        </label>
-                        <div class="d-flex gap-2 align-items-center">
-                            <label>From:</label>
-                            <input name="working_hour_from" class="form-control time" type="time" placeholder="{{ $field['placeholder'] }}" @required($field['required'])>
-                            <label>To:</label>
-                            <input name="working_hour_to" class="form-control time" type="time" placeholder="{{ $field['placeholder'] }}" @required($field['required'])>
+                        <div>
+                            <label class="form-label">{{ $field['label'] }}@if ($field['required'])
+                                    <span class="text-danger">*</span>
+                                @endif
+                            </label>
+                            <div class="d-flex gap-2 align-items-center">
+                                <label>Start:</label>
+                                <input name="working_hours[start]" class="form-control time" type="time" placeholder="{{ $field['placeholder'] }}" @required($field['required'])>
+                                <label>End:</label>
+                                <input name="working_hours[end]" class="form-control time" type="time" placeholder="{{ $field['placeholder'] }}" @required($field['required'])>
+                            </div>
                         </div>
+                        <span class="{{ $field_name }} text-danger errors"></span>
                     </div>
                 @else
                     <div class="col-lg-{{ $field['col'] }} mt-lg-4">
@@ -185,23 +188,22 @@
                                 @endif
                             </label>
                             @if ($field['type'] == 'textarea')
-                                <div class="editor" id="{{ $key }}"></div>
+                                <div class="editor" id="{{ $field_name }}"></div>
                             @elseif($field['type'] == 'select')
-                                <select class="form-select" name="{{ $field['name'] }}" @if ($key == 'working_days') multiple @endif>
-                                    <option value="" disabled @if ($key != 'working_days') selected @endif>{{ $field['placeholder'] }}</option>
-                                    @if ($key == 'work_status')
+                                <select class="form-select" name="{{ $field['name'] }}" @if ($field_name == 'working_days') multiple @endif>
+                                    <option value="" disabled @if ($field_name != 'working_days') selected @endif>{{ $field['placeholder'] }}</option>
+                                    @if ($field_name == 'work_status')
                                         <option value="{{ base64_encode('Full Time') }}">Full Time</option>
                                         <option value="{{ base64_encode('Full Time') }}">Part Time</option>
-                                    @elseif($key == 'category')
+                                    @elseif($field_name == 'category')
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                         @endforeach
-                                    @elseif($key == 'location')
-                                        
+                                    @elseif($field_name == 'location')
                                         @foreach ($locations as $location)
                                             <option value="{{ $location->id }}">{{ $location->location_name_en }}</option>
                                         @endforeach
-                                    @elseif($key == 'working_days')
+                                    @elseif($field_name == 'working_days')
                                         @php
                                             $days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
                                         @endphp
@@ -211,12 +213,12 @@
                                     @endif
                                 </select>
                             @elseif($field['type'] == 'number')
-                                <input id="{{ $key }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) min="0" />
+                                <input id="{{ $field_name }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) min="0" />
                             @else
-                                <input id="{{ $key }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
+                                <input id="{{ $field_name }}" name="{{ $field['name'] }}" type="{{ $field['type'] }}" class="form-control" placeholder="{{ $field['placeholder'] }}" @required($field['required']) />
                             @endif
                         </div>
-                        <span class="{{ $key }} text-danger errors"></span>
+                        <span class="{{ $field_name }} text-danger errors"></span>
                     </div>
                 @endif
             @endforeach
@@ -274,8 +276,6 @@
 
                 formData.append('details', details.root.innerHTML);
                 formData.append('other_benefits', otherBenefits.root.innerHTML);
-
-                console.log(details.root.innerHTML)
 
                 function successCallback(response) {
                     console.log(response);

@@ -62,6 +62,7 @@
              error: function(xhr) {
                  if (xhr.status === 422) {
                      const errors = xhr.responseJSON.errors;
+                     console.log(errors);
                      $(`.errors`).text('');
                      $.each(errors, function(key, value) {
                          $(`.${key}`).text(value[0]);

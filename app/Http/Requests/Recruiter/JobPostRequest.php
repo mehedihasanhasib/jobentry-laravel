@@ -30,9 +30,16 @@ class JobPostRequest extends FormRequest
             'work_experience' => ['required', 'numeric','min:1', 'max:2147483647'],
             'deadline' => ['required', 'date'],
             'location' => ['required', 'exists:locations,id'],
-            'work_status' => ['required', Rule::in(['Full Time', 'Part Time'])],
+            'work_status' => ['required', Rule::in([base64_encode('Full Time'), base64_encode('Part Time')])],
             'category' => ['required', 'exists:categories,id'],
             'details' => [new JobDetailsRequired]
+        ];
+    }
+
+    public function  messages(): array
+    {
+        return [
+            'working_hours' =>  'Working hours must be in the format of start and end time',
         ];
     }
 }

@@ -37,4 +37,12 @@ trait ReturnResponse
             'errors' => $message
         ]);
     }
+
+    public function validationError(string $field_name, string $error){
+        return response()->json([
+            'errors' =>[
+                $field_name => [$error]
+            ]
+        ],422);
+    }
 }

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('location_id')->constrained();
             $table->string('work_status');
             $table->foreignId('categories_id')->constrained();
-            $table->json('working_days');
+            $table->json('working_days')->nullable();
             $table->time('working_hours');
             $table->json('requirements');
             $table->text('details');

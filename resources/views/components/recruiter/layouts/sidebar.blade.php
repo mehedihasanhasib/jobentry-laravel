@@ -8,7 +8,7 @@
             'icon' => 'fas fa-home',
         ],
         [
-            'name' => 'Jobs',
+            'name' => 'Posted Jobs',
             'route' => route('recruiter.jobs'),
             'url' => 'jobs',
             'icon' => 'fa fa-briefcase',

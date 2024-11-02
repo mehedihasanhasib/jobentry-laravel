@@ -21,10 +21,11 @@ body {
     max-width: 280px;
     height: 100vh;
     background-color: var(--primary-color);
-    transition: all 0.3s;
+    transition: margin-left linear 0.15s;
     box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
     position: sticky;
-    top: 0
+    top: 0;
+    overflow-y: auto;
 }
 
 
